@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/venturemark/apigengo/pkg/pbf/audience"
-
 	"github.com/venturemark/fmz/pkg/client"
 )
 

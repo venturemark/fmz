@@ -1,10 +1,9 @@
 package client
 
 import (
+	"github.com/venturemark/apigengo/pkg/pbf/audience"
 	"github.com/xh3b4sd/tracer"
 	"google.golang.org/grpc"
-
-	"github.com/venturemark/apigengo/pkg/pbf/audience"
 )
 
 type Config struct {
