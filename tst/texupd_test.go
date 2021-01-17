@@ -137,7 +137,6 @@ func Test_TexUpd_Lifecycle(t *testing.T) {
 			t.Fatal("there must be two updates")
 		}
 
-		// We show the latest updates first when watching at a timeline.
 		if o.Obj[0].Property.Text != "Lorem ipsum 2" {
 			t.Fatal("texupd name must be Lorem ipsum 1")
 		}
