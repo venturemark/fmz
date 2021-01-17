@@ -7,10 +7,11 @@ import (
 	"testing"
 
 	"github.com/venturemark/apigengo/pkg/pbf/audience"
+
 	"github.com/venturemark/fmz/pkg/client"
 )
 
-func Test_Audience_001(t *testing.T) {
+func Test_Audience_Lifecycle(t *testing.T) {
 	var err error
 
 	var cli *client.Client
@@ -30,8 +31,8 @@ func Test_Audience_001(t *testing.T) {
 		i := &audience.CreateI{
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
-					"organization.venturemark.co/id": "org",
-					"user.venturemark.co/id":         "usr",
+					"organization.venturemark.co/id": "1",
+					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -60,8 +61,8 @@ func Test_Audience_001(t *testing.T) {
 		i := &audience.CreateI{
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
-					"organization.venturemark.co/id": "org",
-					"user.venturemark.co/id":         "usr",
+					"organization.venturemark.co/id": "1",
+					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -84,8 +85,8 @@ func Test_Audience_001(t *testing.T) {
 			Obj: &audience.DeleteI_Obj{
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     aid,
-					"organization.venturemark.co/id": "org",
-					"user.venturemark.co/id":         "usr",
+					"organization.venturemark.co/id": "1",
+					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -97,7 +98,7 @@ func Test_Audience_001(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
 		if !ok {
-			t.Fatal("audience ID must not be empty")
+			t.Fatal("audience status must not be empty")
 		}
 
 		if s != "deleted" {
@@ -109,8 +110,8 @@ func Test_Audience_001(t *testing.T) {
 		i := &audience.CreateI{
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
-					"organization.venturemark.co/id": "org",
-					"user.venturemark.co/id":         "usr",
+					"organization.venturemark.co/id": "1",
+					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -140,8 +141,8 @@ func Test_Audience_001(t *testing.T) {
 			Obj: []*audience.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"organization.venturemark.co/id": "org",
-						"user.venturemark.co/id":         "usr",
+						"organization.venturemark.co/id": "1",
+						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -166,8 +167,8 @@ func Test_Audience_001(t *testing.T) {
 			Obj: &audience.DeleteI_Obj{
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     aid,
-					"organization.venturemark.co/id": "org",
-					"user.venturemark.co/id":         "usr",
+					"organization.venturemark.co/id": "1",
+					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -179,7 +180,7 @@ func Test_Audience_001(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
 		if !ok {
-			t.Fatal("audience ID must not be empty")
+			t.Fatal("audience status must not be empty")
 		}
 
 		if s != "deleted" {
