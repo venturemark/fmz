@@ -2,6 +2,7 @@ package client
 
 import (
 	"github.com/venturemark/apigengo/pkg/pbf/audience"
+	"github.com/venturemark/apigengo/pkg/pbf/message"
 	"github.com/venturemark/apigengo/pkg/pbf/texupd"
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 	"github.com/venturemark/apigengo/pkg/pbf/update"
@@ -17,6 +18,7 @@ type Client struct {
 	connection *grpc.ClientConn
 
 	audience audience.APIClient
+	message  message.APIClient
 	texupd   texupd.APIClient
 	timeline timeline.APIClient
 	update   update.APIClient
@@ -42,6 +44,11 @@ func New(c Config) (*Client, error) {
 		aud = audience.NewAPIClient(con)
 	}
 
+	var mes message.APIClient
+	{
+		mes = message.NewAPIClient(con)
+	}
+
 	var tex texupd.APIClient
 	{
 		tex = texupd.NewAPIClient(con)
@@ -61,6 +68,7 @@ func New(c Config) (*Client, error) {
 		connection: con,
 
 		audience: aud,
+		message:  mes,
 		texupd:   tex,
 		timeline: tim,
 		update:   upd,
@@ -75,6 +83,10 @@ func (c *Client) Connection() *grpc.ClientConn {
 
 func (c *Client) Audience() audience.APIClient {
 	return c.audience
+}
+
+func (c *Client) Message() message.APIClient {
+	return c.message
 }
 
 func (c *Client) TexUpd() texupd.APIClient {

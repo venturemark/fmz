@@ -138,10 +138,10 @@ func Test_TexUpd_Lifecycle(t *testing.T) {
 		}
 
 		if o.Obj[0].Property.Text != "Lorem ipsum 2" {
-			t.Fatal("texupd name must be Lorem ipsum 1")
+			t.Fatal("texupd text must be Lorem ipsum 1")
 		}
 		if o.Obj[1].Property.Text != "Lorem ipsum 1" {
-			t.Fatal("texupd name must be Lorem ipsum 2")
+			t.Fatal("texupd text must be Lorem ipsum 2")
 		}
 	}
 
