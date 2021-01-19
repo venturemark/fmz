@@ -13,7 +13,9 @@ import (
 	"github.com/venturemark/fmz/pkg/client"
 )
 
-func Test_TexUpd_Lifecycle(t *testing.T) {
+// Test_TexUpd_001 ensures that the lifecycle of text updates is covered from
+// creation to deletion.
+func Test_TexUpd_001(t *testing.T) {
 	var err error
 
 	var cli *client.Client
@@ -253,7 +255,9 @@ func Test_TexUpd_Lifecycle(t *testing.T) {
 	}
 }
 
-func Test_TexUpd_No_Timeline(t *testing.T) {
+// Test_TexUpd_002 ensures text updates can only be created for timelines that
+// already exist.
+func Test_TexUpd_002(t *testing.T) {
 	var err error
 
 	var cli *client.Client
