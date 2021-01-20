@@ -204,6 +204,36 @@ func Test_TexUpd_001(t *testing.T) {
 	}
 
 	{
+		i := &timeline.UpdateI{
+			Obj: &timeline.UpdateI_Obj{
+				Metadata: map[string]string{
+					"audience.venturemark.co/id":     "1",
+					"organization.venturemark.co/id": "1",
+					"timeline.venturemark.co/id":     tid,
+					"user.venturemark.co/id":         "1",
+				},
+				Property: &timeline.UpdateI_Obj_Property{
+					Stat: toStringP("archived"),
+				},
+			},
+		}
+
+		o, err := cli.Timeline().Update(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		if !ok {
+			t.Fatal("timeline status must not be empty")
+		}
+
+		if s != "updated" {
+			t.Fatal("timeline status must be updated")
+		}
+	}
+
+	{
 		i := &timeline.DeleteI{
 			Obj: &timeline.DeleteI_Obj{
 				Metadata: map[string]string{
