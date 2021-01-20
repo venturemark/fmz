@@ -543,7 +543,7 @@ func Test_Timeline_003(t *testing.T) {
 }
 
 // Test_Timeline_004 ensures that timelines not having the archived state cannot
-//be deleted.
+// be deleted.
 func Test_Timeline_004(t *testing.T) {
 	var err error
 
