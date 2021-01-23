@@ -72,7 +72,7 @@ func Test_Audience_001(t *testing.T) {
 					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
-					Name: "Vendors",
+					Name: "Investors",
 					Tmln: []string{
 						"bar",
 						"baz",
@@ -119,8 +119,8 @@ func Test_Audience_001(t *testing.T) {
 			t.Fatal("there must be two audiences")
 		}
 
-		if o.Obj[0].Property.Name != "Vendors" {
-			t.Fatal("name must be Vendors")
+		if o.Obj[0].Property.Name != "Investors" {
+			t.Fatal("name must be Investors")
 		}
 		if o.Obj[0].Property.Tmln[0] != "bar" {
 			t.Fatal("timeline must include bar")
