@@ -74,12 +74,12 @@ func Test_Audience_001(t *testing.T) {
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Vendors",
 					Tmln: []string{
-						"foo",
 						"bar",
+						"baz",
 					},
 					User: []string{
-						"xh3b4sd",
 						"marcoelli",
+						"xh3b4sd",
 					},
 				},
 			},
@@ -120,10 +120,34 @@ func Test_Audience_001(t *testing.T) {
 		}
 
 		if o.Obj[0].Property.Name != "Vendors" {
-			t.Fatal("audience name must be Vendors")
+			t.Fatal("name must be Vendors")
+		}
+		if o.Obj[0].Property.Tmln[0] != "bar" {
+			t.Fatal("timeline must include bar")
+		}
+		if o.Obj[0].Property.Tmln[1] != "baz" {
+			t.Fatal("timeline must include baz")
+		}
+		if o.Obj[0].Property.User[0] != "marcoelli" {
+			t.Fatal("user must include marcoelli")
+		}
+		if o.Obj[0].Property.User[1] != "xh3b4sd" {
+			t.Fatal("user must include xh3b4sd")
 		}
 		if o.Obj[1].Property.Name != "Employees" {
-			t.Fatal("audience name must be Employees")
+			t.Fatal("name must be Employees")
+		}
+		if o.Obj[1].Property.Tmln[0] != "foo" {
+			t.Fatal("timeline must include foo")
+		}
+		if o.Obj[1].Property.Tmln[1] != "bar" {
+			t.Fatal("timeline must include bar")
+		}
+		if o.Obj[1].Property.User[0] != "xh3b4sd" {
+			t.Fatal("user must include xh3b4sd")
+		}
+		if o.Obj[1].Property.User[1] != "marcoelli" {
+			t.Fatal("user must include marcoelli")
 		}
 	}
 
@@ -145,11 +169,11 @@ func Test_Audience_001(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
 		if !ok {
-			t.Fatal("audience status must not be empty")
+			t.Fatal("status must not be empty")
 		}
 
 		if s != "deleted" {
-			t.Fatal("audience status must be deleted")
+			t.Fatal("status must be deleted")
 		}
 	}
 
@@ -171,11 +195,11 @@ func Test_Audience_001(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
 		if !ok {
-			t.Fatal("audience status must not be empty")
+			t.Fatal("status must not be empty")
 		}
 
 		if s != "deleted" {
-			t.Fatal("audience status must be deleted")
+			t.Fatal("status must be deleted")
 		}
 	}
 
@@ -276,7 +300,7 @@ func Test_Audience_002(t *testing.T) {
 
 		_, err := cli.Audience().Create(context.Background(), i)
 		if err == nil {
-			t.Fatal("audience name must be unique")
+			t.Fatal("name must be unique")
 		}
 	}
 
@@ -298,11 +322,11 @@ func Test_Audience_002(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
 		if !ok {
-			t.Fatal("audience status must not be empty")
+			t.Fatal("status must not be empty")
 		}
 
 		if s != "deleted" {
-			t.Fatal("audience status must be deleted")
+			t.Fatal("status must be deleted")
 		}
 	}
 }
@@ -391,7 +415,7 @@ func Test_Audience_004(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
 		if !ok {
-			t.Fatal("audience ID must not be empty")
+			t.Fatal("id must not be empty")
 		}
 
 		aid = s
@@ -415,11 +439,11 @@ func Test_Audience_004(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
 		if !ok {
-			t.Fatal("audience status must not be empty")
+			t.Fatal("status must not be empty")
 		}
 
 		if s != "deleted" {
-			t.Fatal("audience status must be deleted")
+			t.Fatal("status must be deleted")
 		}
 	}
 }
