@@ -735,7 +735,7 @@ func Test_Timeline_005(t *testing.T) {
 						ti1,
 					},
 					User: []string{
-						"1",
+						ui1,
 					},
 				},
 			},
@@ -768,7 +768,7 @@ func Test_Timeline_005(t *testing.T) {
 						ti2,
 					},
 					User: []string{
-						"2",
+						ui2,
 					},
 				},
 			},
@@ -1086,7 +1086,7 @@ func Test_Timeline_006(t *testing.T) {
 						ti1,
 					},
 					User: []string{
-						"1",
+						ui1,
 					},
 				},
 			},
@@ -1119,7 +1119,7 @@ func Test_Timeline_006(t *testing.T) {
 						ti2,
 					},
 					User: []string{
-						"2",
+						ui2,
 					},
 				},
 			},
