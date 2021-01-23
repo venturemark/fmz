@@ -34,8 +34,8 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
-github.com/venturemark/apigengo v0.0.0-20210119172842-9ef5a2744d4f h1:GhDowhZ0V0HFgeKgsLBTiC9gae+17cF8/ZrQT89SmeM=
-github.com/venturemark/apigengo v0.0.0-20210119172842-9ef5a2744d4f/go.mod h1:Vh1j2Yvbdui2WYbByYto5AJbhYdkpP6VRz2d6P4PhqM=
+github.com/venturemark/apigengo v0.0.0-20210123125511-98d84d24d738 h1:M/CfYdXd6ncjkimn2/TrSYaraXeT3au2K8mq9fZtpqQ=
+github.com/venturemark/apigengo v0.0.0-20210123125511-98d84d24d738/go.mod h1:Vh1j2Yvbdui2WYbByYto5AJbhYdkpP6VRz2d6P4PhqM=
 github.com/xh3b4sd/tracer v0.3.1 h1:wv4Cy/u/xLXLUJeKQWeiR+aU4mywj2f8PkQVda1EXKQ=
 github.com/xh3b4sd/tracer v0.3.1/go.mod h1:ZOLvBVLrmNx3GLCL7j0vEGMuI3r5ltLFcmDjG/3nV7g=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
