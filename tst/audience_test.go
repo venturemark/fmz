@@ -447,3 +447,313 @@ func Test_Audience_004(t *testing.T) {
 		}
 	}
 }
+
+// Test_Audience_005 ensures that updating audiences via JSON-Patch methods
+// works as expected.
+func Test_Audience_005(t *testing.T) {
+	var err error
+
+	var cli *client.Client
+	{
+		c := client.Config{}
+
+		cli, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Connection().Close()
+	}
+
+	var ai1 string
+	{
+		i := &audience.CreateI{
+			Obj: &audience.CreateI_Obj{
+				Metadata: map[string]string{
+					"organization.venturemark.co/id": "1",
+					"user.venturemark.co/id":         "1",
+				},
+				Property: &audience.CreateI_Obj_Property{
+					Name: "Employees",
+					Tmln: []string{
+						"foo",
+						"bar",
+					},
+					User: []string{
+						"xh3b4sd",
+						"marcoelli",
+					},
+				},
+			},
+		}
+
+		o, err := cli.Audience().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		if !ok {
+			t.Fatal("audience ID must not be empty")
+		}
+
+		ai1 = s
+	}
+
+	var ai2 string
+	{
+		i := &audience.CreateI{
+			Obj: &audience.CreateI_Obj{
+				Metadata: map[string]string{
+					"organization.venturemark.co/id": "1",
+					"user.venturemark.co/id":         "1",
+				},
+				Property: &audience.CreateI_Obj_Property{
+					Name: "Investors",
+					Tmln: []string{
+						"bar",
+						"baz",
+					},
+					User: []string{
+						"marcoelli",
+						"xh3b4sd",
+					},
+				},
+			},
+		}
+
+		o, err := cli.Audience().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		if !ok {
+			t.Fatal("audience ID must not be empty")
+		}
+
+		ai2 = s
+	}
+
+	{
+		i := &audience.SearchI{
+			Obj: []*audience.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"organization.venturemark.co/id": "1",
+						"user.venturemark.co/id":         "1",
+					},
+				},
+			},
+		}
+
+		o, err := cli.Audience().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 2 {
+			t.Fatal("there must be two audiences")
+		}
+
+		if o.Obj[0].Property.Name != "Investors" {
+			t.Fatal("name must be Investors")
+		}
+		if o.Obj[0].Property.Tmln[0] != "bar" {
+			t.Fatal("timeline must include bar")
+		}
+		if o.Obj[0].Property.Tmln[1] != "baz" {
+			t.Fatal("timeline must include baz")
+		}
+		if o.Obj[0].Property.User[0] != "marcoelli" {
+			t.Fatal("user must include marcoelli")
+		}
+		if o.Obj[0].Property.User[1] != "xh3b4sd" {
+			t.Fatal("user must include xh3b4sd")
+		}
+		if o.Obj[1].Property.Name != "Employees" {
+			t.Fatal("name must be Employees")
+		}
+		if o.Obj[1].Property.Tmln[0] != "foo" {
+			t.Fatal("timeline must include foo")
+		}
+		if o.Obj[1].Property.Tmln[1] != "bar" {
+			t.Fatal("timeline must include bar")
+		}
+		if o.Obj[1].Property.User[0] != "xh3b4sd" {
+			t.Fatal("user must include xh3b4sd")
+		}
+		if o.Obj[1].Property.User[1] != "marcoelli" {
+			t.Fatal("user must include marcoelli")
+		}
+	}
+
+	{
+		i := &audience.UpdateI{
+			Obj: &audience.UpdateI_Obj{
+				Metadata: map[string]string{
+					"audience.venturemark.co/id":     ai1,
+					"organization.venturemark.co/id": "1",
+					"user.venturemark.co/id":         "1",
+				},
+				Jsnpatch: []*audience.UpdateI_Obj_Jsnpatch{
+					{
+						Ope: "replace",
+						Pat: "/name",
+						Val: toStringP("replaced name"),
+					},
+					{
+						Ope: "remove",
+						Pat: "/user/0",
+					},
+					{
+						Ope: "add",
+						Pat: "/user/-",
+						Val: toStringP("added user"),
+					},
+				},
+			},
+		}
+
+		o, err := cli.Audience().Update(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		if !ok {
+			t.Fatal("status must not be empty")
+		}
+
+		if s != "updated" {
+			t.Fatal("status must be updated")
+		}
+	}
+
+	{
+		i := &audience.SearchI{
+			Obj: []*audience.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"organization.venturemark.co/id": "1",
+						"user.venturemark.co/id":         "1",
+					},
+				},
+			},
+		}
+
+		o, err := cli.Audience().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 2 {
+			t.Fatal("there must be two audiences")
+		}
+
+		if o.Obj[0].Property.Name != "Investors" {
+			t.Fatal("name must be Investors")
+		}
+		if o.Obj[0].Property.Tmln[0] != "bar" {
+			t.Fatal("timeline must include bar")
+		}
+		if o.Obj[0].Property.Tmln[1] != "baz" {
+			t.Fatal("timeline must include baz")
+		}
+		if o.Obj[0].Property.User[0] != "marcoelli" {
+			t.Fatal("user must include marcoelli")
+		}
+		if o.Obj[0].Property.User[1] != "xh3b4sd" {
+			t.Fatal("user must include xh3b4sd")
+		}
+		if o.Obj[1].Property.Name != "replaced name" {
+			t.Fatal("name must be replaced name")
+		}
+		if o.Obj[1].Property.Tmln[0] != "foo" {
+			t.Fatal("timeline must include foo")
+		}
+		if o.Obj[1].Property.Tmln[1] != "bar" {
+			t.Fatal("timeline must include bar")
+		}
+		if o.Obj[1].Property.User[0] != "marcoelli" {
+			t.Fatal("user must include marcoelli")
+		}
+		if o.Obj[1].Property.User[1] != "added user" {
+			t.Fatal("user must include added user")
+		}
+	}
+
+	{
+		i := &audience.DeleteI{
+			Obj: &audience.DeleteI_Obj{
+				Metadata: map[string]string{
+					"audience.venturemark.co/id":     ai1,
+					"organization.venturemark.co/id": "1",
+					"user.venturemark.co/id":         "1",
+				},
+			},
+		}
+
+		o, err := cli.Audience().Delete(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		if !ok {
+			t.Fatal("status must not be empty")
+		}
+
+		if s != "deleted" {
+			t.Fatal("status must be deleted")
+		}
+	}
+
+	{
+		i := &audience.DeleteI{
+			Obj: &audience.DeleteI_Obj{
+				Metadata: map[string]string{
+					"audience.venturemark.co/id":     ai2,
+					"organization.venturemark.co/id": "1",
+					"user.venturemark.co/id":         "1",
+				},
+			},
+		}
+
+		o, err := cli.Audience().Delete(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		if !ok {
+			t.Fatal("status must not be empty")
+		}
+
+		if s != "deleted" {
+			t.Fatal("status must be deleted")
+		}
+	}
+
+	{
+		i := &audience.SearchI{
+			Obj: []*audience.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"organization.venturemark.co/id": "1",
+						"user.venturemark.co/id":         "1",
+					},
+				},
+			},
+		}
+
+		o, err := cli.Audience().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 0 {
+			t.Fatal("there must be zero audiences")
+		}
+	}
+}
