@@ -11,6 +11,7 @@ import (
 	"github.com/venturemark/apigengo/pkg/pbf/update"
 
 	"github.com/venturemark/fmz/pkg/client"
+	"github.com/venturemark/fmz/pkg/to"
 )
 
 // Test_TexUpd_001 ensures that the lifecycle of text updates is covered from
@@ -206,7 +207,7 @@ func Test_TexUpd_001(t *testing.T) {
 					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
-					Stat: toStringP("archived"),
+					Stat: to.StringP("archived"),
 				},
 			},
 		}

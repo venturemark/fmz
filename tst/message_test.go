@@ -31,7 +31,6 @@ func Test_Message_Lifecycle(t *testing.T) {
 		i := &message.CreateI{
 			Obj: &message.CreateI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
@@ -61,7 +60,6 @@ func Test_Message_Lifecycle(t *testing.T) {
 		i := &message.CreateI{
 			Obj: &message.CreateI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
@@ -91,7 +89,6 @@ func Test_Message_Lifecycle(t *testing.T) {
 			Obj: []*message.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id":     "1",
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
@@ -122,7 +119,6 @@ func Test_Message_Lifecycle(t *testing.T) {
 		i := &message.DeleteI{
 			Obj: &message.DeleteI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"message.venturemark.co/id":      mi1,
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
@@ -151,7 +147,6 @@ func Test_Message_Lifecycle(t *testing.T) {
 		i := &message.DeleteI{
 			Obj: &message.DeleteI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"message.venturemark.co/id":      mi2,
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
@@ -181,7 +176,6 @@ func Test_Message_Lifecycle(t *testing.T) {
 			Obj: []*message.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id":     "1",
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",

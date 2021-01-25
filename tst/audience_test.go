@@ -9,6 +9,7 @@ import (
 	"github.com/venturemark/apigengo/pkg/pbf/audience"
 
 	"github.com/venturemark/fmz/pkg/client"
+	"github.com/venturemark/fmz/pkg/to"
 )
 
 // Test_Audience_001 ensures that the lifecycle of audiences is covered from
@@ -600,7 +601,7 @@ func Test_Audience_005(t *testing.T) {
 					{
 						Ope: "replace",
 						Pat: "/name",
-						Val: toStringP("replaced name"),
+						Val: to.StringP("replaced name"),
 					},
 					{
 						Ope: "remove",
@@ -609,7 +610,7 @@ func Test_Audience_005(t *testing.T) {
 					{
 						Ope: "add",
 						Pat: "/user/-",
-						Val: toStringP("added user"),
+						Val: to.StringP("added user"),
 					},
 				},
 			},
