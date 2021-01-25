@@ -35,7 +35,6 @@ func Test_TexUpd_001(t *testing.T) {
 		i := &timeline.CreateI{
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"organization.venturemark.co/id": "1",
 					"user.venturemark.co/id":         "1",
 				},
@@ -63,7 +62,6 @@ func Test_TexUpd_001(t *testing.T) {
 		i := &texupd.CreateI{
 			Obj: &texupd.CreateI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
 					"user.venturemark.co/id":         "1",
@@ -92,7 +90,6 @@ func Test_TexUpd_001(t *testing.T) {
 		i := &texupd.CreateI{
 			Obj: &texupd.CreateI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
 					"user.venturemark.co/id":         "1",
@@ -121,7 +118,6 @@ func Test_TexUpd_001(t *testing.T) {
 			Obj: []*update.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id":     "1",
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     tid,
 						"user.venturemark.co/id":         "1",
@@ -151,7 +147,6 @@ func Test_TexUpd_001(t *testing.T) {
 		i := &texupd.DeleteI{
 			Obj: &texupd.DeleteI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
 					"update.venturemark.co/id":       ui1,
@@ -179,7 +174,6 @@ func Test_TexUpd_001(t *testing.T) {
 		i := &texupd.DeleteI{
 			Obj: &texupd.DeleteI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
 					"update.venturemark.co/id":       ui2,
@@ -207,7 +201,6 @@ func Test_TexUpd_001(t *testing.T) {
 		i := &timeline.UpdateI{
 			Obj: &timeline.UpdateI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
 					"user.venturemark.co/id":         "1",
@@ -237,7 +230,6 @@ func Test_TexUpd_001(t *testing.T) {
 		i := &timeline.DeleteI{
 			Obj: &timeline.DeleteI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"timeline.venturemark.co/id":     tid,
 					"organization.venturemark.co/id": "1",
 					"user.venturemark.co/id":         "1",
@@ -265,7 +257,6 @@ func Test_TexUpd_001(t *testing.T) {
 			Obj: []*update.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id":     "1",
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     tid,
 						"user.venturemark.co/id":         "1",
@@ -306,7 +297,6 @@ func Test_TexUpd_002(t *testing.T) {
 		i := &texupd.CreateI{
 			Obj: &texupd.CreateI_Obj{
 				Metadata: map[string]string{
-					"audience.venturemark.co/id":     "1",
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"user.venturemark.co/id":         "1",
