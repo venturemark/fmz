@@ -10,6 +10,7 @@ import (
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 
 	"github.com/venturemark/fmz/pkg/client"
+	"github.com/venturemark/fmz/pkg/to"
 )
 
 // Test_Timeline_001 ensures that the lifecycle of timelines is covered from
@@ -121,7 +122,7 @@ func Test_Timeline_001(t *testing.T) {
 					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
-					Stat: toStringP("archived"),
+					Stat: to.StringP("archived"),
 				},
 			},
 		}
@@ -176,7 +177,7 @@ func Test_Timeline_001(t *testing.T) {
 					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
-					Stat: toStringP("archived"),
+					Stat: to.StringP("archived"),
 				},
 			},
 		}
@@ -316,7 +317,7 @@ func Test_Timeline_002(t *testing.T) {
 					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
-					Stat: toStringP("archived"),
+					Stat: to.StringP("archived"),
 				},
 			},
 		}
@@ -447,7 +448,7 @@ func Test_Timeline_003(t *testing.T) {
 					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
-					Stat: toStringP("archived"),
+					Stat: to.StringP("archived"),
 				},
 			},
 		}
@@ -596,7 +597,7 @@ func Test_Timeline_004(t *testing.T) {
 					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
-					Stat: toStringP("archived"),
+					Stat: to.StringP("archived"),
 				},
 			},
 		}
@@ -840,7 +841,7 @@ func Test_Timeline_005(t *testing.T) {
 					"user.venturemark.co/id":         ui1,
 				},
 				Property: &timeline.UpdateI_Obj_Property{
-					Stat: toStringP("archived"),
+					Stat: to.StringP("archived"),
 				},
 			},
 		}
@@ -895,7 +896,7 @@ func Test_Timeline_005(t *testing.T) {
 					"user.venturemark.co/id":         ui2,
 				},
 				Property: &timeline.UpdateI_Obj_Property{
-					Stat: toStringP("archived"),
+					Stat: to.StringP("archived"),
 				},
 			},
 		}
@@ -1201,7 +1202,7 @@ func Test_Timeline_006(t *testing.T) {
 					"user.venturemark.co/id":         ui1,
 				},
 				Property: &timeline.UpdateI_Obj_Property{
-					Stat: toStringP("archived"),
+					Stat: to.StringP("archived"),
 				},
 			},
 		}
@@ -1256,7 +1257,7 @@ func Test_Timeline_006(t *testing.T) {
 					"user.venturemark.co/id":         ui2,
 				},
 				Property: &timeline.UpdateI_Obj_Property{
-					Stat: toStringP("archived"),
+					Stat: to.StringP("archived"),
 				},
 			},
 		}
