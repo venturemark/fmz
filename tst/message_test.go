@@ -11,7 +11,9 @@ import (
 	"github.com/venturemark/fmz/pkg/client"
 )
 
-func Test_Message_Lifecycle(t *testing.T) {
+// Test_Message_001 ensures that the lifecycle of messages is covered from
+// creation to deletion.
+func Test_Message_001(t *testing.T) {
 	var err error
 
 	var cli *client.Client
@@ -26,6 +28,13 @@ func Test_Message_Lifecycle(t *testing.T) {
 		defer cli.Connection().Close()
 	}
 
+	var ui1 string
+	var ui2 string
+	{
+		ui1 = "1"
+		ui2 = "2"
+	}
+
 	var mi1 string
 	{
 		i := &message.CreateI{
@@ -34,7 +43,7 @@ func Test_Message_Lifecycle(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
-					"user.venturemark.co/id":         "1",
+					"user.venturemark.co/id":         ui1,
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 1",
@@ -63,7 +72,7 @@ func Test_Message_Lifecycle(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
-					"user.venturemark.co/id":         "1",
+					"user.venturemark.co/id":         ui2,
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 2",
@@ -92,7 +101,7 @@ func Test_Message_Lifecycle(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
-						"user.venturemark.co/id":         "1",
+						"user.venturemark.co/id":         ui1,
 					},
 				},
 			},
@@ -107,11 +116,80 @@ func Test_Message_Lifecycle(t *testing.T) {
 			t.Fatal("there must be two messages")
 		}
 
-		if o.Obj[0].Property.Text != "Lorem ipsum 2" {
-			t.Fatal("message text must be Lorem ipsum 1")
+		{
+			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
+				t.Fatal("message text must be Lorem ipsum 1")
+			}
+			s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != ui2 {
+				t.Fatal("id must match")
+			}
 		}
-		if o.Obj[1].Property.Text != "Lorem ipsum 1" {
-			t.Fatal("message text must be Lorem ipsum 2")
+
+		{
+			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
+				t.Fatal("message text must be Lorem ipsum 2")
+			}
+			s, ok := o.Obj[1].Metadata["user.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != ui1 {
+				t.Fatal("id must match")
+			}
+		}
+	}
+
+	{
+		i := &message.SearchI{
+			Obj: []*message.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"organization.venturemark.co/id": "1",
+						"timeline.venturemark.co/id":     "1",
+						"update.venturemark.co/id":       "1",
+						"user.venturemark.co/id":         ui2,
+					},
+				},
+			},
+		}
+
+		o, err := cli.Message().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 2 {
+			t.Fatal("there must be two messages")
+		}
+
+		{
+			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
+				t.Fatal("message text must be Lorem ipsum 1")
+			}
+			s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != ui2 {
+				t.Fatal("id must match")
+			}
+		}
+
+		{
+			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
+				t.Fatal("message text must be Lorem ipsum 2")
+			}
+			s, ok := o.Obj[1].Metadata["user.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != ui1 {
+				t.Fatal("id must match")
+			}
 		}
 	}
 
@@ -123,7 +201,7 @@ func Test_Message_Lifecycle(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
-					"user.venturemark.co/id":         "1",
+					"user.venturemark.co/id":         ui1,
 				},
 			},
 		}
@@ -151,7 +229,7 @@ func Test_Message_Lifecycle(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
-					"user.venturemark.co/id":         "1",
+					"user.venturemark.co/id":         ui2,
 				},
 			},
 		}
@@ -179,7 +257,31 @@ func Test_Message_Lifecycle(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
-						"user.venturemark.co/id":         "1",
+						"user.venturemark.co/id":         ui1,
+					},
+				},
+			},
+		}
+
+		o, err := cli.Message().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 0 {
+			t.Fatal("there must be zero messages")
+		}
+	}
+
+	{
+		i := &message.SearchI{
+			Obj: []*message.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"organization.venturemark.co/id": "1",
+						"timeline.venturemark.co/id":     "1",
+						"update.venturemark.co/id":       "1",
+						"user.venturemark.co/id":         ui2,
 					},
 				},
 			},
