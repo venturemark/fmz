@@ -600,16 +600,16 @@ func Test_Audience_005(t *testing.T) {
 				Jsnpatch: []*audience.UpdateI_Obj_Jsnpatch{
 					{
 						Ope: "replace",
-						Pat: "/name",
+						Pat: "/obj/property/name",
 						Val: to.StringP("replaced name"),
 					},
 					{
 						Ope: "remove",
-						Pat: "/user/0",
+						Pat: "/obj/property/user/0",
 					},
 					{
 						Ope: "add",
-						Pat: "/user/-",
+						Pat: "/obj/property/user/-",
 						Val: to.StringP("added user"),
 					},
 				},
