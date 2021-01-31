@@ -27,7 +27,12 @@ func Test_Timeline_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var ti1 string
@@ -105,11 +110,30 @@ func Test_Timeline_001(t *testing.T) {
 			t.Fatal("there must be two timelines")
 		}
 
-		if o.Obj[0].Property.Name != "Internal Project" {
-			t.Fatal("name must be Internal Project")
+		{
+			tid, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if tid != ti2 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[0].Property.Name != "Internal Project" {
+				t.Fatal("name must be Internal Project")
+			}
 		}
-		if o.Obj[1].Property.Name != "Marketing Campaign" {
-			t.Fatal("name must be Marketing Campaign")
+
+		{
+			tid, ok := o.Obj[1].Metadata["timeline.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if tid != ti1 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[1].Property.Name != "Marketing Campaign" {
+				t.Fatal("name must be Marketing Campaign")
+			}
 		}
 	}
 
@@ -259,7 +283,12 @@ func Test_Timeline_002(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var tid string
@@ -377,7 +406,12 @@ func Test_Timeline_003(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var tid string
@@ -541,7 +575,12 @@ func Test_Timeline_004(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var tid string
@@ -658,7 +697,12 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var ui1 string
@@ -1009,7 +1053,12 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var ui1 string

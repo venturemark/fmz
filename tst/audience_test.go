@@ -26,7 +26,12 @@ func Test_Audience_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var ai1 string
@@ -120,35 +125,54 @@ func Test_Audience_001(t *testing.T) {
 			t.Fatal("there must be two audiences")
 		}
 
-		if o.Obj[0].Property.Name != "Investors" {
-			t.Fatal("name must be Investors")
+		{
+			aid, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if aid != ai2 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[0].Property.Name != "Investors" {
+				t.Fatal("name must be Investors")
+			}
+			if o.Obj[0].Property.Tmln[0] != "bar" {
+				t.Fatal("timeline must include bar")
+			}
+			if o.Obj[0].Property.Tmln[1] != "baz" {
+				t.Fatal("timeline must include baz")
+			}
+			if o.Obj[0].Property.User[0] != "marcoelli" {
+				t.Fatal("user must include marcoelli")
+			}
+			if o.Obj[0].Property.User[1] != "xh3b4sd" {
+				t.Fatal("user must include xh3b4sd")
+			}
 		}
-		if o.Obj[0].Property.Tmln[0] != "bar" {
-			t.Fatal("timeline must include bar")
-		}
-		if o.Obj[0].Property.Tmln[1] != "baz" {
-			t.Fatal("timeline must include baz")
-		}
-		if o.Obj[0].Property.User[0] != "marcoelli" {
-			t.Fatal("user must include marcoelli")
-		}
-		if o.Obj[0].Property.User[1] != "xh3b4sd" {
-			t.Fatal("user must include xh3b4sd")
-		}
-		if o.Obj[1].Property.Name != "Employees" {
-			t.Fatal("name must be Employees")
-		}
-		if o.Obj[1].Property.Tmln[0] != "foo" {
-			t.Fatal("timeline must include foo")
-		}
-		if o.Obj[1].Property.Tmln[1] != "bar" {
-			t.Fatal("timeline must include bar")
-		}
-		if o.Obj[1].Property.User[0] != "xh3b4sd" {
-			t.Fatal("user must include xh3b4sd")
-		}
-		if o.Obj[1].Property.User[1] != "marcoelli" {
-			t.Fatal("user must include marcoelli")
+
+		{
+			aid, ok := o.Obj[1].Metadata["audience.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if aid != ai1 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[1].Property.Name != "Employees" {
+				t.Fatal("name must be Employees")
+			}
+			if o.Obj[1].Property.Tmln[0] != "foo" {
+				t.Fatal("timeline must include foo")
+			}
+			if o.Obj[1].Property.Tmln[1] != "bar" {
+				t.Fatal("timeline must include bar")
+			}
+			if o.Obj[1].Property.User[0] != "xh3b4sd" {
+				t.Fatal("user must include xh3b4sd")
+			}
+			if o.Obj[1].Property.User[1] != "marcoelli" {
+				t.Fatal("user must include marcoelli")
+			}
 		}
 	}
 
@@ -240,7 +264,12 @@ func Test_Audience_002(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var aid string
@@ -346,7 +375,12 @@ func Test_Audience_003(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	{
@@ -387,7 +421,12 @@ func Test_Audience_004(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var aid string
@@ -463,7 +502,12 @@ func Test_Audience_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var ai1 string
