@@ -6,6 +6,8 @@ import (
 	"github.com/venturemark/apigengo/pkg/pbf/texupd"
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 	"github.com/venturemark/apigengo/pkg/pbf/update"
+	"github.com/xh3b4sd/redigo"
+	"github.com/xh3b4sd/redigo/pkg/client"
 	"github.com/xh3b4sd/tracer"
 	"google.golang.org/grpc"
 )
@@ -15,7 +17,8 @@ type Config struct {
 }
 
 type Client struct {
-	connection *grpc.ClientConn
+	grpc   *grpc.ClientConn
+	redigo redigo.Interface
 
 	audience audience.APIClient
 	message  message.APIClient
@@ -34,6 +37,18 @@ func New(c Config) (*Client, error) {
 	var con *grpc.ClientConn
 	{
 		con, err = grpc.Dial(c.Address, grpc.WithInsecure())
+		if err != nil {
+			return nil, tracer.Mask(err)
+		}
+	}
+
+	var red redigo.Interface
+	{
+		c := client.Config{
+			Kind: client.KindSingle,
+		}
+
+		red, err = client.New(c)
 		if err != nil {
 			return nil, tracer.Mask(err)
 		}
@@ -65,7 +80,8 @@ func New(c Config) (*Client, error) {
 	}
 
 	cli := &Client{
-		connection: con,
+		grpc:   con,
+		redigo: red,
 
 		audience: aud,
 		message:  mes,
@@ -77,8 +93,12 @@ func New(c Config) (*Client, error) {
 	return cli, nil
 }
 
-func (c *Client) Connection() *grpc.ClientConn {
-	return c.connection
+func (c *Client) Grpc() *grpc.ClientConn {
+	return c.grpc
+}
+
+func (c *Client) Redigo() redigo.Interface {
+	return c.redigo
 }
 
 func (c *Client) Audience() audience.APIClient {

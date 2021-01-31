@@ -25,7 +25,12 @@ func Test_Message_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var ui1 string
@@ -117,19 +122,33 @@ func Test_Message_001(t *testing.T) {
 		}
 
 		{
-			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
-				t.Fatal("message text must be Lorem ipsum 1")
+			mid, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if mid != mi2 {
+				t.Fatal("id must match across actions")
 			}
 			s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
 			if s != ui2 {
-				t.Fatal("id must match")
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
+				t.Fatal("message text must be Lorem ipsum 1")
 			}
 		}
 
 		{
+			mid, ok := o.Obj[1].Metadata["message.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if mid != mi1 {
+				t.Fatal("id must match across actions")
+			}
 			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
 				t.Fatal("message text must be Lorem ipsum 2")
 			}
@@ -138,7 +157,7 @@ func Test_Message_001(t *testing.T) {
 				t.Fatal("id must not be empty")
 			}
 			if s != ui1 {
-				t.Fatal("id must match")
+				t.Fatal("id must match across actions")
 			}
 		}
 	}

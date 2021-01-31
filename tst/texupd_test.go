@@ -28,7 +28,12 @@ func Test_TexUpd_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	var tid string
@@ -136,11 +141,30 @@ func Test_TexUpd_001(t *testing.T) {
 			t.Fatal("there must be two updates")
 		}
 
-		if o.Obj[0].Property.Text != "Lorem ipsum 2" {
-			t.Fatal("texupd text must be Lorem ipsum 1")
+		{
+			uid, ok := o.Obj[0].Metadata["update.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if uid != ui2 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
+				t.Fatal("texupd text must be Lorem ipsum 2")
+			}
 		}
-		if o.Obj[1].Property.Text != "Lorem ipsum 1" {
-			t.Fatal("texupd text must be Lorem ipsum 2")
+
+		{
+			uid, ok := o.Obj[1].Metadata["update.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if uid != ui1 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
+				t.Fatal("texupd text must be Lorem ipsum 1")
+			}
 		}
 	}
 
@@ -291,7 +315,12 @@ func Test_TexUpd_002(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer cli.Connection().Close()
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
 	}
 
 	{
