@@ -142,11 +142,11 @@ func Test_TexUpd_001(t *testing.T) {
 		}
 
 		{
-			uid, ok := o.Obj[0].Metadata["update.venturemark.co/id"]
+			s, ok := o.Obj[0].Metadata["update.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if uid != ui2 {
+			if s != ui2 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
@@ -155,11 +155,11 @@ func Test_TexUpd_001(t *testing.T) {
 		}
 
 		{
-			uid, ok := o.Obj[1].Metadata["update.venturemark.co/id"]
+			s, ok := o.Obj[1].Metadata["update.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if uid != ui1 {
+			if s != ui1 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
@@ -255,8 +255,8 @@ func Test_TexUpd_001(t *testing.T) {
 		i := &timeline.DeleteI{
 			Obj: &timeline.DeleteI_Obj{
 				Metadata: map[string]string{
-					"timeline.venturemark.co/id":     tid,
 					"organization.venturemark.co/id": "1",
+					"timeline.venturemark.co/id":     tid,
 					"user.venturemark.co/id":         "1",
 				},
 			},
