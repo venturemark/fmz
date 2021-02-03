@@ -122,13 +122,16 @@ func Test_Message_001(t *testing.T) {
 		}
 
 		{
-			mid, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
+			s, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if mid != mi2 {
+			if s != mi2 {
 				t.Fatal("id must match across actions")
 			}
+		}
+
+		{
 			s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
@@ -142,16 +145,19 @@ func Test_Message_001(t *testing.T) {
 		}
 
 		{
-			mid, ok := o.Obj[1].Metadata["message.venturemark.co/id"]
+			s, ok := o.Obj[1].Metadata["message.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if mid != mi1 {
+			if s != mi1 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
 				t.Fatal("message text must be Lorem ipsum 2")
 			}
+		}
+
+		{
 			s, ok := o.Obj[1].Metadata["user.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")

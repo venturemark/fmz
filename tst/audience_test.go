@@ -126,11 +126,11 @@ func Test_Audience_001(t *testing.T) {
 		}
 
 		{
-			aid, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
+			s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if aid != ai2 {
+			if s != ai2 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Name != "Investors" {
@@ -151,11 +151,11 @@ func Test_Audience_001(t *testing.T) {
 		}
 
 		{
-			aid, ok := o.Obj[1].Metadata["audience.venturemark.co/id"]
+			s, ok := o.Obj[1].Metadata["audience.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if aid != ai1 {
+			if s != ai1 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[1].Property.Name != "Employees" {
