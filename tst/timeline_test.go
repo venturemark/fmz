@@ -1421,7 +1421,7 @@ func Test_Timeline_007(t *testing.T) {
 	{
 		c := budget.ConstantConfig{
 			Budget:   9,
-			Duration: 3 * time.Second,
+			Duration: 5 * time.Second,
 		}
 
 		b, err = budget.NewConstant(c)
