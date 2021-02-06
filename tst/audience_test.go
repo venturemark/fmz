@@ -63,7 +63,7 @@ func Test_Audience_001(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
 		if !ok {
-			t.Fatal("audience ID must not be empty")
+			t.Fatal("id must not be empty")
 		}
 
 		ai1 = s
@@ -98,7 +98,7 @@ func Test_Audience_001(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
 		if !ok {
-			t.Fatal("audience ID must not be empty")
+			t.Fatal("id must not be empty")
 		}
 
 		ai2 = s
@@ -301,7 +301,7 @@ func Test_Audience_002(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
 		if !ok {
-			t.Fatal("audience ID must not be empty")
+			t.Fatal("id must not be empty")
 		}
 
 		aid = s
@@ -539,7 +539,7 @@ func Test_Audience_005(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
 		if !ok {
-			t.Fatal("audience ID must not be empty")
+			t.Fatal("id must not be empty")
 		}
 
 		ai1 = s
@@ -574,7 +574,7 @@ func Test_Audience_005(t *testing.T) {
 
 		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
 		if !ok {
-			t.Fatal("audience ID must not be empty")
+			t.Fatal("id must not be empty")
 		}
 
 		ai2 = s
