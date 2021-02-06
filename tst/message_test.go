@@ -8,7 +8,7 @@ import (
 
 	"github.com/venturemark/apigengo/pkg/pbf/message"
 
-	"github.com/venturemark/fmz/pkg/client"
+	"github.com/venturemark/cfm/pkg/client"
 )
 
 // Test_Message_001 ensures that the lifecycle of messages is covered from

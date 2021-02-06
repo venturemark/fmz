@@ -10,8 +10,8 @@ import (
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 	"github.com/venturemark/apigengo/pkg/pbf/update"
 
-	"github.com/venturemark/fmz/pkg/client"
-	"github.com/venturemark/fmz/pkg/to"
+	"github.com/venturemark/cfm/pkg/client"
+	"github.com/venturemark/cfm/pkg/to"
 )
 
 // Test_TexUpd_001 ensures that the lifecycle of text updates is covered from

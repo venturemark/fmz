@@ -1,4 +1,4 @@
-module github.com/venturemark/fmz
+module github.com/venturemark/cfm
 
 go 1.15
 

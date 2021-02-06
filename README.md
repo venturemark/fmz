@@ -1,4 +1,4 @@
-# fmz
+# cfm
 
 Conformance tests for the venturemark api.
 
