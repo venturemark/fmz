@@ -16,8 +16,8 @@ import (
 	"github.com/xh3b4sd/budget"
 	"github.com/xh3b4sd/tracer"
 
-	"github.com/venturemark/fmz/pkg/client"
-	"github.com/venturemark/fmz/pkg/to"
+	"github.com/venturemark/cfm/pkg/client"
+	"github.com/venturemark/cfm/pkg/to"
 )
 
 // Test_Timeline_001 ensures that the lifecycle of timelines is covered from

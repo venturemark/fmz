@@ -8,8 +8,8 @@ import (
 
 	"github.com/venturemark/apigengo/pkg/pbf/audience"
 
-	"github.com/venturemark/fmz/pkg/client"
-	"github.com/venturemark/fmz/pkg/to"
+	"github.com/venturemark/cfm/pkg/client"
+	"github.com/venturemark/cfm/pkg/to"
 )
 
 // Test_Audience_001 ensures that the lifecycle of audiences is covered from
