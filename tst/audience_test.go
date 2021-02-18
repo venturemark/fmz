@@ -56,7 +56,7 @@ func Test_Audience_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -91,7 +91,7 @@ func Test_Audience_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -116,7 +116,7 @@ func Test_Audience_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Search(context.Background(), i)
+		o, err := cli.Audience().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -187,7 +187,7 @@ func Test_Audience_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cli.Audience().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -213,7 +213,7 @@ func Test_Audience_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cli.Audience().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -240,7 +240,7 @@ func Test_Audience_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Search(context.Background(), i)
+		o, err := cli.Audience().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -294,7 +294,7 @@ func Test_Audience_002(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -328,7 +328,7 @@ func Test_Audience_002(t *testing.T) {
 			},
 		}
 
-		_, err := cli.Audience().Create(context.Background(), i)
+		_, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err == nil {
 			t.Fatal("name must be unique")
 		}
@@ -345,7 +345,7 @@ func Test_Audience_002(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cli.Audience().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -400,7 +400,7 @@ func Test_Audience_003(t *testing.T) {
 			},
 		}
 
-		_, err := cli.Audience().Create(context.Background(), i)
+		_, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err == nil {
 			t.Fatal("timelines must not be empty")
 		}
@@ -448,7 +448,7 @@ func Test_Audience_004(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -472,7 +472,7 @@ func Test_Audience_004(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cli.Audience().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -532,7 +532,7 @@ func Test_Audience_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -567,7 +567,7 @@ func Test_Audience_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -592,7 +592,7 @@ func Test_Audience_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Search(context.Background(), i)
+		o, err := cli.Audience().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -660,7 +660,7 @@ func Test_Audience_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Update(context.Background(), i)
+		o, err := cli.Audience().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -687,7 +687,7 @@ func Test_Audience_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Search(context.Background(), i)
+		o, err := cli.Audience().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -739,7 +739,7 @@ func Test_Audience_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cli.Audience().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -765,7 +765,7 @@ func Test_Audience_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cli.Audience().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -792,7 +792,7 @@ func Test_Audience_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Search(context.Background(), i)
+		o, err := cli.Audience().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}

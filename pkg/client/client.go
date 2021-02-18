@@ -36,7 +36,7 @@ func New(c Config) (*Client, error) {
 
 	var con *grpc.ClientConn
 	{
-		con, err = grpc.Dial(c.Address, grpc.WithInsecure())
+		con, err = grpc.Dial(c.Address, Credential())
 		if err != nil {
 			return nil, tracer.Mask(err)
 		}

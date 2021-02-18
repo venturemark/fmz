@@ -56,7 +56,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -83,7 +83,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -108,7 +108,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cli.Timeline().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -158,7 +158,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -184,7 +184,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -213,7 +213,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -239,7 +239,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -266,7 +266,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cli.Timeline().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -312,7 +312,7 @@ func Test_Timeline_002(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -338,7 +338,7 @@ func Test_Timeline_002(t *testing.T) {
 			},
 		}
 
-		_, err := cli.Timeline().Create(context.Background(), i)
+		_, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err == nil {
 			t.Fatal("name must be unique")
 		}
@@ -358,7 +358,7 @@ func Test_Timeline_002(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -384,7 +384,7 @@ func Test_Timeline_002(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -435,7 +435,7 @@ func Test_Timeline_003(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -460,7 +460,7 @@ func Test_Timeline_003(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cli.Timeline().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -494,7 +494,7 @@ func Test_Timeline_003(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -521,7 +521,7 @@ func Test_Timeline_003(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cli.Timeline().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -552,7 +552,7 @@ func Test_Timeline_003(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -604,7 +604,7 @@ func Test_Timeline_004(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -628,7 +628,7 @@ func Test_Timeline_004(t *testing.T) {
 			},
 		}
 
-		_, err := cli.Timeline().Delete(context.Background(), i)
+		_, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err == nil {
 			t.Fatal("state must be archived for deletion")
 		}
@@ -648,7 +648,7 @@ func Test_Timeline_004(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -674,7 +674,7 @@ func Test_Timeline_004(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -733,7 +733,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -760,7 +760,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -793,7 +793,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -826,7 +826,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -851,7 +851,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cli.Timeline().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -873,7 +873,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cli.Timeline().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -897,7 +897,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -923,7 +923,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -952,7 +952,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -978,7 +978,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1004,7 +1004,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cli.Audience().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1030,7 +1030,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cli.Audience().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1089,7 +1089,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1116,7 +1116,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1149,7 +1149,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1182,7 +1182,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cli.Audience().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1209,7 +1209,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cli.Timeline().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1236,7 +1236,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cli.Timeline().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1263,7 +1263,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1289,7 +1289,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1318,7 +1318,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1344,7 +1344,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1370,7 +1370,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cli.Audience().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1396,7 +1396,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cli.Audience().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1461,7 +1461,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1488,7 +1488,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cli.Timeline().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1516,7 +1516,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.TexUpd().Create(context.Background(), i)
+		o, err := cli.TexUpd().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1544,7 +1544,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.TexUpd().Create(context.Background(), i)
+		o, err := cli.TexUpd().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1572,7 +1572,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Create(context.Background(), i)
+		o, err := cli.Message().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1599,7 +1599,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Create(context.Background(), i)
+		o, err := cli.Message().Create(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1626,7 +1626,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1652,7 +1652,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1688,7 +1688,7 @@ func Test_Timeline_007(t *testing.T) {
 				},
 			}
 
-			o, err := cli.Message().Search(context.Background(), i)
+			o, err := cli.Message().Search(context.Background(), i, client.Metadata())
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -1720,7 +1720,7 @@ func Test_Timeline_007(t *testing.T) {
 				},
 			}
 
-			o, err := cli.Update().Search(context.Background(), i)
+			o, err := cli.Update().Search(context.Background(), i, client.Metadata())
 			if err != nil {
 				return tracer.Mask(err)
 			}
@@ -1752,7 +1752,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Search(context.Background(), i)
+		o, err := cli.Message().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1782,7 +1782,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Update().Search(context.Background(), i)
+		o, err := cli.Update().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1811,7 +1811,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cli.Timeline().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1835,7 +1835,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cli.Timeline().Update(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1861,7 +1861,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cli.Timeline().Delete(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1891,7 +1891,7 @@ func Test_Timeline_007(t *testing.T) {
 				},
 			}
 
-			o, err := cli.Message().Search(context.Background(), i)
+			o, err := cli.Message().Search(context.Background(), i, client.Metadata())
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -1923,7 +1923,7 @@ func Test_Timeline_007(t *testing.T) {
 				},
 			}
 
-			o, err := cli.Update().Search(context.Background(), i)
+			o, err := cli.Update().Search(context.Background(), i, client.Metadata())
 			if err != nil {
 				return tracer.Mask(err)
 			}
@@ -1953,7 +1953,7 @@ func Test_Timeline_007(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cli.Timeline().Search(context.Background(), i, client.Metadata())
 		if err != nil {
 			t.Fatal(err)
 		}
