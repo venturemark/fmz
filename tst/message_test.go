@@ -56,7 +56,7 @@ func Test_Message_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Create(context.Background(), i, client.Metadata())
+		o, err := cli.Message().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -85,7 +85,7 @@ func Test_Message_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Create(context.Background(), i, client.Metadata())
+		o, err := cli.Message().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -112,7 +112,7 @@ func Test_Message_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Search(context.Background(), i, client.Metadata())
+		o, err := cli.Message().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -182,7 +182,7 @@ func Test_Message_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Search(context.Background(), i, client.Metadata())
+		o, err := cli.Message().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -231,7 +231,7 @@ func Test_Message_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Delete(context.Background(), i, client.Metadata())
+		o, err := cli.Message().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -259,7 +259,7 @@ func Test_Message_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Delete(context.Background(), i, client.Metadata())
+		o, err := cli.Message().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -288,7 +288,7 @@ func Test_Message_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Search(context.Background(), i, client.Metadata())
+		o, err := cli.Message().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -312,7 +312,7 @@ func Test_Message_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Search(context.Background(), i, client.Metadata())
+		o, err := cli.Message().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}

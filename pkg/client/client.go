@@ -10,6 +10,8 @@ import (
 	"github.com/xh3b4sd/redigo/pkg/client"
 	"github.com/xh3b4sd/tracer"
 	"google.golang.org/grpc"
+
+	"github.com/venturemark/cfm/pkg/oauth"
 )
 
 type Config struct {
@@ -36,7 +38,11 @@ func New(c Config) (*Client, error) {
 
 	var con *grpc.ClientConn
 	{
-		con, err = grpc.Dial(c.Address, Credential())
+		con, err = grpc.Dial(
+			c.Address,
+			grpc.WithInsecure(),
+			grpc.WithPerRPCCredentials(oauth.NewInsecure()),
+		)
 		if err != nil {
 			return nil, tracer.Mask(err)
 		}
