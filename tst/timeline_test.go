@@ -17,6 +17,7 @@ import (
 	"github.com/xh3b4sd/tracer"
 
 	"github.com/venturemark/cfm/pkg/client"
+	"github.com/venturemark/cfm/pkg/oauth"
 	"github.com/venturemark/cfm/pkg/to"
 )
 
@@ -48,7 +49,6 @@ func Test_Timeline_001(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Marketing Campaign",
@@ -75,7 +75,6 @@ func Test_Timeline_001(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Internal Project",
@@ -102,7 +101,6 @@ func Test_Timeline_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -150,7 +148,6 @@ func Test_Timeline_001(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -179,7 +176,6 @@ func Test_Timeline_001(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -205,7 +201,6 @@ func Test_Timeline_001(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -234,7 +229,6 @@ func Test_Timeline_001(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -260,7 +254,6 @@ func Test_Timeline_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -304,7 +297,6 @@ func Test_Timeline_002(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Marketing Campaign",
@@ -330,7 +322,6 @@ func Test_Timeline_002(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Marketing Campaign",
@@ -350,7 +341,6 @@ func Test_Timeline_002(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -379,7 +369,6 @@ func Test_Timeline_002(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -427,7 +416,6 @@ func Test_Timeline_003(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Marketing Campaign",
@@ -454,7 +442,6 @@ func Test_Timeline_003(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -486,7 +473,6 @@ func Test_Timeline_003(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -515,7 +501,6 @@ func Test_Timeline_003(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -547,7 +532,6 @@ func Test_Timeline_003(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -596,7 +580,6 @@ func Test_Timeline_004(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Marketing Campaign",
@@ -623,7 +606,6 @@ func Test_Timeline_004(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -640,7 +622,6 @@ func Test_Timeline_004(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -669,7 +650,6 @@ func Test_Timeline_004(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -695,28 +675,49 @@ func Test_Timeline_004(t *testing.T) {
 func Test_Timeline_005(t *testing.T) {
 	var err error
 
-	var cli *client.Client
+	var cr1 *oauth.Insecure
+	var cr2 *oauth.Insecure
 	{
-		c := client.Config{}
-
-		cli, err = client.New(c)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		err = cli.Redigo().Purge()
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		defer cli.Grpc().Close()
+		cr1 = oauth.NewInsecureOne()
+		cr2 = oauth.NewInsecureTwo()
 	}
 
-	var ui1 string
-	var ui2 string
+	var cl1 *client.Client
 	{
-		ui1 = "1"
-		ui2 = "2"
+		c := client.Config{
+			Credentials: cr1,
+		}
+
+		cl1, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cl1.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cl1.Grpc().Close()
+	}
+
+	var cl2 *client.Client
+	{
+		c := client.Config{
+			Credentials: cr2,
+		}
+
+		cl2, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cl2.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cl2.Grpc().Close()
 	}
 
 	var ti1 string
@@ -725,7 +726,6 @@ func Test_Timeline_005(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui1,
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Marketing Campaign",
@@ -733,7 +733,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cl1.Timeline().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -752,7 +752,6 @@ func Test_Timeline_005(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui2,
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Internal Project",
@@ -760,7 +759,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cl2.Timeline().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -779,7 +778,6 @@ func Test_Timeline_005(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui1,
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -787,13 +785,13 @@ func Test_Timeline_005(t *testing.T) {
 						ti1,
 					},
 					User: []string{
-						ui1,
+						cr1.User(),
 					},
 				},
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cl1.Audience().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -812,7 +810,6 @@ func Test_Timeline_005(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui2,
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Investors",
@@ -820,13 +817,13 @@ func Test_Timeline_005(t *testing.T) {
 						ti2,
 					},
 					User: []string{
-						ui2,
+						cr2.User(),
 					},
 				},
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cl2.Audience().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -845,13 +842,12 @@ func Test_Timeline_005(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         ui1,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cl1.Timeline().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -867,13 +863,12 @@ func Test_Timeline_005(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         ui2,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cl2.Timeline().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -889,7 +884,6 @@ func Test_Timeline_005(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         ui1,
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -897,7 +891,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cl1.Timeline().Update(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -918,12 +912,11 @@ func Test_Timeline_005(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         ui1,
 				},
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cl1.Timeline().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -944,7 +937,6 @@ func Test_Timeline_005(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         ui2,
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -952,7 +944,7 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cl2.Timeline().Update(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -973,12 +965,11 @@ func Test_Timeline_005(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         ui2,
 				},
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cl2.Timeline().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -999,12 +990,11 @@ func Test_Timeline_005(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     ai1,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui1,
 				},
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cl1.Audience().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1025,12 +1015,11 @@ func Test_Timeline_005(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     ai2,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui2,
 				},
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cl2.Audience().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1051,28 +1040,49 @@ func Test_Timeline_005(t *testing.T) {
 func Test_Timeline_006(t *testing.T) {
 	var err error
 
-	var cli *client.Client
+	var cr1 *oauth.Insecure
+	var cr2 *oauth.Insecure
 	{
-		c := client.Config{}
-
-		cli, err = client.New(c)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		err = cli.Redigo().Purge()
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		defer cli.Grpc().Close()
+		cr1 = oauth.NewInsecureOne()
+		cr2 = oauth.NewInsecureTwo()
 	}
 
-	var ui1 string
-	var ui2 string
+	var cl1 *client.Client
 	{
-		ui1 = "1"
-		ui2 = "2"
+		c := client.Config{
+			Credentials: cr1,
+		}
+
+		cl1, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cl1.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cl1.Grpc().Close()
+	}
+
+	var cl2 *client.Client
+	{
+		c := client.Config{
+			Credentials: cr2,
+		}
+
+		cl2, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cl2.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cl2.Grpc().Close()
 	}
 
 	var ti1 string
@@ -1081,7 +1091,6 @@ func Test_Timeline_006(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui1,
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Marketing Campaign",
@@ -1089,7 +1098,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cl1.Timeline().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1108,7 +1117,6 @@ func Test_Timeline_006(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui2,
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Internal Project",
@@ -1116,7 +1124,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cl2.Timeline().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1135,7 +1143,6 @@ func Test_Timeline_006(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui1,
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -1143,13 +1150,13 @@ func Test_Timeline_006(t *testing.T) {
 						ti1,
 					},
 					User: []string{
-						ui1,
+						cr1.User(),
 					},
 				},
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cl1.Audience().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1168,7 +1175,6 @@ func Test_Timeline_006(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui2,
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Investors",
@@ -1176,13 +1182,13 @@ func Test_Timeline_006(t *testing.T) {
 						ti2,
 					},
 					User: []string{
-						ui2,
+						cr2.User(),
 					},
 				},
 			},
 		}
 
-		o, err := cli.Audience().Create(context.Background(), i)
+		o, err := cl2.Audience().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1203,13 +1209,12 @@ func Test_Timeline_006(t *testing.T) {
 						"organization.venturemark.co/id":   "1",
 						"permission.venturemark.co/id":     "audience",
 						"permission.venturemark.co/status": "enabled",
-						"user.venturemark.co/id":           ui1,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cl1.Timeline().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1230,13 +1235,12 @@ func Test_Timeline_006(t *testing.T) {
 						"organization.venturemark.co/id":   "1",
 						"permission.venturemark.co/id":     "audience",
 						"permission.venturemark.co/status": "enabled",
-						"user.venturemark.co/id":           ui2,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cl2.Timeline().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1255,7 +1259,6 @@ func Test_Timeline_006(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         ui1,
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -1263,7 +1266,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cl1.Timeline().Update(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1284,12 +1287,11 @@ func Test_Timeline_006(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         ui1,
 				},
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cl1.Timeline().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1310,7 +1312,6 @@ func Test_Timeline_006(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         ui2,
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -1318,7 +1319,7 @@ func Test_Timeline_006(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cl2.Timeline().Update(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1339,12 +1340,11 @@ func Test_Timeline_006(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         ui2,
 				},
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cl2.Timeline().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1365,12 +1365,11 @@ func Test_Timeline_006(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     ai1,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui1,
 				},
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cl1.Audience().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1391,12 +1390,11 @@ func Test_Timeline_006(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     ai2,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         ui2,
 				},
 			},
 		}
 
-		o, err := cli.Audience().Delete(context.Background(), i)
+		o, err := cl2.Audience().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -1453,7 +1451,6 @@ func Test_Timeline_007(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Marketing Campaign",
@@ -1480,7 +1477,6 @@ func Test_Timeline_007(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Internal Project",
@@ -1508,7 +1504,6 @@ func Test_Timeline_007(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &texupd.CreateI_Obj_Property{
 					Text: "Lorem ipsum 1",
@@ -1536,7 +1531,6 @@ func Test_Timeline_007(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &texupd.CreateI_Obj_Property{
 					Text: "Lorem ipsum 2",
@@ -1564,7 +1558,6 @@ func Test_Timeline_007(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
 					"update.venturemark.co/id":       ui1,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 1",
@@ -1591,7 +1584,6 @@ func Test_Timeline_007(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
 					"update.venturemark.co/id":       ui2,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 2",
@@ -1618,7 +1610,6 @@ func Test_Timeline_007(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -1647,7 +1638,6 @@ func Test_Timeline_007(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -1682,7 +1672,6 @@ func Test_Timeline_007(t *testing.T) {
 							"organization.venturemark.co/id": "1",
 							"timeline.venturemark.co/id":     ti1,
 							"update.venturemark.co/id":       ui1,
-							"user.venturemark.co/id":         "1",
 						},
 					},
 				},
@@ -1714,7 +1703,6 @@ func Test_Timeline_007(t *testing.T) {
 						Metadata: map[string]string{
 							"organization.venturemark.co/id": "1",
 							"timeline.venturemark.co/id":     ti1,
-							"user.venturemark.co/id":         "1",
 						},
 					},
 				},
@@ -1746,7 +1734,6 @@ func Test_Timeline_007(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     ti2,
 						"update.venturemark.co/id":       ui2,
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -1776,7 +1763,6 @@ func Test_Timeline_007(t *testing.T) {
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     ti2,
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -1805,7 +1791,6 @@ func Test_Timeline_007(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -1827,7 +1812,6 @@ func Test_Timeline_007(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -1856,7 +1840,6 @@ func Test_Timeline_007(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -1885,7 +1868,6 @@ func Test_Timeline_007(t *testing.T) {
 							"organization.venturemark.co/id": "1",
 							"timeline.venturemark.co/id":     ti2,
 							"update.venturemark.co/id":       ui2,
-							"user.venturemark.co/id":         "1",
 						},
 					},
 				},
@@ -1917,7 +1899,6 @@ func Test_Timeline_007(t *testing.T) {
 						Metadata: map[string]string{
 							"organization.venturemark.co/id": "1",
 							"timeline.venturemark.co/id":     ti2,
-							"user.venturemark.co/id":         "1",
 						},
 					},
 				},
@@ -1947,7 +1928,6 @@ func Test_Timeline_007(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
