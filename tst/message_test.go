@@ -9,6 +9,7 @@ import (
 	"github.com/venturemark/apigengo/pkg/pbf/message"
 
 	"github.com/venturemark/cfm/pkg/client"
+	"github.com/venturemark/cfm/pkg/oauth"
 )
 
 // Test_Message_001 ensures that the lifecycle of messages is covered from
@@ -16,28 +17,49 @@ import (
 func Test_Message_001(t *testing.T) {
 	var err error
 
-	var cli *client.Client
+	var cr1 *oauth.Insecure
+	var cr2 *oauth.Insecure
 	{
-		c := client.Config{}
-
-		cli, err = client.New(c)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		err = cli.Redigo().Purge()
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		defer cli.Grpc().Close()
+		cr1 = oauth.NewInsecureOne()
+		cr2 = oauth.NewInsecureTwo()
 	}
 
-	var ui1 string
-	var ui2 string
+	var cl1 *client.Client
 	{
-		ui1 = "1"
-		ui2 = "2"
+		c := client.Config{
+			Credentials: cr1,
+		}
+
+		cl1, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cl1.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cl1.Grpc().Close()
+	}
+
+	var cl2 *client.Client
+	{
+		c := client.Config{
+			Credentials: cr2,
+		}
+
+		cl2, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cl2.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cl2.Grpc().Close()
 	}
 
 	var mi1 string
@@ -48,7 +70,6 @@ func Test_Message_001(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
-					"user.venturemark.co/id":         ui1,
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 1",
@@ -56,7 +77,7 @@ func Test_Message_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Create(context.Background(), i)
+		o, err := cl1.Message().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -77,7 +98,6 @@ func Test_Message_001(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
-					"user.venturemark.co/id":         ui2,
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 2",
@@ -85,7 +105,7 @@ func Test_Message_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Message().Create(context.Background(), i)
+		o, err := cl2.Message().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -106,13 +126,12 @@ func Test_Message_001(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
-						"user.venturemark.co/id":         ui1,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Message().Search(context.Background(), i)
+		o, err := cl1.Message().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -136,7 +155,7 @@ func Test_Message_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ui2 {
+			if s != cr2.User() {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
@@ -162,7 +181,7 @@ func Test_Message_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ui1 {
+			if s != cr1.User() {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -176,13 +195,12 @@ func Test_Message_001(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
-						"user.venturemark.co/id":         ui2,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Message().Search(context.Background(), i)
+		o, err := cl2.Message().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -199,7 +217,7 @@ func Test_Message_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ui2 {
+			if s != cr2.User() {
 				t.Fatal("id must match")
 			}
 		}
@@ -212,7 +230,7 @@ func Test_Message_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ui1 {
+			if s != cr1.User() {
 				t.Fatal("id must match")
 			}
 		}
@@ -226,12 +244,11 @@ func Test_Message_001(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
-					"user.venturemark.co/id":         ui1,
 				},
 			},
 		}
 
-		o, err := cli.Message().Delete(context.Background(), i)
+		o, err := cl1.Message().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -254,12 +271,11 @@ func Test_Message_001(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
-					"user.venturemark.co/id":         ui2,
 				},
 			},
 		}
 
-		o, err := cli.Message().Delete(context.Background(), i)
+		o, err := cl2.Message().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -282,13 +298,12 @@ func Test_Message_001(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
-						"user.venturemark.co/id":         ui1,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Message().Search(context.Background(), i)
+		o, err := cl1.Message().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -306,13 +321,12 @@ func Test_Message_001(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
-						"user.venturemark.co/id":         ui2,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Message().Search(context.Background(), i)
+		o, err := cl2.Message().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}

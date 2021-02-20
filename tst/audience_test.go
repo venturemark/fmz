@@ -40,7 +40,6 @@ func Test_Audience_001(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -75,7 +74,6 @@ func Test_Audience_001(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Investors",
@@ -110,7 +108,6 @@ func Test_Audience_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -182,7 +179,6 @@ func Test_Audience_001(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     ai1,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -208,7 +204,6 @@ func Test_Audience_001(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     ai2,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -234,7 +229,6 @@ func Test_Audience_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -278,7 +272,6 @@ func Test_Audience_002(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -312,7 +305,6 @@ func Test_Audience_002(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -340,7 +332,6 @@ func Test_Audience_002(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     aid,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -388,7 +379,6 @@ func Test_Audience_003(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -435,7 +425,6 @@ func Test_Audience_004(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -467,7 +456,6 @@ func Test_Audience_004(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     aid,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -516,7 +504,6 @@ func Test_Audience_005(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Employees",
@@ -551,7 +538,6 @@ func Test_Audience_005(t *testing.T) {
 			Obj: &audience.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &audience.CreateI_Obj_Property{
 					Name: "Investors",
@@ -586,7 +572,6 @@ func Test_Audience_005(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -639,7 +624,6 @@ func Test_Audience_005(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     ai1,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Jsnpatch: []*audience.UpdateI_Obj_Jsnpatch{
 					{
@@ -681,7 +665,6 @@ func Test_Audience_005(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -734,7 +717,6 @@ func Test_Audience_005(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     ai1,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -760,7 +742,6 @@ func Test_Audience_005(t *testing.T) {
 				Metadata: map[string]string{
 					"audience.venturemark.co/id":     ai2,
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -786,7 +767,6 @@ func Test_Audience_005(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},

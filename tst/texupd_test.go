@@ -47,7 +47,6 @@ func Test_TexUpd_001(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Marketing Campaign",
@@ -75,7 +74,6 @@ func Test_TexUpd_001(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &texupd.CreateI_Obj_Property{
 					Text: "Lorem ipsum 1",
@@ -103,7 +101,6 @@ func Test_TexUpd_001(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &texupd.CreateI_Obj_Property{
 					Text: "Lorem ipsum 2",
@@ -131,7 +128,6 @@ func Test_TexUpd_001(t *testing.T) {
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     tid,
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -180,7 +176,6 @@ func Test_TexUpd_001(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
 					"update.venturemark.co/id":       ui1,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -207,7 +202,6 @@ func Test_TexUpd_001(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
 					"update.venturemark.co/id":       ui2,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -233,7 +227,6 @@ func Test_TexUpd_001(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -262,7 +255,6 @@ func Test_TexUpd_001(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     tid,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -289,7 +281,6 @@ func Test_TexUpd_001(t *testing.T) {
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     tid,
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -334,7 +325,6 @@ func Test_TexUpd_002(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &texupd.CreateI_Obj_Property{
 					Text: "Lorem ipsum 1",
@@ -390,7 +380,6 @@ func Test_TexUpd_003(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Marketing Campaign",
@@ -417,7 +406,6 @@ func Test_TexUpd_003(t *testing.T) {
 			Obj: &timeline.CreateI_Obj{
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.CreateI_Obj_Property{
 					Name: "Internal Project",
@@ -445,7 +433,6 @@ func Test_TexUpd_003(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &texupd.CreateI_Obj_Property{
 					Text: "Lorem ipsum 1",
@@ -473,7 +460,6 @@ func Test_TexUpd_003(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &texupd.CreateI_Obj_Property{
 					Text: "Lorem ipsum 2",
@@ -501,7 +487,6 @@ func Test_TexUpd_003(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
 					"update.venturemark.co/id":       ui1,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 1",
@@ -528,7 +513,6 @@ func Test_TexUpd_003(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
 					"update.venturemark.co/id":       ui2,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 2",
@@ -556,7 +540,6 @@ func Test_TexUpd_003(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
 					"update.venturemark.co/id":       ui1,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -591,7 +574,6 @@ func Test_TexUpd_003(t *testing.T) {
 							"organization.venturemark.co/id": "1",
 							"timeline.venturemark.co/id":     ti1,
 							"update.venturemark.co/id":       ui1,
-							"user.venturemark.co/id":         "1",
 						},
 					},
 				},
@@ -623,7 +605,6 @@ func Test_TexUpd_003(t *testing.T) {
 						Metadata: map[string]string{
 							"organization.venturemark.co/id": "1",
 							"timeline.venturemark.co/id":     ti1,
-							"user.venturemark.co/id":         "1",
 						},
 					},
 				},
@@ -655,7 +636,6 @@ func Test_TexUpd_003(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     ti2,
 						"update.venturemark.co/id":       ui2,
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -685,7 +665,6 @@ func Test_TexUpd_003(t *testing.T) {
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     ti2,
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -714,7 +693,6 @@ func Test_TexUpd_003(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
@@ -736,7 +714,6 @@ func Test_TexUpd_003(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -765,7 +742,6 @@ func Test_TexUpd_003(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti1,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -791,7 +767,6 @@ func Test_TexUpd_003(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         "1",
 				},
 				Property: &timeline.UpdateI_Obj_Property{
 					Stat: to.StringP("archived"),
@@ -820,7 +795,6 @@ func Test_TexUpd_003(t *testing.T) {
 				Metadata: map[string]string{
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     ti2,
-					"user.venturemark.co/id":         "1",
 				},
 			},
 		}
@@ -849,7 +823,6 @@ func Test_TexUpd_003(t *testing.T) {
 							"organization.venturemark.co/id": "1",
 							"timeline.venturemark.co/id":     ti2,
 							"update.venturemark.co/id":       ui2,
-							"user.venturemark.co/id":         "1",
 						},
 					},
 				},
@@ -881,7 +854,6 @@ func Test_TexUpd_003(t *testing.T) {
 						Metadata: map[string]string{
 							"organization.venturemark.co/id": "1",
 							"timeline.venturemark.co/id":     ti2,
-							"user.venturemark.co/id":         "1",
 						},
 					},
 				},
@@ -911,7 +883,6 @@ func Test_TexUpd_003(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"organization.venturemark.co/id": "1",
-						"user.venturemark.co/id":         "1",
 					},
 				},
 			},
