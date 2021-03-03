@@ -131,10 +131,10 @@ func Test_Role_001(t *testing.T) {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Kin != "owner" {
-				t.Fatal("name must be owner")
+				t.Fatal("kin must be owner")
 			}
 			if o.Obj[0].Property.Res != "venture" {
-				t.Fatal("name must be venture")
+				t.Fatal("res must be venture")
 			}
 		}
 	}
@@ -168,10 +168,10 @@ func Test_Role_001(t *testing.T) {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Kin != "member" {
-				t.Fatal("name must be member")
+				t.Fatal("kin must be member")
 			}
 			if o.Obj[0].Property.Res != "venture" {
-				t.Fatal("name must be venture")
+				t.Fatal("res must be venture")
 			}
 		}
 	}
@@ -243,10 +243,10 @@ func Test_Role_001(t *testing.T) {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Kin != "owner" {
-				t.Fatal("name must be owner")
+				t.Fatal("kin must be owner")
 			}
 			if o.Obj[0].Property.Res != "venture" {
-				t.Fatal("name must be venture")
+				t.Fatal("res must be venture")
 			}
 		}
 	}
@@ -280,10 +280,10 @@ func Test_Role_001(t *testing.T) {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Kin != "owner" {
-				t.Fatal("name must be owner")
+				t.Fatal("kin must be owner")
 			}
 			if o.Obj[0].Property.Res != "venture" {
-				t.Fatal("name must be venture")
+				t.Fatal("res must be venture")
 			}
 		}
 	}
