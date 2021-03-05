@@ -40,8 +40,8 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"organization.venturemark.co/id": "1",
-						"subject.venturemark.co/id":      "1",
+						"venture.venturemark.co/id": "1",
+						"subject.venturemark.co/id": "1",
 					},
 					Property: &role.CreateI_Obj_Property{
 						Kin: "owner",
@@ -74,8 +74,8 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"organization.venturemark.co/id": "1",
-						"subject.venturemark.co/id":      "2",
+						"venture.venturemark.co/id": "1",
+						"subject.venturemark.co/id": "2",
 					},
 					Property: &role.CreateI_Obj_Property{
 						Kin: "member",
@@ -107,7 +107,7 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/id": "1",
+						"venture.venturemark.co/id": "1",
 					},
 				},
 			},
@@ -118,45 +118,8 @@ func Test_Role_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		if len(o.Obj) != 1 {
-			t.Fatal("there must be one role")
-		}
-
-		{
-			s, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
-			if !ok {
-				t.Fatal("id must not be empty")
-			}
-			if s != ri1 {
-				t.Fatal("id must match across actions")
-			}
-			if o.Obj[0].Property.Kin != "owner" {
-				t.Fatal("kin must be owner")
-			}
-			if o.Obj[0].Property.Res != "venture" {
-				t.Fatal("res must be venture")
-			}
-		}
-	}
-
-	{
-		i := &role.SearchI{
-			Obj: []*role.SearchI_Obj{
-				{
-					Metadata: map[string]string{
-						"subject.venturemark.co/id": "2",
-					},
-				},
-			},
-		}
-
-		o, err := cli.Role().Search(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		if len(o.Obj) != 1 {
-			t.Fatal("there must be one role")
+		if len(o.Obj) != 2 {
+			t.Fatal("there must be two roles")
 		}
 
 		{
@@ -174,6 +137,22 @@ func Test_Role_001(t *testing.T) {
 				t.Fatal("res must be venture")
 			}
 		}
+
+		{
+			s, ok := o.Obj[1].Metadata["role.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != ri1 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[1].Property.Kin != "owner" {
+				t.Fatal("kin must be owner")
+			}
+			if o.Obj[1].Property.Res != "venture" {
+				t.Fatal("res must be venture")
+			}
+		}
 	}
 
 	{
@@ -182,7 +161,7 @@ func Test_Role_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"role.venturemark.co/id":    ri2,
-						"subject.venturemark.co/id": "2",
+						"venture.venturemark.co/id": "1",
 					},
 					Jsnpatch: []*role.UpdateI_Obj_Jsnpatch{
 						{
@@ -219,7 +198,7 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/id": "1",
+						"venture.venturemark.co/id": "1",
 					},
 				},
 			},
@@ -230,45 +209,8 @@ func Test_Role_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		if len(o.Obj) != 1 {
-			t.Fatal("there must be one role")
-		}
-
-		{
-			s, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
-			if !ok {
-				t.Fatal("id must not be empty")
-			}
-			if s != ri1 {
-				t.Fatal("id must match across actions")
-			}
-			if o.Obj[0].Property.Kin != "owner" {
-				t.Fatal("kin must be owner")
-			}
-			if o.Obj[0].Property.Res != "venture" {
-				t.Fatal("res must be venture")
-			}
-		}
-	}
-
-	{
-		i := &role.SearchI{
-			Obj: []*role.SearchI_Obj{
-				{
-					Metadata: map[string]string{
-						"subject.venturemark.co/id": "2",
-					},
-				},
-			},
-		}
-
-		o, err := cli.Role().Search(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		if len(o.Obj) != 1 {
-			t.Fatal("there must be one role")
+		if len(o.Obj) != 2 {
+			t.Fatal("there must be two roles")
 		}
 
 		{
@@ -286,6 +228,22 @@ func Test_Role_001(t *testing.T) {
 				t.Fatal("res must be venture")
 			}
 		}
+
+		{
+			s, ok := o.Obj[1].Metadata["role.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != ri1 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[1].Property.Kin != "owner" {
+				t.Fatal("kin must be owner")
+			}
+			if o.Obj[1].Property.Res != "venture" {
+				t.Fatal("res must be venture")
+			}
+		}
 	}
 
 	{
@@ -294,7 +252,7 @@ func Test_Role_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"role.venturemark.co/id":    ri1,
-						"subject.venturemark.co/id": "1",
+						"venture.venturemark.co/id": "1",
 					},
 				},
 			},
@@ -325,7 +283,7 @@ func Test_Role_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"role.venturemark.co/id":    ri2,
-						"subject.venturemark.co/id": "2",
+						"venture.venturemark.co/id": "1",
 					},
 				},
 			},
@@ -355,28 +313,7 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/id": "1",
-					},
-				},
-			},
-		}
-
-		o, err := cli.Role().Search(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		if len(o.Obj) != 0 {
-			t.Fatal("there must be zero roles")
-		}
-	}
-
-	{
-		i := &role.SearchI{
-			Obj: []*role.SearchI_Obj{
-				{
-					Metadata: map[string]string{
-						"subject.venturemark.co/id": "2",
+						"venture.venturemark.co/id": "1",
 					},
 				},
 			},
