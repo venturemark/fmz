@@ -34,14 +34,21 @@ func Test_Role_001(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
+	var si1 string
+	var si2 string
+	{
+		si1 = "1"
+		si2 = "2"
+	}
+
 	var ri1 string
 	{
 		i := &role.CreateI{
 			Obj: []*role.CreateI_Obj{
 				{
 					Metadata: map[string]string{
+						"subject.venturemark.co/id": si1,
 						"venture.venturemark.co/id": "1",
-						"subject.venturemark.co/id": "1",
 					},
 					Property: &role.CreateI_Obj_Property{
 						Kin: "owner",
@@ -74,8 +81,8 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.CreateI_Obj{
 				{
 					Metadata: map[string]string{
+						"subject.venturemark.co/id": si2,
 						"venture.venturemark.co/id": "1",
-						"subject.venturemark.co/id": "2",
 					},
 					Property: &role.CreateI_Obj_Property{
 						Kin: "member",
@@ -130,6 +137,19 @@ func Test_Role_001(t *testing.T) {
 			if s != ri2 {
 				t.Fatal("id must match across actions")
 			}
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["subject.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != si2 {
+				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
 			if o.Obj[0].Property.Kin != "member" {
 				t.Fatal("kin must be member")
 			}
@@ -146,6 +166,19 @@ func Test_Role_001(t *testing.T) {
 			if s != ri1 {
 				t.Fatal("id must match across actions")
 			}
+		}
+
+		{
+			s, ok := o.Obj[1].Metadata["subject.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != si1 {
+				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
 			if o.Obj[1].Property.Kin != "owner" {
 				t.Fatal("kin must be owner")
 			}
@@ -221,6 +254,19 @@ func Test_Role_001(t *testing.T) {
 			if s != ri2 {
 				t.Fatal("id must match across actions")
 			}
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["subject.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != si2 {
+				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
 			if o.Obj[0].Property.Kin != "owner" {
 				t.Fatal("kin must be owner")
 			}
@@ -237,6 +283,19 @@ func Test_Role_001(t *testing.T) {
 			if s != ri1 {
 				t.Fatal("id must match across actions")
 			}
+		}
+
+		{
+			s, ok := o.Obj[1].Metadata["subject.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != si1 {
+				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
 			if o.Obj[1].Property.Kin != "owner" {
 				t.Fatal("kin must be owner")
 			}
