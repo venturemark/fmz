@@ -67,10 +67,9 @@ func Test_Message_001(t *testing.T) {
 		i := &message.CreateI{
 			Obj: &message.CreateI_Obj{
 				Metadata: map[string]string{
-					"organization.venturemark.co/id": "1",
-					"timeline.venturemark.co/id":     "1",
-					"update.venturemark.co/id":       "1",
-					"venture.venturemark.co/id":      "1",
+					"timeline.venturemark.co/id": "1",
+					"update.venturemark.co/id":   "1",
+					"venture.venturemark.co/id":  "1",
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 1",
@@ -96,10 +95,9 @@ func Test_Message_001(t *testing.T) {
 		i := &message.CreateI{
 			Obj: &message.CreateI_Obj{
 				Metadata: map[string]string{
-					"organization.venturemark.co/id": "1",
-					"timeline.venturemark.co/id":     "1",
-					"update.venturemark.co/id":       "1",
-					"venture.venturemark.co/id":      "1",
+					"timeline.venturemark.co/id": "1",
+					"update.venturemark.co/id":   "1",
+					"venture.venturemark.co/id":  "1",
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 2",
@@ -125,10 +123,9 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"organization.venturemark.co/id": "1",
-						"timeline.venturemark.co/id":     "1",
-						"update.venturemark.co/id":       "1",
-						"venture.venturemark.co/id":      "1",
+						"timeline.venturemark.co/id": "1",
+						"update.venturemark.co/id":   "1",
+						"venture.venturemark.co/id":  "1",
 					},
 				},
 			},
@@ -195,10 +192,9 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"organization.venturemark.co/id": "1",
-						"timeline.venturemark.co/id":     "1",
-						"update.venturemark.co/id":       "1",
-						"venture.venturemark.co/id":      "1",
+						"timeline.venturemark.co/id": "1",
+						"update.venturemark.co/id":   "1",
+						"venture.venturemark.co/id":  "1",
 					},
 				},
 			},
@@ -244,11 +240,10 @@ func Test_Message_001(t *testing.T) {
 		i := &message.DeleteI{
 			Obj: &message.DeleteI_Obj{
 				Metadata: map[string]string{
-					"message.venturemark.co/id":      mi1,
-					"organization.venturemark.co/id": "1",
-					"timeline.venturemark.co/id":     "1",
-					"update.venturemark.co/id":       "1",
-					"venture.venturemark.co/id":      "1",
+					"message.venturemark.co/id":  mi1,
+					"timeline.venturemark.co/id": "1",
+					"update.venturemark.co/id":   "1",
+					"venture.venturemark.co/id":  "1",
 				},
 			},
 		}
@@ -272,11 +267,10 @@ func Test_Message_001(t *testing.T) {
 		i := &message.DeleteI{
 			Obj: &message.DeleteI_Obj{
 				Metadata: map[string]string{
-					"message.venturemark.co/id":      mi2,
-					"organization.venturemark.co/id": "1",
-					"timeline.venturemark.co/id":     "1",
-					"update.venturemark.co/id":       "1",
-					"venture.venturemark.co/id":      "1",
+					"message.venturemark.co/id":  mi2,
+					"timeline.venturemark.co/id": "1",
+					"update.venturemark.co/id":   "1",
+					"venture.venturemark.co/id":  "1",
 				},
 			},
 		}
@@ -301,10 +295,9 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"organization.venturemark.co/id": "1",
-						"timeline.venturemark.co/id":     "1",
-						"update.venturemark.co/id":       "1",
-						"venture.venturemark.co/id":      "1",
+						"timeline.venturemark.co/id": "1",
+						"update.venturemark.co/id":   "1",
+						"venture.venturemark.co/id":  "1",
 					},
 				},
 			},
@@ -325,10 +318,9 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"organization.venturemark.co/id": "1",
-						"timeline.venturemark.co/id":     "1",
-						"update.venturemark.co/id":       "1",
-						"venture.venturemark.co/id":      "1",
+						"timeline.venturemark.co/id": "1",
+						"update.venturemark.co/id":   "1",
+						"venture.venturemark.co/id":  "1",
 					},
 				},
 			},
