@@ -3,6 +3,7 @@ package client
 import (
 	"github.com/venturemark/apigengo/pkg/pbf/audience"
 	"github.com/venturemark/apigengo/pkg/pbf/message"
+	"github.com/venturemark/apigengo/pkg/pbf/role"
 	"github.com/venturemark/apigengo/pkg/pbf/texupd"
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 	"github.com/venturemark/apigengo/pkg/pbf/update"
@@ -26,6 +27,7 @@ type Client struct {
 
 	audience audience.APIClient
 	message  message.APIClient
+	role     role.APIClient
 	texupd   texupd.APIClient
 	timeline timeline.APIClient
 	update   update.APIClient
@@ -75,6 +77,11 @@ func New(c Config) (*Client, error) {
 		mes = message.NewAPIClient(con)
 	}
 
+	var rol role.APIClient
+	{
+		rol = role.NewAPIClient(con)
+	}
+
 	var tex texupd.APIClient
 	{
 		tex = texupd.NewAPIClient(con)
@@ -96,6 +103,7 @@ func New(c Config) (*Client, error) {
 
 		audience: aud,
 		message:  mes,
+		role:     rol,
 		texupd:   tex,
 		timeline: tim,
 		update:   upd,
@@ -118,6 +126,10 @@ func (c *Client) Audience() audience.APIClient {
 
 func (c *Client) Message() message.APIClient {
 	return c.message
+}
+
+func (c *Client) Role() role.APIClient {
+	return c.role
 }
 
 func (c *Client) TexUpd() texupd.APIClient {
