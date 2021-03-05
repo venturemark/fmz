@@ -70,6 +70,7 @@ func Test_Message_001(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
+					"venture.venturemark.co/id":      "1",
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 1",
@@ -98,6 +99,7 @@ func Test_Message_001(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
+					"venture.venturemark.co/id":      "1",
 				},
 				Property: &message.CreateI_Obj_Property{
 					Text: "Lorem ipsum 2",
@@ -126,6 +128,7 @@ func Test_Message_001(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
+						"venture.venturemark.co/id":      "1",
 					},
 				},
 			},
@@ -195,6 +198,7 @@ func Test_Message_001(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
+						"venture.venturemark.co/id":      "1",
 					},
 				},
 			},
@@ -244,6 +248,7 @@ func Test_Message_001(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
+					"venture.venturemark.co/id":      "1",
 				},
 			},
 		}
@@ -271,6 +276,7 @@ func Test_Message_001(t *testing.T) {
 					"organization.venturemark.co/id": "1",
 					"timeline.venturemark.co/id":     "1",
 					"update.venturemark.co/id":       "1",
+					"venture.venturemark.co/id":      "1",
 				},
 			},
 		}
@@ -298,6 +304,7 @@ func Test_Message_001(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
+						"venture.venturemark.co/id":      "1",
 					},
 				},
 			},
@@ -321,6 +328,7 @@ func Test_Message_001(t *testing.T) {
 						"organization.venturemark.co/id": "1",
 						"timeline.venturemark.co/id":     "1",
 						"update.venturemark.co/id":       "1",
+						"venture.venturemark.co/id":      "1",
 					},
 				},
 			},
