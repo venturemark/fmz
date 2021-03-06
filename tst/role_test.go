@@ -47,12 +47,10 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/id": si1,
-						"venture.venturemark.co/id": "1",
-					},
-					Property: &role.CreateI_Obj_Property{
-						Kin: "owner",
-						Res: "venture",
+						"resource.venturemark.co/kind": "venture",
+						"role.venturemark.co/kind":     "owner",
+						"subject.venturemark.co/id":    si1,
+						"venture.venturemark.co/id":    "1",
 					},
 				},
 			},
@@ -81,12 +79,10 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/id": si2,
-						"venture.venturemark.co/id": "1",
-					},
-					Property: &role.CreateI_Obj_Property{
-						Kin: "member",
-						Res: "venture",
+						"resource.venturemark.co/kind": "venture",
+						"role.venturemark.co/kind":     "member",
+						"subject.venturemark.co/id":    si2,
+						"venture.venturemark.co/id":    "1",
 					},
 				},
 			},
@@ -114,7 +110,8 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"resource.venturemark.co/kind": "venture",
+						"venture.venturemark.co/id":    "1",
 					},
 				},
 			},
@@ -130,12 +127,32 @@ func Test_Role_001(t *testing.T) {
 		}
 
 		{
+			s, ok := o.Obj[0].Metadata["resource.venturemark.co/kind"]
+			if !ok {
+				t.Fatal("kind must not be empty")
+			}
+			if s != "venture" {
+				t.Fatal("kind must match across actions")
+			}
+		}
+
+		{
 			s, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
 			if s != ri2 {
 				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["role.venturemark.co/kind"]
+			if !ok {
+				t.Fatal("kind must not be empty")
+			}
+			if s != "member" {
+				t.Fatal("kind must match across actions")
 			}
 		}
 
@@ -150,11 +167,12 @@ func Test_Role_001(t *testing.T) {
 		}
 
 		{
-			if o.Obj[0].Property.Kin != "member" {
-				t.Fatal("kin must be member")
+			s, ok := o.Obj[1].Metadata["resource.venturemark.co/kind"]
+			if !ok {
+				t.Fatal("kind must not be empty")
 			}
-			if o.Obj[0].Property.Res != "venture" {
-				t.Fatal("res must be venture")
+			if s != "venture" {
+				t.Fatal("kind must match across actions")
 			}
 		}
 
@@ -169,21 +187,22 @@ func Test_Role_001(t *testing.T) {
 		}
 
 		{
+			s, ok := o.Obj[1].Metadata["role.venturemark.co/kind"]
+			if !ok {
+				t.Fatal("kind must not be empty")
+			}
+			if s != "owner" {
+				t.Fatal("kind must match across actions")
+			}
+		}
+
+		{
 			s, ok := o.Obj[1].Metadata["subject.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
 			if s != si1 {
 				t.Fatal("id must match across actions")
-			}
-		}
-
-		{
-			if o.Obj[1].Property.Kin != "owner" {
-				t.Fatal("kin must be owner")
-			}
-			if o.Obj[1].Property.Res != "venture" {
-				t.Fatal("res must be venture")
 			}
 		}
 	}
@@ -193,13 +212,14 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.UpdateI_Obj{
 				{
 					Metadata: map[string]string{
-						"role.venturemark.co/id":    ri2,
-						"venture.venturemark.co/id": "1",
+						"resource.venturemark.co/kind": "venture",
+						"role.venturemark.co/id":       ri2,
+						"venture.venturemark.co/id":    "1",
 					},
 					Jsnpatch: []*role.UpdateI_Obj_Jsnpatch{
 						{
 							Ope: "replace",
-							Pat: "/obj/property/kin",
+							Pat: "/obj/metadata/role.venturemark.co~1kind",
 							Val: to.StringP("owner"),
 						},
 					},
@@ -231,7 +251,8 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"resource.venturemark.co/kind": "venture",
+						"venture.venturemark.co/id":    "1",
 					},
 				},
 			},
@@ -247,12 +268,32 @@ func Test_Role_001(t *testing.T) {
 		}
 
 		{
+			s, ok := o.Obj[0].Metadata["resource.venturemark.co/kind"]
+			if !ok {
+				t.Fatal("kind must not be empty")
+			}
+			if s != "venture" {
+				t.Fatal("kind must match across actions")
+			}
+		}
+
+		{
 			s, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
 			if s != ri2 {
 				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["role.venturemark.co/kind"]
+			if !ok {
+				t.Fatal("kind must not be empty")
+			}
+			if s != "owner" {
+				t.Fatal("kind must match across actions")
 			}
 		}
 
@@ -267,11 +308,12 @@ func Test_Role_001(t *testing.T) {
 		}
 
 		{
-			if o.Obj[0].Property.Kin != "owner" {
-				t.Fatal("kin must be owner")
+			s, ok := o.Obj[1].Metadata["resource.venturemark.co/kind"]
+			if !ok {
+				t.Fatal("kind must not be empty")
 			}
-			if o.Obj[0].Property.Res != "venture" {
-				t.Fatal("res must be venture")
+			if s != "venture" {
+				t.Fatal("kind must match across actions")
 			}
 		}
 
@@ -286,21 +328,22 @@ func Test_Role_001(t *testing.T) {
 		}
 
 		{
+			s, ok := o.Obj[1].Metadata["role.venturemark.co/kind"]
+			if !ok {
+				t.Fatal("kind must not be empty")
+			}
+			if s != "owner" {
+				t.Fatal("kind must match across actions")
+			}
+		}
+
+		{
 			s, ok := o.Obj[1].Metadata["subject.venturemark.co/id"]
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
 			if s != si1 {
 				t.Fatal("id must match across actions")
-			}
-		}
-
-		{
-			if o.Obj[1].Property.Kin != "owner" {
-				t.Fatal("kin must be owner")
-			}
-			if o.Obj[1].Property.Res != "venture" {
-				t.Fatal("res must be venture")
 			}
 		}
 	}
@@ -310,8 +353,9 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"role.venturemark.co/id":    ri1,
-						"venture.venturemark.co/id": "1",
+						"resource.venturemark.co/kind": "venture",
+						"role.venturemark.co/id":       ri1,
+						"venture.venturemark.co/id":    "1",
 					},
 				},
 			},
@@ -341,8 +385,9 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"role.venturemark.co/id":    ri2,
-						"venture.venturemark.co/id": "1",
+						"resource.venturemark.co/kind": "venture",
+						"role.venturemark.co/id":       ri2,
+						"venture.venturemark.co/id":    "1",
 					},
 				},
 			},
@@ -372,7 +417,8 @@ func Test_Role_001(t *testing.T) {
 			Obj: []*role.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"resource.venturemark.co/kind": "venture",
+						"venture.venturemark.co/id":    "1",
 					},
 				},
 			},
