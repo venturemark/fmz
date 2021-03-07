@@ -434,3 +434,45 @@ func Test_Role_001(t *testing.T) {
 		}
 	}
 }
+
+// Test_Role_002 ensures that deleting role resources which do not exist returns
+// an error.
+func Test_Role_002(t *testing.T) {
+	var err error
+
+	var cli *client.Client
+	{
+		c := client.Config{}
+
+		cli, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
+	}
+
+	{
+		i := &role.DeleteI{
+			Obj: []*role.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "venture",
+						"role.venturemark.co/id":       "1",
+						"venture.venturemark.co/id":    "1",
+					},
+				},
+			},
+		}
+
+		_, err := cli.Role().Delete(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+}
