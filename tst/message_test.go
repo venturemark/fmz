@@ -336,3 +336,44 @@ func Test_Message_001(t *testing.T) {
 		}
 	}
 }
+
+// Test_Message_002 ensures that deleting message resources which do not exist
+// returns an error.
+func Test_Message_002(t *testing.T) {
+	var err error
+
+	var cli *client.Client
+	{
+		c := client.Config{}
+
+		cli, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
+	}
+
+	{
+		i := &message.DeleteI{
+			Obj: &message.DeleteI_Obj{
+				Metadata: map[string]string{
+					"message.venturemark.co/id":  "1",
+					"timeline.venturemark.co/id": "1",
+					"update.venturemark.co/id":   "1",
+					"venture.venturemark.co/id":  "1",
+				},
+			},
+		}
+
+		_, err := cli.Message().Delete(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+}

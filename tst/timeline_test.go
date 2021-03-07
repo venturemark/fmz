@@ -1943,3 +1943,42 @@ func Test_Timeline_007(t *testing.T) {
 		}
 	}
 }
+
+// Test_Timeline_008 ensures that deleting timeline resources which do not exist
+// returns an error.
+func Test_Timeline_008(t *testing.T) {
+	var err error
+
+	var cli *client.Client
+	{
+		c := client.Config{}
+
+		cli, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
+	}
+
+	{
+		i := &timeline.DeleteI{
+			Obj: &timeline.DeleteI_Obj{
+				Metadata: map[string]string{
+					"timeline.venturemark.co/id": "1",
+					"venture.venturemark.co/id":  "1",
+				},
+			},
+		}
+
+		_, err := cli.Timeline().Delete(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+}
