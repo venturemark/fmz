@@ -4,7 +4,7 @@ go 1.15
 
 require (
 	github.com/google/go-cmp v0.5.5 // indirect
-	github.com/venturemark/apigengo v0.0.0-20210303125107-d752acb5fce1
+	github.com/venturemark/apigengo v0.0.0-20210308111857-4ac80b51af61
 	github.com/xh3b4sd/budget v0.2.0
 	github.com/xh3b4sd/redigo v0.16.0
 	github.com/xh3b4sd/tracer v0.3.1

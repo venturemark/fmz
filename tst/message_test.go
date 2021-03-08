@@ -65,14 +65,16 @@ func Test_Message_001(t *testing.T) {
 	var mi1 string
 	{
 		i := &message.CreateI{
-			Obj: &message.CreateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": "1",
-					"update.venturemark.co/id":   "1",
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &message.CreateI_Obj_Property{
-					Text: "Lorem ipsum 1",
+			Obj: []*message.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": "1",
+						"update.venturemark.co/id":   "1",
+						"venture.venturemark.co/id":  "1",
+					},
+					Property: &message.CreateI_Obj_Property{
+						Text: "Lorem ipsum 1",
+					},
 				},
 			},
 		}
@@ -82,7 +84,7 @@ func Test_Message_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["message.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
 		if !ok {
 			t.Fatal("message ID must not be empty")
 		}
@@ -93,14 +95,16 @@ func Test_Message_001(t *testing.T) {
 	var mi2 string
 	{
 		i := &message.CreateI{
-			Obj: &message.CreateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": "1",
-					"update.venturemark.co/id":   "1",
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &message.CreateI_Obj_Property{
-					Text: "Lorem ipsum 2",
+			Obj: []*message.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": "1",
+						"update.venturemark.co/id":   "1",
+						"venture.venturemark.co/id":  "1",
+					},
+					Property: &message.CreateI_Obj_Property{
+						Text: "Lorem ipsum 2",
+					},
 				},
 			},
 		}
@@ -110,7 +114,7 @@ func Test_Message_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["message.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
 		if !ok {
 			t.Fatal("message ID must not be empty")
 		}
@@ -238,12 +242,14 @@ func Test_Message_001(t *testing.T) {
 
 	{
 		i := &message.DeleteI{
-			Obj: &message.DeleteI_Obj{
-				Metadata: map[string]string{
-					"message.venturemark.co/id":  mi1,
-					"timeline.venturemark.co/id": "1",
-					"update.venturemark.co/id":   "1",
-					"venture.venturemark.co/id":  "1",
+			Obj: []*message.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"message.venturemark.co/id":  mi1,
+						"timeline.venturemark.co/id": "1",
+						"update.venturemark.co/id":   "1",
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -253,7 +259,7 @@ func Test_Message_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["message.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["message.venturemark.co/status"]
 		if !ok {
 			t.Fatal("message status must not be empty")
 		}
@@ -265,12 +271,14 @@ func Test_Message_001(t *testing.T) {
 
 	{
 		i := &message.DeleteI{
-			Obj: &message.DeleteI_Obj{
-				Metadata: map[string]string{
-					"message.venturemark.co/id":  mi2,
-					"timeline.venturemark.co/id": "1",
-					"update.venturemark.co/id":   "1",
-					"venture.venturemark.co/id":  "1",
+			Obj: []*message.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"message.venturemark.co/id":  mi2,
+						"timeline.venturemark.co/id": "1",
+						"update.venturemark.co/id":   "1",
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -280,7 +288,7 @@ func Test_Message_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["message.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["message.venturemark.co/status"]
 		if !ok {
 			t.Fatal("message status must not be empty")
 		}
@@ -361,12 +369,14 @@ func Test_Message_002(t *testing.T) {
 
 	{
 		i := &message.DeleteI{
-			Obj: &message.DeleteI_Obj{
-				Metadata: map[string]string{
-					"message.venturemark.co/id":  "1",
-					"timeline.venturemark.co/id": "1",
-					"update.venturemark.co/id":   "1",
-					"venture.venturemark.co/id":  "1",
+			Obj: []*message.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"message.venturemark.co/id":  "1",
+						"timeline.venturemark.co/id": "1",
+						"update.venturemark.co/id":   "1",
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
