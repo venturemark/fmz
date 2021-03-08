@@ -46,12 +46,14 @@ func Test_Timeline_001(t *testing.T) {
 	var ti1 string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Marketing Campaign",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Marketing Campaign",
+					},
 				},
 			},
 		}
@@ -61,7 +63,7 @@ func Test_Timeline_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -72,12 +74,14 @@ func Test_Timeline_001(t *testing.T) {
 	var ti2 string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Internal Project",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Internal Project",
+					},
 				},
 			},
 		}
@@ -87,7 +91,7 @@ func Test_Timeline_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -144,13 +148,19 @@ func Test_Timeline_001(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti1,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti1,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -160,7 +170,7 @@ func Test_Timeline_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -172,10 +182,12 @@ func Test_Timeline_001(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti1,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti1,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -185,7 +197,7 @@ func Test_Timeline_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -197,13 +209,19 @@ func Test_Timeline_001(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti2,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti2,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -213,7 +231,7 @@ func Test_Timeline_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -225,10 +243,12 @@ func Test_Timeline_001(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti2,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti2,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -238,7 +258,7 @@ func Test_Timeline_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -294,12 +314,14 @@ func Test_Timeline_002(t *testing.T) {
 	var tid string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Marketing Campaign",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Marketing Campaign",
+					},
 				},
 			},
 		}
@@ -309,7 +331,7 @@ func Test_Timeline_002(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -319,12 +341,14 @@ func Test_Timeline_002(t *testing.T) {
 
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Marketing Campaign",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Marketing Campaign",
+					},
 				},
 			},
 		}
@@ -337,13 +361,19 @@ func Test_Timeline_002(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": tid,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": tid,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -353,7 +383,7 @@ func Test_Timeline_002(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -365,10 +395,12 @@ func Test_Timeline_002(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": tid,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": tid,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -378,7 +410,7 @@ func Test_Timeline_002(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -413,12 +445,14 @@ func Test_Timeline_003(t *testing.T) {
 	var tid string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Marketing Campaign",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Marketing Campaign",
+					},
 				},
 			},
 		}
@@ -428,7 +462,7 @@ func Test_Timeline_003(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -469,13 +503,19 @@ func Test_Timeline_003(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": tid,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": tid,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -485,7 +525,7 @@ func Test_Timeline_003(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -528,10 +568,12 @@ func Test_Timeline_003(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": tid,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": tid,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -541,7 +583,7 @@ func Test_Timeline_003(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -577,12 +619,14 @@ func Test_Timeline_004(t *testing.T) {
 	var tid string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Marketing Campaign",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Marketing Campaign",
+					},
 				},
 			},
 		}
@@ -592,7 +636,7 @@ func Test_Timeline_004(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -602,10 +646,12 @@ func Test_Timeline_004(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": tid,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": tid,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -618,13 +664,19 @@ func Test_Timeline_004(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": tid,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": tid,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -634,7 +686,7 @@ func Test_Timeline_004(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -646,10 +698,12 @@ func Test_Timeline_004(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": tid,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": tid,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -659,7 +713,7 @@ func Test_Timeline_004(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -723,12 +777,14 @@ func Test_Timeline_005(t *testing.T) {
 	var ti1 string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Marketing Campaign",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Marketing Campaign",
+					},
 				},
 			},
 		}
@@ -738,7 +794,7 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -749,12 +805,14 @@ func Test_Timeline_005(t *testing.T) {
 	var ti2 string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Internal Project",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Internal Project",
+					},
 				},
 			},
 		}
@@ -764,7 +822,7 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -775,17 +833,19 @@ func Test_Timeline_005(t *testing.T) {
 	var ai1 string
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Employees",
-					Tmln: []string{
-						ti1,
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{
-						cr1.User(),
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Employees",
+						Tmln: []string{
+							ti1,
+						},
+						User: []string{
+							cr1.User(),
+						},
 					},
 				},
 			},
@@ -796,7 +856,7 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 		if !ok {
 			t.Fatal("audience ID must not be empty")
 		}
@@ -807,17 +867,19 @@ func Test_Timeline_005(t *testing.T) {
 	var ai2 string
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Investors",
-					Tmln: []string{
-						ti2,
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{
-						cr2.User(),
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Investors",
+						Tmln: []string{
+							ti2,
+						},
+						User: []string{
+							cr2.User(),
+						},
 					},
 				},
 			},
@@ -828,7 +890,7 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 		if !ok {
 			t.Fatal("audience ID must not be empty")
 		}
@@ -880,13 +942,19 @@ func Test_Timeline_005(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti1,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti1,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -896,7 +964,7 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -908,10 +976,12 @@ func Test_Timeline_005(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti1,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti1,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -921,7 +991,7 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -933,13 +1003,19 @@ func Test_Timeline_005(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti2,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti2,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -949,7 +1025,7 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -961,10 +1037,12 @@ func Test_Timeline_005(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti2,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti2,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -974,7 +1052,7 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -986,10 +1064,12 @@ func Test_Timeline_005(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": ai1,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": ai1,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -999,7 +1079,7 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1011,10 +1091,12 @@ func Test_Timeline_005(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": ai2,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": ai2,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -1024,7 +1106,7 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1088,12 +1170,14 @@ func Test_Timeline_006(t *testing.T) {
 	var ti1 string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Marketing Campaign",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Marketing Campaign",
+					},
 				},
 			},
 		}
@@ -1103,7 +1187,7 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -1114,12 +1198,14 @@ func Test_Timeline_006(t *testing.T) {
 	var ti2 string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Internal Project",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Internal Project",
+					},
 				},
 			},
 		}
@@ -1129,7 +1215,7 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -1140,17 +1226,19 @@ func Test_Timeline_006(t *testing.T) {
 	var ai1 string
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Employees",
-					Tmln: []string{
-						ti1,
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{
-						cr1.User(),
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Employees",
+						Tmln: []string{
+							ti1,
+						},
+						User: []string{
+							cr1.User(),
+						},
 					},
 				},
 			},
@@ -1161,7 +1249,7 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 		if !ok {
 			t.Fatal("audience ID must not be empty")
 		}
@@ -1172,17 +1260,19 @@ func Test_Timeline_006(t *testing.T) {
 	var ai2 string
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Investors",
-					Tmln: []string{
-						ti2,
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{
-						cr2.User(),
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Investors",
+						Tmln: []string{
+							ti2,
+						},
+						User: []string{
+							cr2.User(),
+						},
 					},
 				},
 			},
@@ -1193,7 +1283,7 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 		if !ok {
 			t.Fatal("audience ID must not be empty")
 		}
@@ -1255,13 +1345,19 @@ func Test_Timeline_006(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti1,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti1,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -1271,7 +1367,7 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1283,10 +1379,12 @@ func Test_Timeline_006(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti1,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti1,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -1296,7 +1394,7 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1308,13 +1406,19 @@ func Test_Timeline_006(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti2,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti2,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -1324,7 +1428,7 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1336,10 +1440,12 @@ func Test_Timeline_006(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti2,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti2,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -1349,7 +1455,7 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1361,10 +1467,12 @@ func Test_Timeline_006(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": ai1,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": ai1,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -1374,7 +1482,7 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1386,10 +1494,12 @@ func Test_Timeline_006(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": ai2,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": ai2,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -1399,7 +1509,7 @@ func Test_Timeline_006(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1448,12 +1558,14 @@ func Test_Timeline_007(t *testing.T) {
 	var ti1 string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Marketing Campaign",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Marketing Campaign",
+					},
 				},
 			},
 		}
@@ -1463,7 +1575,7 @@ func Test_Timeline_007(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -1474,12 +1586,14 @@ func Test_Timeline_007(t *testing.T) {
 	var ti2 string
 	{
 		i := &timeline.CreateI{
-			Obj: &timeline.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &timeline.CreateI_Obj_Property{
-					Name: "Internal Project",
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Internal Project",
+					},
 				},
 			},
 		}
@@ -1489,7 +1603,7 @@ func Test_Timeline_007(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -1500,13 +1614,15 @@ func Test_Timeline_007(t *testing.T) {
 	var ui1 string
 	{
 		i := &texupd.CreateI{
-			Obj: &texupd.CreateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti1,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &texupd.CreateI_Obj_Property{
-					Text: "Lorem ipsum 1",
+			Obj: []*texupd.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti1,
+						"venture.venturemark.co/id":  "1",
+					},
+					Property: &texupd.CreateI_Obj_Property{
+						Text: "Lorem ipsum 1",
+					},
 				},
 			},
 		}
@@ -1516,7 +1632,7 @@ func Test_Timeline_007(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["update.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["update.venturemark.co/id"]
 		if !ok {
 			t.Fatal("texupd ID must not be empty")
 		}
@@ -1527,13 +1643,15 @@ func Test_Timeline_007(t *testing.T) {
 	var ui2 string
 	{
 		i := &texupd.CreateI{
-			Obj: &texupd.CreateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti2,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &texupd.CreateI_Obj_Property{
-					Text: "Lorem ipsum 2",
+			Obj: []*texupd.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti2,
+						"venture.venturemark.co/id":  "1",
+					},
+					Property: &texupd.CreateI_Obj_Property{
+						Text: "Lorem ipsum 2",
+					},
 				},
 			},
 		}
@@ -1543,7 +1661,7 @@ func Test_Timeline_007(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["update.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["update.venturemark.co/id"]
 		if !ok {
 			t.Fatal("texupd ID must not be empty")
 		}
@@ -1553,14 +1671,16 @@ func Test_Timeline_007(t *testing.T) {
 
 	{
 		i := &message.CreateI{
-			Obj: &message.CreateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti1,
-					"update.venturemark.co/id":   ui1,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &message.CreateI_Obj_Property{
-					Text: "Lorem ipsum 1",
+			Obj: []*message.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti1,
+						"update.venturemark.co/id":   ui1,
+						"venture.venturemark.co/id":  "1",
+					},
+					Property: &message.CreateI_Obj_Property{
+						Text: "Lorem ipsum 1",
+					},
 				},
 			},
 		}
@@ -1570,7 +1690,7 @@ func Test_Timeline_007(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		_, ok := o.Obj.Metadata["message.venturemark.co/id"]
+		_, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
 		if !ok {
 			t.Fatal("message ID must not be empty")
 		}
@@ -1579,14 +1699,16 @@ func Test_Timeline_007(t *testing.T) {
 	var mi2 string
 	{
 		i := &message.CreateI{
-			Obj: &message.CreateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti2,
-					"update.venturemark.co/id":   ui2,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &message.CreateI_Obj_Property{
-					Text: "Lorem ipsum 2",
+			Obj: []*message.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti2,
+						"update.venturemark.co/id":   ui2,
+						"venture.venturemark.co/id":  "1",
+					},
+					Property: &message.CreateI_Obj_Property{
+						Text: "Lorem ipsum 2",
+					},
 				},
 			},
 		}
@@ -1596,7 +1718,7 @@ func Test_Timeline_007(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["message.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
 		if !ok {
 			t.Fatal("message ID must not be empty")
 		}
@@ -1606,13 +1728,19 @@ func Test_Timeline_007(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti1,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti1,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -1622,7 +1750,7 @@ func Test_Timeline_007(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1634,10 +1762,12 @@ func Test_Timeline_007(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti1,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti1,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -1647,7 +1777,7 @@ func Test_Timeline_007(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1808,13 +1938,19 @@ func Test_Timeline_007(t *testing.T) {
 
 	{
 		i := &timeline.UpdateI{
-			Obj: &timeline.UpdateI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti2,
-					"venture.venturemark.co/id":  "1",
-				},
-				Property: &timeline.UpdateI_Obj_Property{
-					Stat: to.StringP("archived"),
+			Obj: []*timeline.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti2,
+						"venture.venturemark.co/id":  "1",
+					},
+					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("archived"),
+						},
+					},
 				},
 			},
 		}
@@ -1824,7 +1960,7 @@ func Test_Timeline_007(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1836,10 +1972,12 @@ func Test_Timeline_007(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": ti2,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": ti2,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -1849,7 +1987,7 @@ func Test_Timeline_007(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["timeline.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -1968,10 +2106,12 @@ func Test_Timeline_008(t *testing.T) {
 
 	{
 		i := &timeline.DeleteI{
-			Obj: &timeline.DeleteI_Obj{
-				Metadata: map[string]string{
-					"timeline.venturemark.co/id": "1",
-					"venture.venturemark.co/id":  "1",
+			Obj: []*timeline.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": "1",
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}

@@ -37,19 +37,21 @@ func Test_Audience_001(t *testing.T) {
 	var ai1 string
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Employees",
-					Tmln: []string{
-						"foo",
-						"bar",
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{
-						"xh3b4sd",
-						"marcoelli",
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Employees",
+						Tmln: []string{
+							"foo",
+							"bar",
+						},
+						User: []string{
+							"xh3b4sd",
+							"marcoelli",
+						},
 					},
 				},
 			},
@@ -60,7 +62,7 @@ func Test_Audience_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -71,19 +73,21 @@ func Test_Audience_001(t *testing.T) {
 	var ai2 string
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Investors",
-					Tmln: []string{
-						"bar",
-						"baz",
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{
-						"marcoelli",
-						"xh3b4sd",
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Investors",
+						Tmln: []string{
+							"bar",
+							"baz",
+						},
+						User: []string{
+							"marcoelli",
+							"xh3b4sd",
+						},
 					},
 				},
 			},
@@ -94,7 +98,7 @@ func Test_Audience_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -175,10 +179,12 @@ func Test_Audience_001(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": ai1,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": ai1,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -188,7 +194,7 @@ func Test_Audience_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -200,10 +206,12 @@ func Test_Audience_001(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": ai2,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": ai2,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -213,7 +221,7 @@ func Test_Audience_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -269,19 +277,21 @@ func Test_Audience_002(t *testing.T) {
 	var aid string
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Employees",
-					Tmln: []string{
-						"foo",
-						"bar",
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{
-						"xh3b4sd",
-						"marcoelli",
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Employees",
+						Tmln: []string{
+							"foo",
+							"bar",
+						},
+						User: []string{
+							"xh3b4sd",
+							"marcoelli",
+						},
 					},
 				},
 			},
@@ -292,7 +302,7 @@ func Test_Audience_002(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -302,19 +312,21 @@ func Test_Audience_002(t *testing.T) {
 
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Employees",
-					Tmln: []string{
-						"foo",
-						"bar",
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{
-						"foo",
-						"bar",
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Employees",
+						Tmln: []string{
+							"foo",
+							"bar",
+						},
+						User: []string{
+							"foo",
+							"bar",
+						},
 					},
 				},
 			},
@@ -328,10 +340,12 @@ func Test_Audience_002(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": aid,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": aid,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -341,7 +355,7 @@ func Test_Audience_002(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -376,15 +390,17 @@ func Test_Audience_003(t *testing.T) {
 
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Employees",
-					User: []string{
-						"xh3b4sd",
-						"marcoelli",
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Employees",
+						User: []string{
+							"xh3b4sd",
+							"marcoelli",
+						},
 					},
 				},
 			},
@@ -422,17 +438,19 @@ func Test_Audience_004(t *testing.T) {
 	var aid string
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Employees",
-					Tmln: []string{
-						"foo",
-						"bar",
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{},
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Employees",
+						Tmln: []string{
+							"foo",
+							"bar",
+						},
+						User: []string{},
+					},
 				},
 			},
 		}
@@ -442,7 +460,7 @@ func Test_Audience_004(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -452,10 +470,12 @@ func Test_Audience_004(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": aid,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": aid,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -465,7 +485,7 @@ func Test_Audience_004(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -501,19 +521,21 @@ func Test_Audience_005(t *testing.T) {
 	var ai1 string
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Employees",
-					Tmln: []string{
-						"foo",
-						"bar",
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{
-						"xh3b4sd",
-						"marcoelli",
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Employees",
+						Tmln: []string{
+							"foo",
+							"bar",
+						},
+						User: []string{
+							"xh3b4sd",
+							"marcoelli",
+						},
 					},
 				},
 			},
@@ -524,7 +546,7 @@ func Test_Audience_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -535,19 +557,21 @@ func Test_Audience_005(t *testing.T) {
 	var ai2 string
 	{
 		i := &audience.CreateI{
-			Obj: &audience.CreateI_Obj{
-				Metadata: map[string]string{
-					"venture.venturemark.co/id": "1",
-				},
-				Property: &audience.CreateI_Obj_Property{
-					Name: "Investors",
-					Tmln: []string{
-						"bar",
-						"baz",
+			Obj: []*audience.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
 					},
-					User: []string{
-						"marcoelli",
-						"xh3b4sd",
+					Property: &audience.CreateI_Obj_Property{
+						Name: "Investors",
+						Tmln: []string{
+							"bar",
+							"baz",
+						},
+						User: []string{
+							"marcoelli",
+							"xh3b4sd",
+						},
 					},
 				},
 			},
@@ -558,7 +582,7 @@ func Test_Audience_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/id"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
@@ -620,25 +644,27 @@ func Test_Audience_005(t *testing.T) {
 
 	{
 		i := &audience.UpdateI{
-			Obj: &audience.UpdateI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": ai1,
-					"venture.venturemark.co/id":  "1",
-				},
-				Jsnpatch: []*audience.UpdateI_Obj_Jsnpatch{
-					{
-						Ope: "replace",
-						Pat: "/obj/property/name",
-						Val: to.StringP("replaced name"),
+			Obj: []*audience.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": ai1,
+						"venture.venturemark.co/id":  "1",
 					},
-					{
-						Ope: "remove",
-						Pat: "/obj/property/user/0",
-					},
-					{
-						Ope: "add",
-						Pat: "/obj/property/user/-",
-						Val: to.StringP("added user"),
+					Jsnpatch: []*audience.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/name",
+							Val: to.StringP("replaced name"),
+						},
+						{
+							Ope: "remove",
+							Pat: "/obj/property/user/0",
+						},
+						{
+							Ope: "add",
+							Pat: "/obj/property/user/-",
+							Val: to.StringP("added user"),
+						},
 					},
 				},
 			},
@@ -649,7 +675,7 @@ func Test_Audience_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -713,10 +739,12 @@ func Test_Audience_005(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": ai1,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": ai1,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -726,7 +754,7 @@ func Test_Audience_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -738,10 +766,12 @@ func Test_Audience_005(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": ai2,
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": ai2,
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
@@ -751,7 +781,7 @@ func Test_Audience_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj.Metadata["audience.venturemark.co/status"]
+		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
 		if !ok {
 			t.Fatal("status must not be empty")
 		}
@@ -807,10 +837,12 @@ func Test_Audience_006(t *testing.T) {
 
 	{
 		i := &audience.DeleteI{
-			Obj: &audience.DeleteI_Obj{
-				Metadata: map[string]string{
-					"audience.venturemark.co/id": "1",
-					"venture.venturemark.co/id":  "1",
+			Obj: []*audience.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"audience.venturemark.co/id": "1",
+						"venture.venturemark.co/id":  "1",
+					},
 				},
 			},
 		}
