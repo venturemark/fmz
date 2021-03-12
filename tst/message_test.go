@@ -7,6 +7,8 @@ import (
 	"testing"
 
 	"github.com/venturemark/apigengo/pkg/pbf/message"
+	"github.com/venturemark/apigengo/pkg/pbf/role"
+	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 
 	"github.com/venturemark/cfm/pkg/client"
 	"github.com/venturemark/cfm/pkg/oauth"
@@ -62,13 +64,71 @@ func Test_Message_001(t *testing.T) {
 		defer cl2.Grpc().Close()
 	}
 
+	var tii string
+	{
+		i := &timeline.CreateI{
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": "1",
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Marketing Campaign",
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Timeline().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		tii = s
+	}
+
+	{
+		i := &role.CreateI{
+			Obj: []*role.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "timeline",
+						"role.venturemark.co/kind":     "member",
+						"subject.venturemark.co/id":    cr2.User(),
+						"timeline.venturemark.co/id":   tii,
+						"venture.venturemark.co/id":    "1",
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Role().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one role")
+		}
+
+		_, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+	}
+
 	var mi1 string
 	{
 		i := &message.CreateI{
 			Obj: []*message.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": "1",
+						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
 						"venture.venturemark.co/id":  "1",
 					},
@@ -98,7 +158,7 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": "1",
+						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
 						"venture.venturemark.co/id":  "1",
 					},
@@ -127,7 +187,7 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": "1",
+						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
 						"venture.venturemark.co/id":  "1",
 					},
@@ -196,7 +256,7 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": "1",
+						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
 						"venture.venturemark.co/id":  "1",
 					},
@@ -246,7 +306,7 @@ func Test_Message_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"message.venturemark.co/id":  mi1,
-						"timeline.venturemark.co/id": "1",
+						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
 						"venture.venturemark.co/id":  "1",
 					},
@@ -275,7 +335,7 @@ func Test_Message_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"message.venturemark.co/id":  mi2,
-						"timeline.venturemark.co/id": "1",
+						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
 						"venture.venturemark.co/id":  "1",
 					},
@@ -303,7 +363,7 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": "1",
+						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
 						"venture.venturemark.co/id":  "1",
 					},
@@ -326,7 +386,7 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": "1",
+						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
 						"venture.venturemark.co/id":  "1",
 					},
