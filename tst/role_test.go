@@ -34,14 +34,14 @@ func Test_Role_001(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
-	var si1 string
-	var si2 string
+	var su1 string
+	var su2 string
 	{
-		si1 = "1"
-		si2 = "2"
+		su1 = "1"
+		su2 = "2"
 	}
 
-	var ri1 string
+	var ro1 string
 	{
 		i := &role.CreateI{
 			Obj: []*role.CreateI_Obj{
@@ -49,7 +49,7 @@ func Test_Role_001(t *testing.T) {
 					Metadata: map[string]string{
 						"resource.venturemark.co/kind": "venture",
 						"role.venturemark.co/kind":     "owner",
-						"subject.venturemark.co/id":    si1,
+						"subject.venturemark.co/id":    su1,
 						"venture.venturemark.co/id":    "1",
 					},
 				},
@@ -70,10 +70,10 @@ func Test_Role_001(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ri1 = s
+		ro1 = s
 	}
 
-	var ri2 string
+	var ro2 string
 	{
 		i := &role.CreateI{
 			Obj: []*role.CreateI_Obj{
@@ -81,7 +81,7 @@ func Test_Role_001(t *testing.T) {
 					Metadata: map[string]string{
 						"resource.venturemark.co/kind": "venture",
 						"role.venturemark.co/kind":     "member",
-						"subject.venturemark.co/id":    si2,
+						"subject.venturemark.co/id":    su2,
 						"venture.venturemark.co/id":    "1",
 					},
 				},
@@ -102,7 +102,7 @@ func Test_Role_001(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ri2 = s
+		ro2 = s
 	}
 
 	{
@@ -141,7 +141,7 @@ func Test_Role_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ri2 {
+			if s != ro2 {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -161,7 +161,7 @@ func Test_Role_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != si2 {
+			if s != su2 {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -181,7 +181,7 @@ func Test_Role_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ri1 {
+			if s != ro1 {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -201,7 +201,7 @@ func Test_Role_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != si1 {
+			if s != su1 {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -213,7 +213,7 @@ func Test_Role_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"resource.venturemark.co/kind": "venture",
-						"role.venturemark.co/id":       ri2,
+						"role.venturemark.co/id":       ro2,
 						"venture.venturemark.co/id":    "1",
 					},
 					Jsnpatch: []*role.UpdateI_Obj_Jsnpatch{
@@ -282,7 +282,7 @@ func Test_Role_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ri2 {
+			if s != ro2 {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -302,7 +302,7 @@ func Test_Role_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != si2 {
+			if s != su2 {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -322,7 +322,7 @@ func Test_Role_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ri1 {
+			if s != ro1 {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -342,7 +342,7 @@ func Test_Role_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != si1 {
+			if s != su1 {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -354,7 +354,7 @@ func Test_Role_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"resource.venturemark.co/kind": "venture",
-						"role.venturemark.co/id":       ri1,
+						"role.venturemark.co/id":       ro1,
 						"venture.venturemark.co/id":    "1",
 					},
 				},
@@ -386,7 +386,7 @@ func Test_Role_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"resource.venturemark.co/kind": "venture",
-						"role.venturemark.co/id":       ri2,
+						"role.venturemark.co/id":       ro2,
 						"venture.venturemark.co/id":    "1",
 					},
 				},
