@@ -34,7 +34,7 @@ func Test_Audience_001(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
-	var ai1 string
+	var au1 string
 	{
 		i := &audience.CreateI{
 			Obj: []*audience.CreateI_Obj{
@@ -67,10 +67,10 @@ func Test_Audience_001(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ai1 = s
+		au1 = s
 	}
 
-	var ai2 string
+	var au2 string
 	{
 		i := &audience.CreateI{
 			Obj: []*audience.CreateI_Obj{
@@ -103,7 +103,7 @@ func Test_Audience_001(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ai2 = s
+		au2 = s
 	}
 
 	{
@@ -131,7 +131,7 @@ func Test_Audience_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ai2 {
+			if s != au2 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Name != "Investors" {
@@ -156,7 +156,7 @@ func Test_Audience_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ai1 {
+			if s != au1 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[1].Property.Name != "Employees" {
@@ -182,7 +182,7 @@ func Test_Audience_001(t *testing.T) {
 			Obj: []*audience.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id": ai1,
+						"audience.venturemark.co/id": au1,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -209,7 +209,7 @@ func Test_Audience_001(t *testing.T) {
 			Obj: []*audience.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id": ai2,
+						"audience.venturemark.co/id": au2,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -274,7 +274,7 @@ func Test_Audience_002(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
-	var aid string
+	var aui string
 	{
 		i := &audience.CreateI{
 			Obj: []*audience.CreateI_Obj{
@@ -307,7 +307,7 @@ func Test_Audience_002(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		aid = s
+		aui = s
 	}
 
 	{
@@ -343,7 +343,7 @@ func Test_Audience_002(t *testing.T) {
 			Obj: []*audience.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id": aid,
+						"audience.venturemark.co/id": aui,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -435,7 +435,7 @@ func Test_Audience_004(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
-	var aid string
+	var aui string
 	{
 		i := &audience.CreateI{
 			Obj: []*audience.CreateI_Obj{
@@ -465,7 +465,7 @@ func Test_Audience_004(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		aid = s
+		aui = s
 	}
 
 	{
@@ -473,7 +473,7 @@ func Test_Audience_004(t *testing.T) {
 			Obj: []*audience.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id": aid,
+						"audience.venturemark.co/id": aui,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -518,7 +518,7 @@ func Test_Audience_005(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
-	var ai1 string
+	var au1 string
 	{
 		i := &audience.CreateI{
 			Obj: []*audience.CreateI_Obj{
@@ -551,10 +551,10 @@ func Test_Audience_005(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ai1 = s
+		au1 = s
 	}
 
-	var ai2 string
+	var au2 string
 	{
 		i := &audience.CreateI{
 			Obj: []*audience.CreateI_Obj{
@@ -587,7 +587,7 @@ func Test_Audience_005(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ai2 = s
+		au2 = s
 	}
 
 	{
@@ -647,7 +647,7 @@ func Test_Audience_005(t *testing.T) {
 			Obj: []*audience.UpdateI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id": ai1,
+						"audience.venturemark.co/id": au1,
 						"venture.venturemark.co/id":  "1",
 					},
 					Jsnpatch: []*audience.UpdateI_Obj_Jsnpatch{
@@ -742,7 +742,7 @@ func Test_Audience_005(t *testing.T) {
 			Obj: []*audience.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id": ai1,
+						"audience.venturemark.co/id": au1,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -769,7 +769,7 @@ func Test_Audience_005(t *testing.T) {
 			Obj: []*audience.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"audience.venturemark.co/id": ai2,
+						"audience.venturemark.co/id": au2,
 						"venture.venturemark.co/id":  "1",
 					},
 				},

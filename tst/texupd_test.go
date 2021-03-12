@@ -41,7 +41,7 @@ func Test_TexUpd_001(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
-	var tid string
+	var tii string
 	{
 		i := &timeline.CreateI{
 			Obj: []*timeline.CreateI_Obj{
@@ -66,16 +66,16 @@ func Test_TexUpd_001(t *testing.T) {
 			t.Fatal("timeline ID must not be empty")
 		}
 
-		tid = s
+		tii = s
 	}
 
-	var ui1 string
+	var up1 string
 	{
 		i := &texupd.CreateI{
 			Obj: []*texupd.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": tid,
+						"timeline.venturemark.co/id": tii,
 						"venture.venturemark.co/id":  "1",
 					},
 					Property: &texupd.CreateI_Obj_Property{
@@ -95,16 +95,16 @@ func Test_TexUpd_001(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ui1 = s
+		up1 = s
 	}
 
-	var ui2 string
+	var up2 string
 	{
 		i := &texupd.CreateI{
 			Obj: []*texupd.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": tid,
+						"timeline.venturemark.co/id": tii,
 						"venture.venturemark.co/id":  "1",
 					},
 					Property: &texupd.CreateI_Obj_Property{
@@ -124,7 +124,7 @@ func Test_TexUpd_001(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ui2 = s
+		up2 = s
 	}
 
 	{
@@ -132,7 +132,7 @@ func Test_TexUpd_001(t *testing.T) {
 			Obj: []*update.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": tid,
+						"timeline.venturemark.co/id": tii,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -153,7 +153,7 @@ func Test_TexUpd_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ui2 {
+			if s != up2 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
@@ -166,7 +166,7 @@ func Test_TexUpd_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != ui1 {
+			if s != up1 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
@@ -180,8 +180,8 @@ func Test_TexUpd_001(t *testing.T) {
 			Obj: []*texupd.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": tid,
-						"update.venturemark.co/id":   ui1,
+						"timeline.venturemark.co/id": tii,
+						"update.venturemark.co/id":   up1,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -208,8 +208,8 @@ func Test_TexUpd_001(t *testing.T) {
 			Obj: []*texupd.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": tid,
-						"update.venturemark.co/id":   ui2,
+						"timeline.venturemark.co/id": tii,
+						"update.venturemark.co/id":   up2,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -236,7 +236,7 @@ func Test_TexUpd_001(t *testing.T) {
 			Obj: []*timeline.UpdateI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": tid,
+						"timeline.venturemark.co/id": tii,
 						"venture.venturemark.co/id":  "1",
 					},
 					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
@@ -270,7 +270,7 @@ func Test_TexUpd_001(t *testing.T) {
 			Obj: []*timeline.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": tid,
+						"timeline.venturemark.co/id": tii,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -297,7 +297,7 @@ func Test_TexUpd_001(t *testing.T) {
 			Obj: []*update.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"timeline.venturemark.co/id": tid,
+						"timeline.venturemark.co/id": tii,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -450,7 +450,7 @@ func Test_TexUpd_003(t *testing.T) {
 		ti2 = s
 	}
 
-	var ui1 string
+	var up1 string
 	{
 		i := &texupd.CreateI{
 			Obj: []*texupd.CreateI_Obj{
@@ -476,10 +476,10 @@ func Test_TexUpd_003(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ui1 = s
+		up1 = s
 	}
 
-	var ui2 string
+	var up2 string
 	{
 		i := &texupd.CreateI{
 			Obj: []*texupd.CreateI_Obj{
@@ -505,7 +505,7 @@ func Test_TexUpd_003(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ui2 = s
+		up2 = s
 	}
 
 	{
@@ -514,7 +514,7 @@ func Test_TexUpd_003(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti1,
-						"update.venturemark.co/id":   ui1,
+						"update.venturemark.co/id":   up1,
 						"venture.venturemark.co/id":  "1",
 					},
 					Property: &message.CreateI_Obj_Property{
@@ -535,14 +535,14 @@ func Test_TexUpd_003(t *testing.T) {
 		}
 	}
 
-	var mi2 string
+	var me2 string
 	{
 		i := &message.CreateI{
 			Obj: []*message.CreateI_Obj{
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti2,
-						"update.venturemark.co/id":   ui2,
+						"update.venturemark.co/id":   up2,
 						"venture.venturemark.co/id":  "1",
 					},
 					Property: &message.CreateI_Obj_Property{
@@ -562,7 +562,7 @@ func Test_TexUpd_003(t *testing.T) {
 			t.Fatal("message ID must not be empty")
 		}
 
-		mi2 = s
+		me2 = s
 	}
 
 	{
@@ -571,7 +571,7 @@ func Test_TexUpd_003(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti1,
-						"update.venturemark.co/id":   ui1,
+						"update.venturemark.co/id":   up1,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -606,7 +606,7 @@ func Test_TexUpd_003(t *testing.T) {
 					{
 						Metadata: map[string]string{
 							"timeline.venturemark.co/id": ti1,
-							"update.venturemark.co/id":   ui1,
+							"update.venturemark.co/id":   up1,
 							"venture.venturemark.co/id":  "1",
 						},
 					},
@@ -668,7 +668,7 @@ func Test_TexUpd_003(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti2,
-						"update.venturemark.co/id":   ui2,
+						"update.venturemark.co/id":   up2,
 						"venture.venturemark.co/id":  "1",
 					},
 				},
@@ -687,7 +687,7 @@ func Test_TexUpd_003(t *testing.T) {
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
-		if s != mi2 {
+		if s != me2 {
 			t.Fatal("id must match")
 		}
 	}
@@ -716,7 +716,7 @@ func Test_TexUpd_003(t *testing.T) {
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
-		if s != ui2 {
+		if s != up2 {
 			t.Fatal("id must match")
 		}
 	}
@@ -871,7 +871,7 @@ func Test_TexUpd_003(t *testing.T) {
 					{
 						Metadata: map[string]string{
 							"timeline.venturemark.co/id": ti2,
-							"update.venturemark.co/id":   ui2,
+							"update.venturemark.co/id":   up2,
 							"venture.venturemark.co/id":  "1",
 						},
 					},
