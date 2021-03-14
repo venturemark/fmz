@@ -7,6 +7,7 @@ import (
 	"github.com/venturemark/apigengo/pkg/pbf/texupd"
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 	"github.com/venturemark/apigengo/pkg/pbf/update"
+	"github.com/venturemark/apigengo/pkg/pbf/venture"
 	"github.com/xh3b4sd/redigo"
 	"github.com/xh3b4sd/redigo/pkg/client"
 	"github.com/xh3b4sd/tracer"
@@ -31,6 +32,7 @@ type Client struct {
 	texupd   texupd.APIClient
 	timeline timeline.APIClient
 	update   update.APIClient
+	venture  venture.APIClient
 }
 
 func New(c Config) (*Client, error) {
@@ -97,6 +99,11 @@ func New(c Config) (*Client, error) {
 		upd = update.NewAPIClient(con)
 	}
 
+	var ven venture.APIClient
+	{
+		ven = venture.NewAPIClient(con)
+	}
+
 	cli := &Client{
 		grpc:   con,
 		redigo: red,
@@ -107,6 +114,7 @@ func New(c Config) (*Client, error) {
 		texupd:   tex,
 		timeline: tim,
 		update:   upd,
+		venture:  ven,
 	}
 
 	return cli, nil
@@ -142,4 +150,8 @@ func (c *Client) Timeline() timeline.APIClient {
 
 func (c *Client) Update() update.APIClient {
 	return c.update
+}
+
+func (c *Client) Venture() venture.APIClient {
+	return c.venture
 }

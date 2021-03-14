@@ -8,11 +8,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/venturemark/apigengo/pkg/pbf/audience"
 	"github.com/venturemark/apigengo/pkg/pbf/message"
 	"github.com/venturemark/apigengo/pkg/pbf/texupd"
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 	"github.com/venturemark/apigengo/pkg/pbf/update"
+	"github.com/venturemark/apigengo/pkg/pbf/venture"
 	"github.com/xh3b4sd/budget"
 	"github.com/xh3b4sd/tracer"
 
@@ -43,13 +43,38 @@ func Test_Timeline_001(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
+	var vei string
+	{
+		i := &venture.CreateI{
+			Obj: []*venture.CreateI_Obj{
+				{
+					Property: &venture.CreateI_Obj_Property{
+						Name: "IBM",
+					},
+				},
+			},
+		}
+
+		o, err := cli.Venture().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["venture.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		vei = s
+	}
+
 	var ti1 string
 	{
 		i := &timeline.CreateI{
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Marketing Campaign",
@@ -77,7 +102,7 @@ func Test_Timeline_001(t *testing.T) {
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Internal Project",
@@ -104,7 +129,7 @@ func Test_Timeline_001(t *testing.T) {
 			Obj: []*timeline.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 				},
 			},
@@ -152,7 +177,7 @@ func Test_Timeline_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti1,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
 						{
@@ -186,7 +211,7 @@ func Test_Timeline_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti1,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -213,7 +238,7 @@ func Test_Timeline_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti2,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
 						{
@@ -247,7 +272,7 @@ func Test_Timeline_001(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti2,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -273,7 +298,7 @@ func Test_Timeline_001(t *testing.T) {
 			Obj: []*timeline.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 				},
 			},
@@ -311,13 +336,38 @@ func Test_Timeline_002(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
+	var vei string
+	{
+		i := &venture.CreateI{
+			Obj: []*venture.CreateI_Obj{
+				{
+					Property: &venture.CreateI_Obj_Property{
+						Name: "IBM",
+					},
+				},
+			},
+		}
+
+		o, err := cli.Venture().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["venture.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		vei = s
+	}
+
 	var tii string
 	{
 		i := &timeline.CreateI{
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Marketing Campaign",
@@ -344,7 +394,7 @@ func Test_Timeline_002(t *testing.T) {
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Marketing Campaign",
@@ -365,7 +415,7 @@ func Test_Timeline_002(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
 						{
@@ -399,7 +449,7 @@ func Test_Timeline_002(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -442,13 +492,38 @@ func Test_Timeline_003(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
+	var vei string
+	{
+		i := &venture.CreateI{
+			Obj: []*venture.CreateI_Obj{
+				{
+					Property: &venture.CreateI_Obj_Property{
+						Name: "IBM",
+					},
+				},
+			},
+		}
+
+		o, err := cli.Venture().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["venture.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		vei = s
+	}
+
 	var tii string
 	{
 		i := &timeline.CreateI{
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Marketing Campaign",
@@ -475,7 +550,7 @@ func Test_Timeline_003(t *testing.T) {
 			Obj: []*timeline.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 				},
 			},
@@ -507,7 +582,7 @@ func Test_Timeline_003(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
 						{
@@ -540,7 +615,7 @@ func Test_Timeline_003(t *testing.T) {
 			Obj: []*timeline.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 				},
 			},
@@ -572,7 +647,7 @@ func Test_Timeline_003(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -616,13 +691,38 @@ func Test_Timeline_004(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
+	var vei string
+	{
+		i := &venture.CreateI{
+			Obj: []*venture.CreateI_Obj{
+				{
+					Property: &venture.CreateI_Obj_Property{
+						Name: "IBM",
+					},
+				},
+			},
+		}
+
+		o, err := cli.Venture().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["venture.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		vei = s
+	}
+
 	var tii string
 	{
 		i := &timeline.CreateI{
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Marketing Campaign",
@@ -650,7 +750,7 @@ func Test_Timeline_004(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -668,7 +768,7 @@ func Test_Timeline_004(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
 						{
@@ -702,7 +802,7 @@ func Test_Timeline_004(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -724,8 +824,8 @@ func Test_Timeline_004(t *testing.T) {
 	}
 }
 
-// Test_Timeline_005 ensures that all timelines can be shown to users with
-// permissions disabled.
+// Test_Timeline_005 ensures that timelines can only be created by users who are
+// members of a venture.
 func Test_Timeline_005(t *testing.T) {
 	var err error
 
@@ -774,13 +874,37 @@ func Test_Timeline_005(t *testing.T) {
 		defer cl2.Grpc().Close()
 	}
 
-	var ti1 string
+	var vei string
+	{
+		i := &venture.CreateI{
+			Obj: []*venture.CreateI_Obj{
+				{
+					Property: &venture.CreateI_Obj_Property{
+						Name: "IBM",
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Venture().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["venture.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		vei = s
+	}
+
 	{
 		i := &timeline.CreateI{
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Marketing Campaign",
@@ -794,21 +918,18 @@ func Test_Timeline_005(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
+		_, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
-
-		ti1 = s
 	}
 
-	var ti2 string
 	{
 		i := &timeline.CreateI{
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Internal Project",
@@ -817,712 +938,16 @@ func Test_Timeline_005(t *testing.T) {
 			},
 		}
 
-		o, err := cl2.Timeline().Create(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
-		if !ok {
-			t.Fatal("id must not be empty")
-		}
-
-		ti2 = s
-	}
-
-	var au1 string
-	{
-		i := &audience.CreateI{
-			Obj: []*audience.CreateI_Obj{
-				{
-					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
-					},
-					Property: &audience.CreateI_Obj_Property{
-						Name: "Employees",
-						Tmln: []string{
-							ti1,
-						},
-						User: []string{
-							cr1.User(),
-						},
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Audience().Create(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
-		if !ok {
-			t.Fatal("audience ID must not be empty")
-		}
-
-		au1 = s
-	}
-
-	var au2 string
-	{
-		i := &audience.CreateI{
-			Obj: []*audience.CreateI_Obj{
-				{
-					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
-					},
-					Property: &audience.CreateI_Obj_Property{
-						Name: "Investors",
-						Tmln: []string{
-							ti2,
-						},
-						User: []string{
-							cr2.User(),
-						},
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Audience().Create(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
-		if !ok {
-			t.Fatal("audience ID must not be empty")
-		}
-
-		au2 = s
-	}
-
-	{
-		i := &timeline.SearchI{
-			Obj: []*timeline.SearchI_Obj{
-				{
-					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Timeline().Search(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		if len(o.Obj) != 2 {
-			t.Fatal("there must be two timelines")
-		}
-	}
-
-	{
-		i := &timeline.SearchI{
-			Obj: []*timeline.SearchI_Obj{
-				{
-					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Timeline().Search(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		if len(o.Obj) != 2 {
-			t.Fatal("there must be two timelines")
-		}
-	}
-
-	{
-		i := &timeline.UpdateI{
-			Obj: []*timeline.UpdateI_Obj{
-				{
-					Metadata: map[string]string{
-						"timeline.venturemark.co/id": ti1,
-						"venture.venturemark.co/id":  "1",
-					},
-					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
-						{
-							Ope: "replace",
-							Pat: "/obj/property/stat",
-							Val: to.StringP("archived"),
-						},
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Timeline().Update(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "updated" {
-			t.Fatal("status must be updated")
-		}
-	}
-
-	{
-		i := &timeline.DeleteI{
-			Obj: []*timeline.DeleteI_Obj{
-				{
-					Metadata: map[string]string{
-						"timeline.venturemark.co/id": ti1,
-						"venture.venturemark.co/id":  "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Timeline().Delete(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
-		}
-	}
-
-	{
-		i := &timeline.UpdateI{
-			Obj: []*timeline.UpdateI_Obj{
-				{
-					Metadata: map[string]string{
-						"timeline.venturemark.co/id": ti2,
-						"venture.venturemark.co/id":  "1",
-					},
-					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
-						{
-							Ope: "replace",
-							Pat: "/obj/property/stat",
-							Val: to.StringP("archived"),
-						},
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Timeline().Update(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "updated" {
-			t.Fatal("status must be updated")
-		}
-	}
-
-	{
-		i := &timeline.DeleteI{
-			Obj: []*timeline.DeleteI_Obj{
-				{
-					Metadata: map[string]string{
-						"timeline.venturemark.co/id": ti2,
-						"venture.venturemark.co/id":  "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Timeline().Delete(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
-		}
-	}
-
-	{
-		i := &audience.DeleteI{
-			Obj: []*audience.DeleteI_Obj{
-				{
-					Metadata: map[string]string{
-						"audience.venturemark.co/id": au1,
-						"venture.venturemark.co/id":  "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Audience().Delete(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
-		}
-	}
-
-	{
-		i := &audience.DeleteI{
-			Obj: []*audience.DeleteI_Obj{
-				{
-					Metadata: map[string]string{
-						"audience.venturemark.co/id": au2,
-						"venture.venturemark.co/id":  "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Audience().Delete(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
+		_, err := cl2.Timeline().Create(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
 		}
 	}
 }
 
-// Test_Timeline_006 ensures that only matching timelines can be shown to users with
-// permissions enabled.
-func Test_Timeline_006(t *testing.T) {
-	var err error
-
-	var cr1 *oauth.Insecure
-	var cr2 *oauth.Insecure
-	{
-		cr1 = oauth.NewInsecureOne()
-		cr2 = oauth.NewInsecureTwo()
-	}
-
-	var cl1 *client.Client
-	{
-		c := client.Config{
-			Credentials: cr1,
-		}
-
-		cl1, err = client.New(c)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		err = cl1.Redigo().Purge()
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		defer cl1.Grpc().Close()
-	}
-
-	var cl2 *client.Client
-	{
-		c := client.Config{
-			Credentials: cr2,
-		}
-
-		cl2, err = client.New(c)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		err = cl2.Redigo().Purge()
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		defer cl2.Grpc().Close()
-	}
-
-	var ti1 string
-	{
-		i := &timeline.CreateI{
-			Obj: []*timeline.CreateI_Obj{
-				{
-					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
-					},
-					Property: &timeline.CreateI_Obj_Property{
-						Name: "Marketing Campaign",
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Timeline().Create(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
-		if !ok {
-			t.Fatal("id must not be empty")
-		}
-
-		ti1 = s
-	}
-
-	var ti2 string
-	{
-		i := &timeline.CreateI{
-			Obj: []*timeline.CreateI_Obj{
-				{
-					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
-					},
-					Property: &timeline.CreateI_Obj_Property{
-						Name: "Internal Project",
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Timeline().Create(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
-		if !ok {
-			t.Fatal("id must not be empty")
-		}
-
-		ti2 = s
-	}
-
-	var au1 string
-	{
-		i := &audience.CreateI{
-			Obj: []*audience.CreateI_Obj{
-				{
-					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
-					},
-					Property: &audience.CreateI_Obj_Property{
-						Name: "Employees",
-						Tmln: []string{
-							ti1,
-						},
-						User: []string{
-							cr1.User(),
-						},
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Audience().Create(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
-		if !ok {
-			t.Fatal("audience ID must not be empty")
-		}
-
-		au1 = s
-	}
-
-	var au2 string
-	{
-		i := &audience.CreateI{
-			Obj: []*audience.CreateI_Obj{
-				{
-					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
-					},
-					Property: &audience.CreateI_Obj_Property{
-						Name: "Investors",
-						Tmln: []string{
-							ti2,
-						},
-						User: []string{
-							cr2.User(),
-						},
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Audience().Create(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["audience.venturemark.co/id"]
-		if !ok {
-			t.Fatal("audience ID must not be empty")
-		}
-
-		au2 = s
-	}
-
-	{
-		i := &timeline.SearchI{
-			Obj: []*timeline.SearchI_Obj{
-				{
-					Metadata: map[string]string{
-						"permission.venturemark.co/id":     "audience",
-						"permission.venturemark.co/status": "enabled",
-						"venture.venturemark.co/id":        "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Timeline().Search(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		if len(o.Obj) != 1 {
-			t.Fatal("there must be one timeline")
-		}
-		if o.Obj[0].Property.Name != "Marketing Campaign" {
-			t.Fatal("name must be Marketing Campaign")
-		}
-	}
-
-	{
-		i := &timeline.SearchI{
-			Obj: []*timeline.SearchI_Obj{
-				{
-					Metadata: map[string]string{
-						"permission.venturemark.co/id":     "audience",
-						"permission.venturemark.co/status": "enabled",
-						"venture.venturemark.co/id":        "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Timeline().Search(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		if len(o.Obj) != 1 {
-			t.Fatal("there must be one timeline")
-		}
-		if o.Obj[0].Property.Name != "Internal Project" {
-			t.Fatal("name must be Internal Project")
-		}
-	}
-
-	{
-		i := &timeline.UpdateI{
-			Obj: []*timeline.UpdateI_Obj{
-				{
-					Metadata: map[string]string{
-						"timeline.venturemark.co/id": ti1,
-						"venture.venturemark.co/id":  "1",
-					},
-					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
-						{
-							Ope: "replace",
-							Pat: "/obj/property/stat",
-							Val: to.StringP("archived"),
-						},
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Timeline().Update(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "updated" {
-			t.Fatal("status must be updated")
-		}
-	}
-
-	{
-		i := &timeline.DeleteI{
-			Obj: []*timeline.DeleteI_Obj{
-				{
-					Metadata: map[string]string{
-						"timeline.venturemark.co/id": ti1,
-						"venture.venturemark.co/id":  "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Timeline().Delete(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
-		}
-	}
-
-	{
-		i := &timeline.UpdateI{
-			Obj: []*timeline.UpdateI_Obj{
-				{
-					Metadata: map[string]string{
-						"timeline.venturemark.co/id": ti2,
-						"venture.venturemark.co/id":  "1",
-					},
-					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
-						{
-							Ope: "replace",
-							Pat: "/obj/property/stat",
-							Val: to.StringP("archived"),
-						},
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Timeline().Update(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "updated" {
-			t.Fatal("status must be updated")
-		}
-	}
-
-	{
-		i := &timeline.DeleteI{
-			Obj: []*timeline.DeleteI_Obj{
-				{
-					Metadata: map[string]string{
-						"timeline.venturemark.co/id": ti2,
-						"venture.venturemark.co/id":  "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Timeline().Delete(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
-		}
-	}
-
-	{
-		i := &audience.DeleteI{
-			Obj: []*audience.DeleteI_Obj{
-				{
-					Metadata: map[string]string{
-						"audience.venturemark.co/id": au1,
-						"venture.venturemark.co/id":  "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl1.Audience().Delete(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
-		}
-	}
-
-	{
-		i := &audience.DeleteI{
-			Obj: []*audience.DeleteI_Obj{
-				{
-					Metadata: map[string]string{
-						"audience.venturemark.co/id": au2,
-						"venture.venturemark.co/id":  "1",
-					},
-				},
-			},
-		}
-
-		o, err := cl2.Audience().Delete(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["audience.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
-		}
-	}
-}
-
-// Test_Timeline_007 ensures that the cascaded deletion of timelines is working
+// Test_Timeline_006 ensures that the cascaded deletion of timelines is working
 // as ecpected.
-func Test_Timeline_007(t *testing.T) {
+func Test_Timeline_006(t *testing.T) {
 	var err error
 
 	var b budget.Interface
@@ -1555,13 +980,38 @@ func Test_Timeline_007(t *testing.T) {
 		defer cli.Grpc().Close()
 	}
 
+	var vei string
+	{
+		i := &venture.CreateI{
+			Obj: []*venture.CreateI_Obj{
+				{
+					Property: &venture.CreateI_Obj_Property{
+						Name: "IBM",
+					},
+				},
+			},
+		}
+
+		o, err := cli.Venture().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["venture.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		vei = s
+	}
+
 	var ti1 string
 	{
 		i := &timeline.CreateI{
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Marketing Campaign",
@@ -1589,7 +1039,7 @@ func Test_Timeline_007(t *testing.T) {
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Internal Project",
@@ -1618,7 +1068,7 @@ func Test_Timeline_007(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti1,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Property: &texupd.CreateI_Obj_Property{
 						Text: "Lorem ipsum 1",
@@ -1647,7 +1097,7 @@ func Test_Timeline_007(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti2,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Property: &texupd.CreateI_Obj_Property{
 						Text: "Lorem ipsum 2",
@@ -1676,7 +1126,7 @@ func Test_Timeline_007(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti1,
 						"update.venturemark.co/id":   up1,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Property: &message.CreateI_Obj_Property{
 						Text: "Lorem ipsum 1",
@@ -1704,7 +1154,7 @@ func Test_Timeline_007(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti2,
 						"update.venturemark.co/id":   up2,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Property: &message.CreateI_Obj_Property{
 						Text: "Lorem ipsum 2",
@@ -1732,7 +1182,7 @@ func Test_Timeline_007(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti1,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
 						{
@@ -1766,7 +1216,7 @@ func Test_Timeline_007(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti1,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -1801,7 +1251,7 @@ func Test_Timeline_007(t *testing.T) {
 						Metadata: map[string]string{
 							"timeline.venturemark.co/id": ti1,
 							"update.venturemark.co/id":   up1,
-							"venture.venturemark.co/id":  "1",
+							"venture.venturemark.co/id":  vei,
 						},
 					},
 				},
@@ -1832,7 +1282,7 @@ func Test_Timeline_007(t *testing.T) {
 					{
 						Metadata: map[string]string{
 							"timeline.venturemark.co/id": ti1,
-							"venture.venturemark.co/id":  "1",
+							"venture.venturemark.co/id":  vei,
 						},
 					},
 				},
@@ -1863,7 +1313,7 @@ func Test_Timeline_007(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti2,
 						"update.venturemark.co/id":   up2,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -1892,7 +1342,7 @@ func Test_Timeline_007(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti2,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -1920,7 +1370,7 @@ func Test_Timeline_007(t *testing.T) {
 			Obj: []*timeline.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 				},
 			},
@@ -1942,7 +1392,7 @@ func Test_Timeline_007(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti2,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 					Jsnpatch: []*timeline.UpdateI_Obj_Jsnpatch{
 						{
@@ -1976,7 +1426,7 @@ func Test_Timeline_007(t *testing.T) {
 				{
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": ti2,
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -2005,7 +1455,7 @@ func Test_Timeline_007(t *testing.T) {
 						Metadata: map[string]string{
 							"timeline.venturemark.co/id": ti2,
 							"update.venturemark.co/id":   up2,
-							"venture.venturemark.co/id":  "1",
+							"venture.venturemark.co/id":  vei,
 						},
 					},
 				},
@@ -2036,7 +1486,7 @@ func Test_Timeline_007(t *testing.T) {
 					{
 						Metadata: map[string]string{
 							"timeline.venturemark.co/id": ti2,
-							"venture.venturemark.co/id":  "1",
+							"venture.venturemark.co/id":  vei,
 						},
 					},
 				},
@@ -2065,7 +1515,7 @@ func Test_Timeline_007(t *testing.T) {
 			Obj: []*timeline.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": vei,
 					},
 				},
 			},
@@ -2082,9 +1532,9 @@ func Test_Timeline_007(t *testing.T) {
 	}
 }
 
-// Test_Timeline_008 ensures that deleting timeline resources which do not exist
+// Test_Timeline_007 ensures that deleting timeline resources which do not exist
 // returns an error.
-func Test_Timeline_008(t *testing.T) {
+func Test_Timeline_007(t *testing.T) {
 	var err error
 
 	var cli *client.Client
