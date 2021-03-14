@@ -9,6 +9,7 @@ import (
 	"github.com/venturemark/apigengo/pkg/pbf/message"
 	"github.com/venturemark/apigengo/pkg/pbf/role"
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
+	"github.com/venturemark/apigengo/pkg/pbf/venture"
 
 	"github.com/venturemark/cfm/pkg/client"
 	"github.com/venturemark/cfm/pkg/oauth"
@@ -64,13 +65,38 @@ func Test_Message_001(t *testing.T) {
 		defer cl2.Grpc().Close()
 	}
 
+	var ve1 string
+	{
+		i := &venture.CreateI{
+			Obj: []*venture.CreateI_Obj{
+				{
+					Property: &venture.CreateI_Obj_Property{
+						Name: "IBM",
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Venture().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["venture.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		ve1 = s
+	}
+
 	var tii string
 	{
 		i := &timeline.CreateI{
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": "1",
+						"venture.venturemark.co/id": ve1,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Marketing Campaign",
@@ -101,7 +127,7 @@ func Test_Message_001(t *testing.T) {
 						"role.venturemark.co/kind":     "member",
 						"subject.venturemark.co/id":    cr2.User(),
 						"timeline.venturemark.co/id":   tii,
-						"venture.venturemark.co/id":    "1",
+						"venture.venturemark.co/id":    ve1,
 					},
 				},
 			},
@@ -130,7 +156,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  ve1,
 					},
 					Property: &message.CreateI_Obj_Property{
 						Text: "Lorem ipsum 1",
@@ -146,7 +172,7 @@ func Test_Message_001(t *testing.T) {
 
 		s, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
 		if !ok {
-			t.Fatal("message ID must not be empty")
+			t.Fatal("id must not be empty")
 		}
 
 		mi1 = s
@@ -160,7 +186,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  ve1,
 					},
 					Property: &message.CreateI_Obj_Property{
 						Text: "Lorem ipsum 2",
@@ -176,7 +202,7 @@ func Test_Message_001(t *testing.T) {
 
 		s, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
 		if !ok {
-			t.Fatal("message ID must not be empty")
+			t.Fatal("id must not be empty")
 		}
 
 		mi2 = s
@@ -189,7 +215,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  ve1,
 					},
 				},
 			},
@@ -223,7 +249,7 @@ func Test_Message_001(t *testing.T) {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
-				t.Fatal("message text must be Lorem ipsum 1")
+				t.Fatal("text must be Lorem ipsum 1")
 			}
 		}
 
@@ -236,7 +262,7 @@ func Test_Message_001(t *testing.T) {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
-				t.Fatal("message text must be Lorem ipsum 2")
+				t.Fatal("text must be Lorem ipsum 2")
 			}
 		}
 
@@ -258,7 +284,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  ve1,
 					},
 				},
 			},
@@ -275,7 +301,7 @@ func Test_Message_001(t *testing.T) {
 
 		{
 			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
-				t.Fatal("message text must be Lorem ipsum 1")
+				t.Fatal("text must be Lorem ipsum 1")
 			}
 			s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
 			if !ok {
@@ -288,7 +314,7 @@ func Test_Message_001(t *testing.T) {
 
 		{
 			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
-				t.Fatal("message text must be Lorem ipsum 2")
+				t.Fatal("text must be Lorem ipsum 2")
 			}
 			s, ok := o.Obj[1].Metadata["user.venturemark.co/id"]
 			if !ok {
@@ -308,7 +334,7 @@ func Test_Message_001(t *testing.T) {
 						"message.venturemark.co/id":  mi1,
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  ve1,
 					},
 				},
 			},
@@ -321,11 +347,11 @@ func Test_Message_001(t *testing.T) {
 
 		s, ok := o.Obj[0].Metadata["message.venturemark.co/status"]
 		if !ok {
-			t.Fatal("message status must not be empty")
+			t.Fatal("status must not be empty")
 		}
 
 		if s != "deleted" {
-			t.Fatal("message status must be deleted")
+			t.Fatal("status must be deleted")
 		}
 	}
 
@@ -337,7 +363,7 @@ func Test_Message_001(t *testing.T) {
 						"message.venturemark.co/id":  mi2,
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  ve1,
 					},
 				},
 			},
@@ -350,11 +376,11 @@ func Test_Message_001(t *testing.T) {
 
 		s, ok := o.Obj[0].Metadata["message.venturemark.co/status"]
 		if !ok {
-			t.Fatal("message status must not be empty")
+			t.Fatal("status must not be empty")
 		}
 
 		if s != "deleted" {
-			t.Fatal("message status must be deleted")
+			t.Fatal("status must be deleted")
 		}
 	}
 
@@ -365,7 +391,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  ve1,
 					},
 				},
 			},
@@ -388,7 +414,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  "1",
+						"venture.venturemark.co/id":  ve1,
 					},
 				},
 			},
