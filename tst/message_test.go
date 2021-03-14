@@ -65,7 +65,7 @@ func Test_Message_001(t *testing.T) {
 		defer cl2.Grpc().Close()
 	}
 
-	var ve1 string
+	var vei string
 	{
 		i := &venture.CreateI{
 			Obj: []*venture.CreateI_Obj{
@@ -87,7 +87,7 @@ func Test_Message_001(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		ve1 = s
+		vei = s
 	}
 
 	var tii string
@@ -96,7 +96,7 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*timeline.CreateI_Obj{
 				{
 					Metadata: map[string]string{
-						"venture.venturemark.co/id": ve1,
+						"venture.venturemark.co/id": vei,
 					},
 					Property: &timeline.CreateI_Obj_Property{
 						Name: "Marketing Campaign",
@@ -127,7 +127,7 @@ func Test_Message_001(t *testing.T) {
 						"role.venturemark.co/kind":     "member",
 						"subject.venturemark.co/id":    cr2.User(),
 						"timeline.venturemark.co/id":   tii,
-						"venture.venturemark.co/id":    ve1,
+						"venture.venturemark.co/id":    vei,
 					},
 				},
 			},
@@ -156,7 +156,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  ve1,
+						"venture.venturemark.co/id":  vei,
 					},
 					Property: &message.CreateI_Obj_Property{
 						Text: "Lorem ipsum 1",
@@ -186,7 +186,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  ve1,
+						"venture.venturemark.co/id":  vei,
 					},
 					Property: &message.CreateI_Obj_Property{
 						Text: "Lorem ipsum 2",
@@ -215,7 +215,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  ve1,
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -284,7 +284,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  ve1,
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -334,7 +334,7 @@ func Test_Message_001(t *testing.T) {
 						"message.venturemark.co/id":  mi1,
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  ve1,
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -363,7 +363,7 @@ func Test_Message_001(t *testing.T) {
 						"message.venturemark.co/id":  mi2,
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  ve1,
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -391,7 +391,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  ve1,
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
@@ -414,7 +414,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
-						"venture.venturemark.co/id":  ve1,
+						"venture.venturemark.co/id":  vei,
 					},
 				},
 			},
