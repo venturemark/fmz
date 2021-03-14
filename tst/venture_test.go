@@ -280,6 +280,40 @@ func Test_Venture_001(t *testing.T) {
 			},
 		}
 
+		_, err := cl2.Venture().Delete(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+
+	{
+		i := &venture.DeleteI{
+			Obj: []*venture.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": ve2,
+					},
+				},
+			},
+		}
+
+		_, err := cl2.Venture().Delete(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+
+	{
+		i := &venture.DeleteI{
+			Obj: []*venture.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": ve1,
+					},
+				},
+			},
+		}
+
 		o, err := cl1.Venture().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
