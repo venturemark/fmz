@@ -86,8 +86,6 @@ github.com/stretchr/testify v1.6.1 h1:hDPOHmpOpP40lSULcqw7IrRb/u7w6RpDC9399XyoNd
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stvp/tempredis v0.0.0-20181119212430-b82af8480203 h1:QVqDTf3h2WHt08YuiTGPZLls0Wq99X9bWd0Q5ZSBesM=
 github.com/stvp/tempredis v0.0.0-20181119212430-b82af8480203/go.mod h1:oqN97ltKNihBbwlX8dLpwxCl3+HnXKV/R0e+sRLd9C8=
-github.com/venturemark/apigengo v0.0.0-20210314122419-625053acc857 h1:uDdw15OjXYvOGXIpZlRDORjNZUlAec4SHdEKiU0HM4M=
-github.com/venturemark/apigengo v0.0.0-20210314122419-625053acc857/go.mod h1:fJtSDhgKu+UHfox3YVyRsbksWqQO7SYPLCEgIPEbR10=
 github.com/venturemark/apigengo v0.1.0 h1:zadMW70Ows1zOlC7/vwvuGPg7Ozt+HUcbfYgLvLM6JQ=
 github.com/venturemark/apigengo v0.1.0/go.mod h1:fJtSDhgKu+UHfox3YVyRsbksWqQO7SYPLCEgIPEbR10=
 github.com/xh3b4sd/budget v0.2.0 h1:xqnGRFwrwXW/hJnf5SCatXIVp/iHfC4ZFVYGmYZmT2Q=
