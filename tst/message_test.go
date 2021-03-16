@@ -9,6 +9,7 @@ import (
 	"github.com/venturemark/apigengo/pkg/pbf/message"
 	"github.com/venturemark/apigengo/pkg/pbf/role"
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
+	"github.com/venturemark/apigengo/pkg/pbf/user"
 	"github.com/venturemark/apigengo/pkg/pbf/venture"
 
 	"github.com/venturemark/cfm/pkg/client"
@@ -63,6 +64,56 @@ func Test_Message_001(t *testing.T) {
 		}
 
 		defer cl2.Grpc().Close()
+	}
+
+	var us1 string
+	{
+		i := &user.CreateI{
+			Obj: []*user.CreateI_Obj{
+				{
+					Property: &user.CreateI_Obj_Property{
+						Name: "marcojelli",
+					},
+				},
+			},
+		}
+
+		o, err := cl1.User().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		us1 = s
+	}
+
+	var us2 string
+	{
+		i := &user.CreateI{
+			Obj: []*user.CreateI_Obj{
+				{
+					Property: &user.CreateI_Obj_Property{
+						Name: "disreszi",
+					},
+				},
+			},
+		}
+
+		o, err := cl2.User().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		us2 = s
 	}
 
 	var vei string
@@ -125,7 +176,7 @@ func Test_Message_001(t *testing.T) {
 					Metadata: map[string]string{
 						"resource.venturemark.co/kind": "timeline",
 						"role.venturemark.co/kind":     "member",
-						"subject.venturemark.co/id":    cr2.User(),
+						"subject.venturemark.co/id":    us2,
 						"timeline.venturemark.co/id":   tii,
 						"venture.venturemark.co/id":    vei,
 					},
@@ -245,7 +296,7 @@ func Test_Message_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != cr2.User() {
+			if s != us2 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
@@ -271,7 +322,7 @@ func Test_Message_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != cr1.User() {
+			if s != us1 {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -307,7 +358,7 @@ func Test_Message_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != cr2.User() {
+			if s != us2 {
 				t.Fatal("id must match")
 			}
 		}
@@ -320,7 +371,7 @@ func Test_Message_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != cr1.User() {
+			if s != us1 {
 				t.Fatal("id must match")
 			}
 		}

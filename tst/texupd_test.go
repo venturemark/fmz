@@ -12,6 +12,7 @@ import (
 	"github.com/venturemark/apigengo/pkg/pbf/texupd"
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 	"github.com/venturemark/apigengo/pkg/pbf/update"
+	"github.com/venturemark/apigengo/pkg/pbf/user"
 	"github.com/venturemark/apigengo/pkg/pbf/venture"
 	"github.com/xh3b4sd/budget"
 	"github.com/xh3b4sd/tracer"
@@ -40,6 +41,28 @@ func Test_TexUpd_001(t *testing.T) {
 		}
 
 		defer cli.Grpc().Close()
+	}
+
+	{
+		i := &user.CreateI{
+			Obj: []*user.CreateI_Obj{
+				{
+					Property: &user.CreateI_Obj_Property{
+						Name: "marcojelli",
+					},
+				},
+			},
+		}
+
+		o, err := cli.User().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		_, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
 	}
 
 	var vei string
@@ -418,6 +441,28 @@ func Test_TexUpd_003(t *testing.T) {
 		}
 
 		defer cli.Grpc().Close()
+	}
+
+	{
+		i := &user.CreateI{
+			Obj: []*user.CreateI_Obj{
+				{
+					Property: &user.CreateI_Obj_Property{
+						Name: "marcojelli",
+					},
+				},
+			},
+		}
+
+		o, err := cli.User().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		_, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
 	}
 
 	var vei string

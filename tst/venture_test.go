@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/venturemark/apigengo/pkg/pbf/role"
+	"github.com/venturemark/apigengo/pkg/pbf/user"
 	"github.com/venturemark/apigengo/pkg/pbf/venture"
 
 	"github.com/venturemark/cfm/pkg/client"
@@ -61,6 +62,56 @@ func Test_Venture_001(t *testing.T) {
 		}
 
 		defer cl2.Grpc().Close()
+	}
+
+	var us1 string
+	{
+		i := &user.CreateI{
+			Obj: []*user.CreateI_Obj{
+				{
+					Property: &user.CreateI_Obj_Property{
+						Name: "marcojelli",
+					},
+				},
+			},
+		}
+
+		o, err := cl1.User().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		us1 = s
+	}
+
+	var us2 string
+	{
+		i := &user.CreateI{
+			Obj: []*user.CreateI_Obj{
+				{
+					Property: &user.CreateI_Obj_Property{
+						Name: "disreszi",
+					},
+				},
+			},
+		}
+
+		o, err := cl2.User().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		us2 = s
 	}
 
 	var ve1 string
@@ -120,7 +171,7 @@ func Test_Venture_001(t *testing.T) {
 					Metadata: map[string]string{
 						"resource.venturemark.co/kind": "venture",
 						"role.venturemark.co/kind":     "member",
-						"subject.venturemark.co/id":    cr2.User(),
+						"subject.venturemark.co/id":    us2,
 						"venture.venturemark.co/id":    ve2,
 					},
 				},
@@ -184,7 +235,7 @@ func Test_Venture_001(t *testing.T) {
 			Obj: []*venture.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/id": cr1.User(),
+						"subject.venturemark.co/id": us1,
 					},
 				},
 			},
@@ -237,7 +288,7 @@ func Test_Venture_001(t *testing.T) {
 			Obj: []*venture.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/id": cr2.User(),
+						"subject.venturemark.co/id": us2,
 					},
 				},
 			},
@@ -360,7 +411,7 @@ func Test_Venture_001(t *testing.T) {
 			Obj: []*venture.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/id": cr1.User(),
+						"subject.venturemark.co/id": us1,
 					},
 				},
 			},
@@ -381,7 +432,7 @@ func Test_Venture_001(t *testing.T) {
 			Obj: []*venture.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/id": cr2.User(),
+						"subject.venturemark.co/id": us2,
 					},
 				},
 			},
