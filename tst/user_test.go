@@ -594,3 +594,65 @@ func Test_User_002(t *testing.T) {
 		}
 	}
 }
+
+// Test_User_003 ensures that the users can only create one user object for
+// themselves.
+func Test_User_003(t *testing.T) {
+	var err error
+
+	var cli *client.Client
+	{
+		c := client.Config{}
+
+		cli, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cli.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cli.Grpc().Close()
+	}
+
+	{
+		i := &user.CreateI{
+			Obj: []*user.CreateI_Obj{
+				{
+					Property: &user.CreateI_Obj_Property{
+						Name: "one",
+					},
+				},
+			},
+		}
+
+		o, err := cli.User().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		_, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+	}
+
+	{
+		i := &user.CreateI{
+			Obj: []*user.CreateI_Obj{
+				{
+					Property: &user.CreateI_Obj_Property{
+						Name: "two",
+					},
+				},
+			},
+		}
+
+		_, err := cli.User().Create(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+}
