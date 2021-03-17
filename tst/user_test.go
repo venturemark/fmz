@@ -4,9 +4,14 @@ package tst
 
 import (
 	"context"
+	"fmt"
 	"testing"
+	"time"
 
+	"github.com/venturemark/apigengo/pkg/pbf/role"
 	"github.com/venturemark/apigengo/pkg/pbf/user"
+	"github.com/xh3b4sd/budget"
+	"github.com/xh3b4sd/tracer"
 
 	"github.com/venturemark/cfm/pkg/client"
 	"github.com/venturemark/cfm/pkg/oauth"
@@ -16,6 +21,19 @@ import (
 // creation to deletion.
 func Test_User_001(t *testing.T) {
 	var err error
+
+	var b budget.Interface
+	{
+		c := budget.ConstantConfig{
+			Budget:   9,
+			Duration: 5 * time.Second,
+		}
+
+		b, err = budget.NewConstant(c)
+		if err != nil {
+			panic(err)
+		}
+	}
 
 	var cr1 *oauth.Insecure
 	var cr2 *oauth.Insecure
@@ -87,6 +105,28 @@ func Test_User_001(t *testing.T) {
 		us1 = s
 	}
 
+	{
+		i := &role.SearchI{
+			Obj: []*role.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "user",
+						"user.venturemark.co/id":       us1,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Role().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one role")
+		}
+	}
+
 	var us2 string
 	{
 		i := &user.CreateI{
@@ -110,6 +150,28 @@ func Test_User_001(t *testing.T) {
 		}
 
 		us2 = s
+	}
+
+	{
+		i := &role.SearchI{
+			Obj: []*role.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "user",
+						"user.venturemark.co/id":       us2,
+					},
+				},
+			},
+		}
+
+		o, err := cl2.Role().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one role")
+		}
 	}
 
 	{
@@ -534,6 +596,37 @@ func Test_User_001(t *testing.T) {
 	}
 
 	{
+		o := func() error {
+			i := &role.SearchI{
+				Obj: []*role.SearchI_Obj{
+					{
+						Metadata: map[string]string{
+							"resource.venturemark.co/kind": "user",
+							"user.venturemark.co/id":       us1,
+						},
+					},
+				},
+			}
+
+			o, err := cl1.Role().Search(context.Background(), i)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if len(o.Obj) != 0 {
+				return tracer.Mask(fmt.Errorf("there must be zero roles"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	{
 		i := &user.SearchI{
 			Obj: []*user.SearchI_Obj{
 				{
@@ -544,13 +637,44 @@ func Test_User_001(t *testing.T) {
 			},
 		}
 
-		o, err := cl1.User().Search(context.Background(), i)
+		o, err := cl2.User().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
 
 		if len(o.Obj) != 0 {
 			t.Fatal("there must be zero users")
+		}
+	}
+
+	{
+		o := func() error {
+			i := &role.SearchI{
+				Obj: []*role.SearchI_Obj{
+					{
+						Metadata: map[string]string{
+							"resource.venturemark.co/kind": "user",
+							"user.venturemark.co/id":       us2,
+						},
+					},
+				},
+			}
+
+			o, err := cl2.Role().Search(context.Background(), i)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if len(o.Obj) != 0 {
+				return tracer.Mask(fmt.Errorf("there must be zero roles"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
 		}
 	}
 }
