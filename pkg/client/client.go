@@ -1,7 +1,6 @@
 package client
 
 import (
-	"github.com/venturemark/apigengo/pkg/pbf/audience"
 	"github.com/venturemark/apigengo/pkg/pbf/message"
 	"github.com/venturemark/apigengo/pkg/pbf/role"
 	"github.com/venturemark/apigengo/pkg/pbf/texupd"
@@ -27,7 +26,6 @@ type Client struct {
 	grpc   *grpc.ClientConn
 	redigo redigo.Interface
 
-	audience audience.APIClient
 	message  message.APIClient
 	role     role.APIClient
 	texupd   texupd.APIClient
@@ -71,11 +69,6 @@ func New(c Config) (*Client, error) {
 		}
 	}
 
-	var aud audience.APIClient
-	{
-		aud = audience.NewAPIClient(con)
-	}
-
 	var mes message.APIClient
 	{
 		mes = message.NewAPIClient(con)
@@ -115,7 +108,6 @@ func New(c Config) (*Client, error) {
 		grpc:   con,
 		redigo: red,
 
-		audience: aud,
 		message:  mes,
 		role:     rol,
 		texupd:   tex,
@@ -134,10 +126,6 @@ func (c *Client) Grpc() *grpc.ClientConn {
 
 func (c *Client) Redigo() redigo.Interface {
 	return c.redigo
-}
-
-func (c *Client) Audience() audience.APIClient {
-	return c.audience
 }
 
 func (c *Client) Message() message.APIClient {
