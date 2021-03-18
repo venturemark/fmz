@@ -82,6 +82,7 @@ github.com/stvp/tempredis v0.0.0-20181119212430-b82af8480203 h1:QVqDTf3h2WHt08Yu
 github.com/stvp/tempredis v0.0.0-20181119212430-b82af8480203/go.mod h1:oqN97ltKNihBbwlX8dLpwxCl3+HnXKV/R0e+sRLd9C8=
 github.com/venturemark/apigengo v0.1.0 h1:zadMW70Ows1zOlC7/vwvuGPg7Ozt+HUcbfYgLvLM6JQ=
 github.com/venturemark/apigengo v0.1.0/go.mod h1:fJtSDhgKu+UHfox3YVyRsbksWqQO7SYPLCEgIPEbR10=
+github.com/venturemark/apigengo v0.2.0/go.mod h1:fJtSDhgKu+UHfox3YVyRsbksWqQO7SYPLCEgIPEbR10=
 github.com/xh3b4sd/budget v0.2.0 h1:xqnGRFwrwXW/hJnf5SCatXIVp/iHfC4ZFVYGmYZmT2Q=
 github.com/xh3b4sd/budget v0.2.0/go.mod h1:u4Ci+UNDDCeDNjEOCPYQduvWg+T4G8frIYDxs/YG/ss=
 github.com/xh3b4sd/redigo v0.16.0 h1:PojjFc1hDcgRQVX8ipjpl3x7XVh4fVlLgqaV0zMMwps=
