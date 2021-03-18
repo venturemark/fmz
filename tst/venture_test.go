@@ -4,11 +4,15 @@ package tst
 
 import (
 	"context"
+	"fmt"
 	"testing"
+	"time"
 
 	"github.com/venturemark/apigengo/pkg/pbf/role"
 	"github.com/venturemark/apigengo/pkg/pbf/user"
 	"github.com/venturemark/apigengo/pkg/pbf/venture"
+	"github.com/xh3b4sd/budget"
+	"github.com/xh3b4sd/tracer"
 
 	"github.com/venturemark/cfm/pkg/client"
 	"github.com/venturemark/cfm/pkg/oauth"
@@ -18,6 +22,19 @@ import (
 // creation to deletion.
 func Test_Venture_001(t *testing.T) {
 	var err error
+
+	var b budget.Interface
+	{
+		c := budget.ConstantConfig{
+			Budget:   9,
+			Duration: 5 * time.Second,
+		}
+
+		b, err = budget.NewConstant(c)
+		if err != nil {
+			panic(err)
+		}
+	}
 
 	var cr1 *oauth.Insecure
 	var cr2 *oauth.Insecure
@@ -139,6 +156,28 @@ func Test_Venture_001(t *testing.T) {
 		ve1 = s
 	}
 
+	{
+		i := &role.SearchI{
+			Obj: []*role.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "venture",
+						"venture.venturemark.co/id":    ve1,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Role().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one role")
+		}
+	}
+
 	var ve2 string
 	{
 		i := &venture.CreateI{
@@ -162,6 +201,28 @@ func Test_Venture_001(t *testing.T) {
 		}
 
 		ve2 = s
+	}
+
+	{
+		i := &role.SearchI{
+			Obj: []*role.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "venture",
+						"venture.venturemark.co/id":    ve2,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Role().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one role")
+		}
 	}
 
 	{
@@ -381,6 +442,37 @@ func Test_Venture_001(t *testing.T) {
 	}
 
 	{
+		o := func() error {
+			i := &role.SearchI{
+				Obj: []*role.SearchI_Obj{
+					{
+						Metadata: map[string]string{
+							"resource.venturemark.co/kind": "venture",
+							"venture.venturemark.co/id":    ve1,
+						},
+					},
+				},
+			}
+
+			o, err := cl1.Role().Search(context.Background(), i)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if len(o.Obj) != 0 {
+				return tracer.Mask(fmt.Errorf("there must be zero roles"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	{
 		i := &venture.DeleteI{
 			Obj: []*venture.DeleteI_Obj{
 				{
@@ -403,6 +495,37 @@ func Test_Venture_001(t *testing.T) {
 
 		if s != "deleted" {
 			t.Fatal("status must be deleted")
+		}
+	}
+
+	{
+		o := func() error {
+			i := &role.SearchI{
+				Obj: []*role.SearchI_Obj{
+					{
+						Metadata: map[string]string{
+							"resource.venturemark.co/kind": "venture",
+							"venture.venturemark.co/id":    ve2,
+						},
+					},
+				},
+			}
+
+			o, err := cl1.Role().Search(context.Background(), i)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if len(o.Obj) != 0 {
+				return tracer.Mask(fmt.Errorf("there must be zero roles"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
 		}
 	}
 
