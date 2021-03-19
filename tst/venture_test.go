@@ -570,6 +570,182 @@ func Test_Venture_001(t *testing.T) {
 			t.Fatal("there must be zero ventures")
 		}
 	}
+
+	{
+		i := &user.DeleteI{
+			Obj: []*user.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"user.venturemark.co/id": us1,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.User().Delete(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["user.venturemark.co/status"]
+		if !ok {
+			t.Fatal("status must not be empty")
+		}
+
+		if s != "deleted" {
+			t.Fatal("status must be deleted")
+		}
+	}
+
+	{
+		i := &user.DeleteI{
+			Obj: []*user.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"user.venturemark.co/id": us2,
+					},
+				},
+			},
+		}
+
+		o, err := cl2.User().Delete(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["user.venturemark.co/status"]
+		if !ok {
+			t.Fatal("status must not be empty")
+		}
+
+		if s != "deleted" {
+			t.Fatal("status must be deleted")
+		}
+	}
+
+	{
+		o := func() error {
+			i := &role.SearchI{
+				Obj: []*role.SearchI_Obj{
+					{
+						Metadata: map[string]string{
+							"resource.venturemark.co/kind": "user",
+							"user.venturemark.co/id":       us1,
+						},
+					},
+				},
+			}
+
+			o, err := cl1.Role().Search(context.Background(), i)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if len(o.Obj) != 0 {
+				return tracer.Mask(fmt.Errorf("there must be zero roles"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	{
+		i := &user.SearchI{
+			Obj: []*user.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"subject.venturemark.co/id": us1,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.User().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 0 {
+			t.Fatal("there must be zero users")
+		}
+	}
+
+	{
+		o := func() error {
+			i := &role.SearchI{
+				Obj: []*role.SearchI_Obj{
+					{
+						Metadata: map[string]string{
+							"resource.venturemark.co/kind": "user",
+							"user.venturemark.co/id":       us2,
+						},
+					},
+				},
+			}
+
+			o, err := cl2.Role().Search(context.Background(), i)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if len(o.Obj) != 0 {
+				return tracer.Mask(fmt.Errorf("there must be zero roles"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	{
+		i := &user.SearchI{
+			Obj: []*user.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"subject.venturemark.co/id": us2,
+					},
+				},
+			},
+		}
+
+		o, err := cl2.User().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 0 {
+			t.Fatal("there must be zero users")
+		}
+	}
+
+	{
+		o := func() error {
+			emp, err := cl1.Redigo().Empty()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if !emp {
+				return tracer.Mask(fmt.Errorf("storage must be empty"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
 }
 
 // Test_Venture_002 ensures that deleting venture resources which do not exist

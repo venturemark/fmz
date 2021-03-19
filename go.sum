@@ -24,8 +24,8 @@ github.com/go-redis/redis/v7 v7.4.0 h1:7obg6wUoj05T0EpY0o8B59S9w5yeMWql7sw2kwNW1
 github.com/go-redis/redis/v7 v7.4.0/go.mod h1:JDNMw23GTyLNC4GZu9njt15ctBQVn7xjRfnwdHj/Dcg=
 github.com/go-redis/redis/v8 v8.1.1 h1:O7R8kajfkEg2BgSn+blItMi0j3T83ps5hwv86HtlSN4=
 github.com/go-redis/redis/v8 v8.1.1/go.mod h1:ysgGY09J/QeDYbu3HikWEIPCwaeOkuNoTgKayTEaEOw=
-github.com/go-redsync/redsync/v4 v4.0.4 h1:ru0qG+VCefaZSx3a5ADmlKZXkNdgeeYWIuymDu/tzV8=
-github.com/go-redsync/redsync/v4 v4.0.4/go.mod h1:QBOJAs1k8O6Eyrre4a++pxQgHe5eQ+HF56KuTVv+8Bs=
+github.com/go-redsync/redsync/v4 v4.1.0 h1:P/OHnsheUm+fCeXbLeqjGwwhf+nA2toyR4he/fsaea0=
+github.com/go-redsync/redsync/v4 v4.1.0/go.mod h1:QBOJAs1k8O6Eyrre4a++pxQgHe5eQ+HF56KuTVv+8Bs=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
 github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
@@ -84,8 +84,8 @@ github.com/venturemark/apigengo v0.2.0 h1:k2Pi1qYy+yyF1GAYx83htQeVKKI4yBdPajn3zH
 github.com/venturemark/apigengo v0.2.0/go.mod h1:fJtSDhgKu+UHfox3YVyRsbksWqQO7SYPLCEgIPEbR10=
 github.com/xh3b4sd/budget v0.2.0 h1:xqnGRFwrwXW/hJnf5SCatXIVp/iHfC4ZFVYGmYZmT2Q=
 github.com/xh3b4sd/budget v0.2.0/go.mod h1:u4Ci+UNDDCeDNjEOCPYQduvWg+T4G8frIYDxs/YG/ss=
-github.com/xh3b4sd/redigo v0.16.0 h1:PojjFc1hDcgRQVX8ipjpl3x7XVh4fVlLgqaV0zMMwps=
-github.com/xh3b4sd/redigo v0.16.0/go.mod h1:gAWZu3I5D0jcIRLuv34Wtncy6LcSMiXcipdecPKZhNg=
+github.com/xh3b4sd/redigo v0.17.0 h1:XjiDSb+mRLv1ez32MtYQkX1jyV5jtJ24F/dOtkz8CC8=
+github.com/xh3b4sd/redigo v0.17.0/go.mod h1:wWafcCjc/aYVA+PbyomS0G6Bsxgi7gEGnSFUCmkt8Rk=
 github.com/xh3b4sd/tracer v0.3.1 h1:wv4Cy/u/xLXLUJeKQWeiR+aU4mywj2f8PkQVda1EXKQ=
 github.com/xh3b4sd/tracer v0.3.1/go.mod h1:ZOLvBVLrmNx3GLCL7j0vEGMuI3r5ltLFcmDjG/3nV7g=
 go.opentelemetry.io/otel v0.11.0 h1:IN2tzQa9Gc4ZVKnTaMbPVcHjvzOdg5n9QfnmlqiET7E=
