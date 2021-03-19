@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/venturemark/apigengo/pkg/pbf/message"
+	"github.com/venturemark/apigengo/pkg/pbf/role"
 	"github.com/venturemark/apigengo/pkg/pbf/texupd"
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 	"github.com/venturemark/apigengo/pkg/pbf/update"
@@ -330,6 +331,38 @@ func Test_Timeline_001(t *testing.T) {
 	}
 
 	{
+		o := func() error {
+			i := &role.SearchI{
+				Obj: []*role.SearchI_Obj{
+					{
+						Metadata: map[string]string{
+							"resource.venturemark.co/kind": "timeline",
+							"timeline.venturemark.co/id":   ti2,
+							"venture.venturemark.co/id":    vei,
+						},
+					},
+				},
+			}
+
+			o, err := cli.Role().Search(context.Background(), i)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if len(o.Obj) != 0 {
+				return tracer.Mask(fmt.Errorf("there must be zero roles"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	{
 		i := &timeline.SearchI{
 			Obj: []*timeline.SearchI_Obj{
 				{
@@ -362,8 +395,8 @@ func Test_Timeline_001(t *testing.T) {
 		}
 
 		_, err := cli.Venture().Delete(context.Background(), i)
-		if err == nil {
-			t.Fatal("error must not be empty")
+		if err != nil {
+			t.Fatal(err)
 		}
 	}
 
@@ -371,8 +404,8 @@ func Test_Timeline_001(t *testing.T) {
 		i := &user.DeleteI{}
 
 		_, err := cli.User().Delete(context.Background(), i)
-		if err == nil {
-			t.Fatal("error must not be empty")
+		if err != nil {
+			t.Fatal(err)
 		}
 	}
 
