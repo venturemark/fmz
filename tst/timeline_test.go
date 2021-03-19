@@ -27,6 +27,19 @@ import (
 func Test_Timeline_001(t *testing.T) {
 	var err error
 
+	var b budget.Interface
+	{
+		c := budget.ConstantConfig{
+			Budget:   9,
+			Duration: 5 * time.Second,
+		}
+
+		b, err = budget.NewConstant(c)
+		if err != nil {
+			panic(err)
+		}
+	}
+
 	var cli *client.Client
 	{
 		c := client.Config{}
@@ -334,6 +347,52 @@ func Test_Timeline_001(t *testing.T) {
 
 		if len(o.Obj) != 0 {
 			t.Fatal("there must be zero timelines")
+		}
+	}
+
+	{
+		i := &venture.DeleteI{
+			Obj: []*venture.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": vei,
+					},
+				},
+			},
+		}
+
+		_, err := cli.Venture().Delete(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+
+	{
+		i := &user.DeleteI{}
+
+		_, err := cli.User().Delete(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+
+	{
+		o := func() error {
+			emp, err := cli.Redigo().Empty()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if !emp {
+				return tracer.Mask(fmt.Errorf("storage must be empty"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
 		}
 	}
 }

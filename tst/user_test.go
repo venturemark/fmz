@@ -549,15 +549,7 @@ func Test_User_001(t *testing.T) {
 	}
 
 	{
-		i := &user.DeleteI{
-			Obj: []*user.DeleteI_Obj{
-				{
-					Metadata: map[string]string{
-						"user.venturemark.co/id": us2,
-					},
-				},
-			},
-		}
+		i := &user.DeleteI{}
 
 		o, err := cl2.User().Delete(context.Background(), i)
 		if err != nil {
