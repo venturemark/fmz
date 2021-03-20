@@ -48,7 +48,6 @@ github.com/google/go-cmp v0.3.1/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMyw
 github.com/google/go-cmp v0.4.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.1/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
-github.com/google/go-cmp v0.5.2/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.5 h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
@@ -84,9 +83,8 @@ github.com/venturemark/apigengo v0.2.0 h1:k2Pi1qYy+yyF1GAYx83htQeVKKI4yBdPajn3zH
 github.com/venturemark/apigengo v0.2.0/go.mod h1:fJtSDhgKu+UHfox3YVyRsbksWqQO7SYPLCEgIPEbR10=
 github.com/xh3b4sd/budget v0.2.1 h1:wn1s+MpnJPfusLN28jH7cH2v4SeP0ldmmwU6H6FRARI=
 github.com/xh3b4sd/budget v0.2.1/go.mod h1:Qq5YihqFy2k1Q3TX+QhlPQYlLtA98ZxNwkWiX72mlAU=
-github.com/xh3b4sd/redigo v0.17.0 h1:XjiDSb+mRLv1ez32MtYQkX1jyV5jtJ24F/dOtkz8CC8=
-github.com/xh3b4sd/redigo v0.17.0/go.mod h1:wWafcCjc/aYVA+PbyomS0G6Bsxgi7gEGnSFUCmkt8Rk=
-github.com/xh3b4sd/tracer v0.3.1/go.mod h1:ZOLvBVLrmNx3GLCL7j0vEGMuI3r5ltLFcmDjG/3nV7g=
+github.com/xh3b4sd/redigo v0.17.1 h1:VIM310nF7tuSCS15ccm06CBQi3HWOwq+1oj/ZK9Auy4=
+github.com/xh3b4sd/redigo v0.17.1/go.mod h1:Qw7ahf+87pLO0b5Ss8mHuWke0DuBr+eFDxRG/k+WXWA=
 github.com/xh3b4sd/tracer v0.4.0 h1:SUxjzOf0ZqeF/mXi2Gtlr5bsJemTlcx9F2NKI6pFWM4=
 github.com/xh3b4sd/tracer v0.4.0/go.mod h1:MxvZ4BYzuaPgQToz+R+iO0q0RZ6BnDijHRGfWvR+yxM=
 go.opentelemetry.io/otel v0.11.0 h1:IN2tzQa9Gc4ZVKnTaMbPVcHjvzOdg5n9QfnmlqiET7E=
