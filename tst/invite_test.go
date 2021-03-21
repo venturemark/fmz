@@ -189,6 +189,9 @@ func Test_Invite_001(t *testing.T) {
 			if o.Obj[0].Property.Mail != "user2@site.net" {
 				t.Fatal("name must be user2@site.net")
 			}
+			if o.Obj[0].Property.Stat != "pending" {
+				t.Fatal("name must be pending")
+			}
 		}
 
 		{
@@ -201,6 +204,9 @@ func Test_Invite_001(t *testing.T) {
 			}
 			if o.Obj[1].Property.Mail != "user1@site.net" {
 				t.Fatal("name must be user1@site.net")
+			}
+			if o.Obj[1].Property.Stat != "pending" {
+				t.Fatal("name must be pending")
 			}
 		}
 	}
@@ -237,6 +243,9 @@ func Test_Invite_001(t *testing.T) {
 			if o.Obj[0].Property.Mail != "user1@site.net" {
 				t.Fatal("name must be user1@site.net")
 			}
+			if o.Obj[0].Property.Stat != "pending" {
+				t.Fatal("name must be pending")
+			}
 		}
 	}
 
@@ -271,6 +280,44 @@ func Test_Invite_001(t *testing.T) {
 
 		if s != "updated" {
 			t.Fatal("status must be updated")
+		}
+	}
+
+	{
+		i := &invite.SearchI{
+			Obj: []*invite.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"subject.venturemark.co/email": "user1@site.net",
+						"venture.venturemark.co/id":    vei,
+					},
+				},
+			},
+		}
+
+		o, err := cli.Invite().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one invite")
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != in1 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[0].Property.Mail != "user1@site.net" {
+				t.Fatal("name must be user1@site.net")
+			}
+			if o.Obj[0].Property.Stat != "accepted" {
+				t.Fatal("name must be accepted")
+			}
 		}
 	}
 
