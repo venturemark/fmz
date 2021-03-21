@@ -206,6 +206,41 @@ func Test_Invite_001(t *testing.T) {
 	}
 
 	{
+		i := &invite.SearchI{
+			Obj: []*invite.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"subject.venturemark.co/email": "user1@site.net",
+						"venture.venturemark.co/id":    vei,
+					},
+				},
+			},
+		}
+
+		o, err := cli.Invite().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one invite")
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != in1 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[0].Property.Mail != "user1@site.net" {
+				t.Fatal("name must be user1@site.net")
+			}
+		}
+	}
+
+	{
 		i := &invite.UpdateI{
 			Obj: []*invite.UpdateI_Obj{
 				{
@@ -542,7 +577,8 @@ func Test_Invite_002(t *testing.T) {
 }
 
 // Test_Invite_003 ensures that invites can only be created by users who are
-// owners of a venture.
+// owners of a venture. Additionally the test verifies that a legitimate email
+// address must be specified.
 func Test_Invite_003(t *testing.T) {
 	var err error
 
@@ -700,6 +736,46 @@ func Test_Invite_003(t *testing.T) {
 		}
 
 		_, err := cl2.Invite().Create(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+
+	{
+		i := &invite.CreateI{
+			Obj: []*invite.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": vei,
+					},
+					Property: &invite.CreateI_Obj_Property{
+						Mail: "",
+					},
+				},
+			},
+		}
+
+		_, err := cl1.Invite().Create(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+
+	{
+		i := &invite.CreateI{
+			Obj: []*invite.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": vei,
+					},
+					Property: &invite.CreateI_Obj_Property{
+						Mail: "garbage",
+					},
+				},
+			},
+		}
+
+		_, err := cl1.Invite().Create(context.Background(), i)
 		if err == nil {
 			t.Fatal("error must not be empty")
 		}
