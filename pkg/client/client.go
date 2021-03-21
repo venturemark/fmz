@@ -1,6 +1,7 @@
 package client
 
 import (
+	"github.com/venturemark/apigengo/pkg/pbf/invite"
 	"github.com/venturemark/apigengo/pkg/pbf/message"
 	"github.com/venturemark/apigengo/pkg/pbf/role"
 	"github.com/venturemark/apigengo/pkg/pbf/texupd"
@@ -26,6 +27,7 @@ type Client struct {
 	grpc   *grpc.ClientConn
 	redigo redigo.Interface
 
+	invite   invite.APIClient
 	message  message.APIClient
 	role     role.APIClient
 	texupd   texupd.APIClient
@@ -69,6 +71,11 @@ func New(c Config) (*Client, error) {
 		}
 	}
 
+	var inv invite.APIClient
+	{
+		inv = invite.NewAPIClient(con)
+	}
+
 	var mes message.APIClient
 	{
 		mes = message.NewAPIClient(con)
@@ -108,6 +115,7 @@ func New(c Config) (*Client, error) {
 		grpc:   con,
 		redigo: red,
 
+		invite:   inv,
 		message:  mes,
 		role:     rol,
 		texupd:   tex,
@@ -126,6 +134,10 @@ func (c *Client) Grpc() *grpc.ClientConn {
 
 func (c *Client) Redigo() redigo.Interface {
 	return c.redigo
+}
+
+func (c *Client) Invite() invite.APIClient {
+	return c.invite
 }
 
 func (c *Client) Message() message.APIClient {
