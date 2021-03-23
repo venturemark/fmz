@@ -38,21 +38,49 @@ func Test_Invite_001(t *testing.T) {
 		}
 	}
 
-	var cli *client.Client
+	var cr1 *oauth.Insecure
+	var cr2 *oauth.Insecure
 	{
-		c := client.Config{}
+		cr1 = oauth.NewInsecureOne()
+		cr2 = oauth.NewInsecureTwo()
+	}
 
-		cli, err = client.New(c)
+	var cl1 *client.Client
+	{
+		c := client.Config{
+			Credentials: cr1,
+		}
+
+		cl1, err = client.New(c)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		err = cli.Redigo().Purge()
+		err = cl1.Redigo().Purge()
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		defer cli.Grpc().Close()
+		defer cl1.Grpc().Close()
+	}
+
+	var cl2 *client.Client
+	{
+		c := client.Config{
+			Credentials: cr2,
+		}
+
+		cl2, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cl2.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cl2.Grpc().Close()
 	}
 
 	{
@@ -66,7 +94,29 @@ func Test_Invite_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.User().Create(context.Background(), i)
+		o, err := cl1.User().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		_, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+	}
+
+	{
+		i := &user.CreateI{
+			Obj: []*user.CreateI_Obj{
+				{
+					Property: &user.CreateI_Obj_Property{
+						Name: "disreszi",
+					},
+				},
+			},
+		}
+
+		o, err := cl2.User().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -89,7 +139,7 @@ func Test_Invite_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Venture().Create(context.Background(), i)
+		o, err := cl1.Venture().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -102,6 +152,7 @@ func Test_Invite_001(t *testing.T) {
 		vei = s
 	}
 
+	var co1 string
 	var in1 string
 	{
 		i := &invite.CreateI{
@@ -117,19 +168,31 @@ func Test_Invite_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Invite().Create(context.Background(), i)
+		o, err := cl1.Invite().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj[0].Metadata["invite.venturemark.co/id"]
-		if !ok {
-			t.Fatal("id must not be empty")
+		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/code"]
+			if !ok {
+				t.Fatal("code must not be empty")
+			}
+
+			co1 = s
 		}
 
-		in1 = s
+		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+
+			in1 = s
+		}
 	}
 
+	var co2 string
 	var in2 string
 	{
 		i := &invite.CreateI{
@@ -145,17 +208,28 @@ func Test_Invite_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Invite().Create(context.Background(), i)
+		o, err := cl1.Invite().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj[0].Metadata["invite.venturemark.co/id"]
-		if !ok {
-			t.Fatal("id must not be empty")
+		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/code"]
+			if !ok {
+				t.Fatal("code must not be empty")
+			}
+
+			co2 = s
 		}
 
-		in2 = s
+		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+
+			in2 = s
+		}
 	}
 
 	{
@@ -169,13 +243,23 @@ func Test_Invite_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Invite().Search(context.Background(), i)
+		o, err := cl1.Invite().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
 
 		if len(o.Obj) != 2 {
 			t.Fatal("there must be two invites")
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/code"]
+			if !ok {
+				t.Fatal("code must not be empty")
+			}
+			if s != co2 {
+				t.Fatal("code must match across actions")
+			}
 		}
 
 		{
@@ -186,11 +270,24 @@ func Test_Invite_001(t *testing.T) {
 			if s != in2 {
 				t.Fatal("id must match across actions")
 			}
+		}
+
+		{
 			if o.Obj[0].Property.Mail != "user2@site.net" {
 				t.Fatal("name must be user2@site.net")
 			}
 			if o.Obj[0].Property.Stat != "pending" {
 				t.Fatal("name must be pending")
+			}
+		}
+
+		{
+			s, ok := o.Obj[1].Metadata["invite.venturemark.co/code"]
+			if !ok {
+				t.Fatal("code must not be empty")
+			}
+			if s != co1 {
+				t.Fatal("code must match across actions")
 			}
 		}
 
@@ -202,6 +299,9 @@ func Test_Invite_001(t *testing.T) {
 			if s != in1 {
 				t.Fatal("id must match across actions")
 			}
+		}
+
+		{
 			if o.Obj[1].Property.Mail != "user1@site.net" {
 				t.Fatal("name must be user1@site.net")
 			}
@@ -216,14 +316,14 @@ func Test_Invite_001(t *testing.T) {
 			Obj: []*invite.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/email": "user1@site.net",
+						"subject.venturemark.co/email": "user2@site.net",
 						"venture.venturemark.co/id":    vei,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Invite().Search(context.Background(), i)
+		o, err := cl1.Invite().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -237,15 +337,37 @@ func Test_Invite_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != in1 {
+			if s != in2 {
 				t.Fatal("id must match across actions")
 			}
-			if o.Obj[0].Property.Mail != "user1@site.net" {
-				t.Fatal("name must be user1@site.net")
+			if o.Obj[0].Property.Mail != "user2@site.net" {
+				t.Fatal("mail must be user2@site.net")
 			}
 			if o.Obj[0].Property.Stat != "pending" {
-				t.Fatal("name must be pending")
+				t.Fatal("stat must be pending")
 			}
+		}
+	}
+
+	{
+		i := &role.SearchI{
+			Obj: []*role.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "venture",
+						"venture.venturemark.co/id":    vei,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Role().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one role")
 		}
 	}
 
@@ -254,8 +376,9 @@ func Test_Invite_001(t *testing.T) {
 			Obj: []*invite.UpdateI_Obj{
 				{
 					Metadata: map[string]string{
-						"invite.venturemark.co/id":  in1,
-						"venture.venturemark.co/id": vei,
+						"invite.venturemark.co/code": "garbage",
+						"invite.venturemark.co/id":   in2,
+						"venture.venturemark.co/id":  vei,
 					},
 					Jsnpatch: []*invite.UpdateI_Obj_Jsnpatch{
 						{
@@ -268,18 +391,79 @@ func Test_Invite_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Invite().Update(context.Background(), i)
+		_, err := cl2.Invite().Update(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+	}
+
+	{
+		i := &invite.UpdateI{
+			Obj: []*invite.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"invite.venturemark.co/code": co2,
+						"invite.venturemark.co/id":   in2,
+						"venture.venturemark.co/id":  vei,
+					},
+					Jsnpatch: []*invite.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/stat",
+							Val: to.StringP("accepted"),
+						},
+					},
+				},
+			},
+		}
+
+		o, err := cl2.Invite().Update(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj[0].Metadata["invite.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
+		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/status"]
+			if !ok {
+				t.Fatal("status must not be empty")
+			}
+
+			if s != "updated" {
+				t.Fatal("status must be updated")
+			}
 		}
 
-		if s != "updated" {
-			t.Fatal("status must be updated")
+		{
+			s, ok := o.Obj[0].Metadata["role.venturemark.co/status"]
+			if !ok {
+				t.Fatal("status must not be empty")
+			}
+
+			if s != "created" {
+				t.Fatal("status must be created")
+			}
+		}
+	}
+
+	{
+		i := &role.SearchI{
+			Obj: []*role.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "venture",
+						"venture.venturemark.co/id":    vei,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Role().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 2 {
+			t.Fatal("there must be two roles")
 		}
 	}
 
@@ -288,14 +472,14 @@ func Test_Invite_001(t *testing.T) {
 			Obj: []*invite.SearchI_Obj{
 				{
 					Metadata: map[string]string{
-						"subject.venturemark.co/email": "user1@site.net",
+						"subject.venturemark.co/email": "user2@site.net",
 						"venture.venturemark.co/id":    vei,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Invite().Search(context.Background(), i)
+		o, err := cl1.Invite().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -309,14 +493,14 @@ func Test_Invite_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != in1 {
+			if s != in2 {
 				t.Fatal("id must match across actions")
 			}
-			if o.Obj[0].Property.Mail != "user1@site.net" {
-				t.Fatal("name must be user1@site.net")
+			if o.Obj[0].Property.Mail != "user2@site.net" {
+				t.Fatal("mail must be user2@site.net")
 			}
 			if o.Obj[0].Property.Stat != "accepted" {
-				t.Fatal("name must be accepted")
+				t.Fatal("stat must be accepted")
 			}
 		}
 	}
@@ -333,7 +517,7 @@ func Test_Invite_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Invite().Delete(context.Background(), i)
+		o, err := cl1.Invite().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -349,40 +533,6 @@ func Test_Invite_001(t *testing.T) {
 	}
 
 	{
-		i := &invite.UpdateI{
-			Obj: []*invite.UpdateI_Obj{
-				{
-					Metadata: map[string]string{
-						"invite.venturemark.co/id":  in2,
-						"venture.venturemark.co/id": vei,
-					},
-					Jsnpatch: []*invite.UpdateI_Obj_Jsnpatch{
-						{
-							Ope: "replace",
-							Pat: "/obj/property/stat",
-							Val: to.StringP("rejected"),
-						},
-					},
-				},
-			},
-		}
-
-		o, err := cli.Invite().Update(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		s, ok := o.Obj[0].Metadata["invite.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
-		}
-
-		if s != "updated" {
-			t.Fatal("status must be updated")
-		}
-	}
-
-	{
 		i := &invite.DeleteI{
 			Obj: []*invite.DeleteI_Obj{
 				{
@@ -394,7 +544,7 @@ func Test_Invite_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Invite().Delete(context.Background(), i)
+		o, err := cl1.Invite().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -423,7 +573,7 @@ func Test_Invite_001(t *testing.T) {
 				},
 			}
 
-			o, err := cli.Role().Search(context.Background(), i)
+			o, err := cl1.Role().Search(context.Background(), i)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -452,7 +602,7 @@ func Test_Invite_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Invite().Search(context.Background(), i)
+		o, err := cl1.Invite().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -473,7 +623,7 @@ func Test_Invite_001(t *testing.T) {
 			},
 		}
 
-		_, err := cli.Venture().Delete(context.Background(), i)
+		_, err := cl1.Venture().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -482,7 +632,16 @@ func Test_Invite_001(t *testing.T) {
 	{
 		i := &user.DeleteI{}
 
-		_, err := cli.User().Delete(context.Background(), i)
+		_, err := cl1.User().Delete(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	{
+		i := &user.DeleteI{}
+
+		_, err := cl2.User().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -490,7 +649,7 @@ func Test_Invite_001(t *testing.T) {
 
 	{
 		o := func() error {
-			emp, err := cli.Redigo().Empty()
+			emp, err := cl1.Redigo().Empty()
 			if err != nil {
 				t.Fatal(err)
 			}
