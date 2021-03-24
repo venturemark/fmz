@@ -15,6 +15,7 @@ import (
 
 	"github.com/venturemark/cfm/pkg/client"
 	"github.com/venturemark/cfm/pkg/oauth"
+	"github.com/venturemark/cfm/pkg/to"
 )
 
 // Test_User_001 ensures that the lifecycle of users is covered from
@@ -87,6 +88,12 @@ func Test_User_001(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "marcojelli",
+						Prof: []*user.CreateI_Obj_Property_Prof{
+							{
+								Desc: "Founder",
+								Vent: "Venturemark",
+							},
+						},
 					},
 				},
 			},
@@ -201,6 +208,51 @@ func Test_User_001(t *testing.T) {
 				t.Fatal("name must be marcojelli")
 			}
 		}
+
+		{
+			if len(o.Obj[0].Property.Prof) != 1 {
+				t.Fatal("there must be one prof")
+			}
+			if o.Obj[0].Property.Prof[0].Desc != "Founder" {
+				t.Fatal("desc must be Founder")
+			}
+			if o.Obj[0].Property.Prof[0].Vent != "Venturemark" {
+				t.Fatal("vent must be Venturemark")
+			}
+		}
+	}
+
+	{
+		i := &user.UpdateI{
+			Obj: []*user.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"user.venturemark.co/id": us1,
+					},
+					Jsnpatch: []*user.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/prof/0/desc",
+							Val: to.StringP("CEO"),
+						},
+					},
+				},
+			},
+		}
+
+		o, err := cl1.User().Update(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["user.venturemark.co/status"]
+		if !ok {
+			t.Fatal("status must not be empty")
+		}
+
+		if s != "updated" {
+			t.Fatal("status must be updated")
+		}
 	}
 
 	{
@@ -236,6 +288,18 @@ func Test_User_001(t *testing.T) {
 		{
 			if o.Obj[0].Property.Name != "marcojelli" {
 				t.Fatal("name must be marcojelli")
+			}
+		}
+
+		{
+			if len(o.Obj[0].Property.Prof) != 1 {
+				t.Fatal("there must be one prof")
+			}
+			if o.Obj[0].Property.Prof[0].Desc != "CEO" {
+				t.Fatal("desc must be CEO")
+			}
+			if o.Obj[0].Property.Prof[0].Vent != "Venturemark" {
+				t.Fatal("vent must be Venturemark")
 			}
 		}
 	}
