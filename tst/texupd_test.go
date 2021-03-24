@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/venturemark/apigengo/pkg/pbf/message"
+	"github.com/venturemark/apigengo/pkg/pbf/role"
 	"github.com/venturemark/apigengo/pkg/pbf/texupd"
 	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 	"github.com/venturemark/apigengo/pkg/pbf/update"
@@ -25,6 +26,19 @@ import (
 // creation to deletion.
 func Test_TexUpd_001(t *testing.T) {
 	var err error
+
+	var b budget.Interface
+	{
+		c := budget.ConstantConfig{
+			Budget:   9,
+			Duration: 5 * time.Second,
+		}
+
+		b, err = budget.NewConstant(c)
+		if err != nil {
+			panic(err)
+		}
+	}
 
 	var cli *client.Client
 	{
@@ -128,6 +142,7 @@ func Test_TexUpd_001(t *testing.T) {
 						"venture.venturemark.co/id":  vei,
 					},
 					Property: &texupd.CreateI_Obj_Property{
+						Head: "title",
 						Text: "Lorem ipsum 1",
 					},
 				},
@@ -205,6 +220,9 @@ func Test_TexUpd_001(t *testing.T) {
 			if s != up2 {
 				t.Fatal("id must match across actions")
 			}
+			if o.Obj[0].Property.Head != "" {
+				t.Fatal("head must be empty")
+			}
 			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
 				t.Fatal("text must be Lorem ipsum 2")
 			}
@@ -217,6 +235,9 @@ func Test_TexUpd_001(t *testing.T) {
 			}
 			if s != up1 {
 				t.Fatal("id must match across actions")
+			}
+			if o.Obj[1].Property.Head != "title" {
+				t.Fatal("head must be title")
 			}
 			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
 				t.Fatal("text must be Lorem ipsum 1")
@@ -360,6 +381,101 @@ func Test_TexUpd_001(t *testing.T) {
 
 		if len(o.Obj) != 0 {
 			t.Fatal("there must be zero updates")
+		}
+	}
+
+	{
+		i := &venture.DeleteI{
+			Obj: []*venture.DeleteI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": vei,
+					},
+				},
+			},
+		}
+
+		o, err := cli.Venture().Delete(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["venture.venturemark.co/status"]
+		if !ok {
+			t.Fatal("status must not be empty")
+		}
+
+		if s != "deleted" {
+			t.Fatal("status must be deleted")
+		}
+	}
+
+	{
+		o := func() error {
+			i := &role.SearchI{
+				Obj: []*role.SearchI_Obj{
+					{
+						Metadata: map[string]string{
+							"resource.venturemark.co/kind": "venture",
+							"venture.venturemark.co/id":    vei,
+						},
+					},
+				},
+			}
+
+			o, err := cli.Role().Search(context.Background(), i)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if len(o.Obj) != 0 {
+				return tracer.Mask(fmt.Errorf("there must be zero roles"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	{
+		i := &user.DeleteI{}
+
+		o, err := cli.User().Delete(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["user.venturemark.co/status"]
+		if !ok {
+			t.Fatal("status must not be empty")
+		}
+
+		if s != "deleted" {
+			t.Fatal("status must be deleted")
+		}
+	}
+
+	{
+		o := func() error {
+			emp, err := cli.Redigo().Empty()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if !emp {
+				return tracer.Mask(fmt.Errorf("storage must be empty"))
+			}
+
+			return nil
+		}
+
+		err = b.Execute(o)
+		if err != nil {
+			t.Fatal(err)
 		}
 	}
 }
