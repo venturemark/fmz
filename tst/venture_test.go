@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/venturemark/apigengo/pkg/pbf/role"
+	"github.com/venturemark/apigengo/pkg/pbf/timeline"
 	"github.com/venturemark/apigengo/pkg/pbf/user"
 	"github.com/venturemark/apigengo/pkg/pbf/venture"
 	"github.com/xh3b4sd/budget"
@@ -156,6 +157,34 @@ func Test_Venture_001(t *testing.T) {
 		ve1 = s
 	}
 
+	var tii string
+	{
+		i := &timeline.CreateI{
+			Obj: []*timeline.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": ve1,
+					},
+					Property: &timeline.CreateI_Obj_Property{
+						Name: "Marketing Campaign",
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Timeline().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["timeline.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		tii = s
+	}
+
 	{
 		i := &role.SearchI{
 			Obj: []*role.SearchI_Obj{
@@ -226,6 +255,24 @@ func Test_Venture_001(t *testing.T) {
 	}
 
 	{
+		i := &venture.SearchI{
+			Obj: []*venture.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": ve1,
+					},
+				},
+			},
+		}
+
+		_, err := cl2.Venture().Search(context.Background(), i)
+		if err == nil {
+			t.Fatal("error must not be empty")
+		}
+
+	}
+
+	{
 		i := &role.CreateI{
 			Obj: []*role.CreateI_Obj{
 				{
@@ -234,6 +281,36 @@ func Test_Venture_001(t *testing.T) {
 						"role.venturemark.co/kind":     "member",
 						"subject.venturemark.co/id":    us2,
 						"venture.venturemark.co/id":    ve2,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Role().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one role")
+		}
+
+		_, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+	}
+
+	{
+		i := &role.CreateI{
+			Obj: []*role.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "timeline",
+						"role.venturemark.co/kind":     "member",
+						"subject.venturemark.co/id":    us2,
+						"timeline.venturemark.co/id":   tii,
+						"venture.venturemark.co/id":    ve1,
 					},
 				},
 			},
@@ -377,6 +454,43 @@ func Test_Venture_001(t *testing.T) {
 		{
 			if o.Obj[0].Property.Name != "GME" {
 				t.Fatal("name must be GME")
+			}
+		}
+	}
+
+	{
+		i := &venture.SearchI{
+			Obj: []*venture.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": ve1,
+					},
+				},
+			},
+		}
+
+		o, err := cl2.Venture().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one venture")
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["venture.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != ve1 {
+				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
+			if o.Obj[0].Property.Name != "IBM" {
+				t.Fatal("name must be IBM")
 			}
 		}
 	}
