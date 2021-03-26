@@ -425,7 +425,7 @@ func Test_Invite_001(t *testing.T) {
 		{
 			s, ok := o.Obj[0].Metadata["invite.venturemark.co/id"]
 			if !ok {
-				t.Fatal("status must not be empty")
+				t.Fatal("id must not be empty")
 			}
 
 			if s != in2 {
