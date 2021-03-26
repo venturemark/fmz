@@ -236,13 +236,26 @@ func Test_Role_001(t *testing.T) {
 			t.Fatal("there must be one role")
 		}
 
-		s, ok := o.Obj[0].Metadata["role.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
+		{
+			s, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+
+			if s != ro2 {
+				t.Fatal("id must match across actions")
+			}
 		}
 
-		if s != "updated" {
-			t.Fatal("status must be updated")
+		{
+			s, ok := o.Obj[0].Metadata["role.venturemark.co/status"]
+			if !ok {
+				t.Fatal("status must not be empty")
+			}
+
+			if s != "updated" {
+				t.Fatal("status must be updated")
+			}
 		}
 	}
 

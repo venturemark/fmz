@@ -263,13 +263,26 @@ func Test_TexUpd_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj[0].Metadata["update.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
+		{
+			s, ok := o.Obj[0].Metadata["update.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+
+			if s != up1 {
+				t.Fatal("id must match across actions")
+			}
 		}
 
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
+		{
+			s, ok := o.Obj[0].Metadata["update.venturemark.co/status"]
+			if !ok {
+				t.Fatal("status must not be empty")
+			}
+
+			if s != "deleted" {
+				t.Fatal("status must be deleted")
+			}
 		}
 	}
 

@@ -199,7 +199,7 @@ func Test_Message_001(t *testing.T) {
 		}
 	}
 
-	var mi1 string
+	var me1 string
 	{
 		i := &message.CreateI{
 			Obj: []*message.CreateI_Obj{
@@ -226,10 +226,10 @@ func Test_Message_001(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		mi1 = s
+		me1 = s
 	}
 
-	var mi2 string
+	var me2 string
 	{
 		i := &message.CreateI{
 			Obj: []*message.CreateI_Obj{
@@ -256,7 +256,7 @@ func Test_Message_001(t *testing.T) {
 			t.Fatal("id must not be empty")
 		}
 
-		mi2 = s
+		me2 = s
 	}
 
 	{
@@ -286,7 +286,7 @@ func Test_Message_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != mi2 {
+			if s != me2 {
 				t.Fatal("id must match across actions")
 			}
 		}
@@ -309,7 +309,7 @@ func Test_Message_001(t *testing.T) {
 			if !ok {
 				t.Fatal("id must not be empty")
 			}
-			if s != mi1 {
+			if s != me1 {
 				t.Fatal("id must match across actions")
 			}
 			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
@@ -382,7 +382,7 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"message.venturemark.co/id":  mi1,
+						"message.venturemark.co/id":  me1,
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
 						"venture.venturemark.co/id":  vei,
@@ -396,13 +396,26 @@ func Test_Message_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj[0].Metadata["message.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
+		{
+			s, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+
+			if s != me1 {
+				t.Fatal("id must match across actions")
+			}
 		}
 
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
+		{
+			s, ok := o.Obj[0].Metadata["message.venturemark.co/status"]
+			if !ok {
+				t.Fatal("status must not be empty")
+			}
+
+			if s != "deleted" {
+				t.Fatal("status must be deleted")
+			}
 		}
 	}
 
@@ -411,7 +424,7 @@ func Test_Message_001(t *testing.T) {
 			Obj: []*message.DeleteI_Obj{
 				{
 					Metadata: map[string]string{
-						"message.venturemark.co/id":  mi2,
+						"message.venturemark.co/id":  me2,
 						"timeline.venturemark.co/id": tii,
 						"update.venturemark.co/id":   "1",
 						"venture.venturemark.co/id":  vei,
