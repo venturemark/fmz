@@ -423,6 +423,17 @@ func Test_Invite_001(t *testing.T) {
 		}
 
 		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/id"]
+			if !ok {
+				t.Fatal("status must not be empty")
+			}
+
+			if s != in2 {
+				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
 			s, ok := o.Obj[0].Metadata["invite.venturemark.co/status"]
 			if !ok {
 				t.Fatal("status must not be empty")
@@ -430,6 +441,13 @@ func Test_Invite_001(t *testing.T) {
 
 			if s != "updated" {
 				t.Fatal("status must be updated")
+			}
+		}
+
+		{
+			_, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
 			}
 		}
 
@@ -522,13 +540,26 @@ func Test_Invite_001(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		s, ok := o.Obj[0].Metadata["invite.venturemark.co/status"]
-		if !ok {
-			t.Fatal("status must not be empty")
+		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/id"]
+			if !ok {
+				t.Fatal("status must not be empty")
+			}
+
+			if s != in1 {
+				t.Fatal("status must be deleted")
+			}
 		}
 
-		if s != "deleted" {
-			t.Fatal("status must be deleted")
+		{
+			s, ok := o.Obj[0].Metadata["invite.venturemark.co/status"]
+			if !ok {
+				t.Fatal("status must not be empty")
+			}
+
+			if s != "deleted" {
+				t.Fatal("status must be deleted")
+			}
 		}
 	}
 
