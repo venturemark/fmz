@@ -80,8 +80,8 @@ github.com/stretchr/testify v1.6.1 h1:hDPOHmpOpP40lSULcqw7IrRb/u7w6RpDC9399XyoNd
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stvp/tempredis v0.0.0-20181119212430-b82af8480203 h1:QVqDTf3h2WHt08YuiTGPZLls0Wq99X9bWd0Q5ZSBesM=
 github.com/stvp/tempredis v0.0.0-20181119212430-b82af8480203/go.mod h1:oqN97ltKNihBbwlX8dLpwxCl3+HnXKV/R0e+sRLd9C8=
-github.com/venturemark/apigengo v0.3.2 h1:DDLAAKhQIajCBKLBVWNGklE5gLnK1n5wk1WFIGEsKTs=
-github.com/venturemark/apigengo v0.3.2/go.mod h1:r5z0VPa/tqgsxVgnJdgNfTIeuwJzohcyLR57criXcIE=
+github.com/venturemark/apigengo v0.4.0 h1:m6l0g4h0LktZHt5+IZecLwV40uwfzPunSDCe1fD2SFk=
+github.com/venturemark/apigengo v0.4.0/go.mod h1:mmgXDZHP/xWoX5DTDiCfchXOxvKB9W/zoKQsGW3Cj7U=
 github.com/xh3b4sd/budget v0.2.1 h1:wn1s+MpnJPfusLN28jH7cH2v4SeP0ldmmwU6H6FRARI=
 github.com/xh3b4sd/budget v0.2.1/go.mod h1:Qq5YihqFy2k1Q3TX+QhlPQYlLtA98ZxNwkWiX72mlAU=
 github.com/xh3b4sd/redigo v0.17.1 h1:VIM310nF7tuSCS15ccm06CBQi3HWOwq+1oj/ZK9Auy4=
@@ -138,7 +138,6 @@ google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZi
 google.golang.org/grpc v1.23.0/go.mod h1:Y5yQAOtifL1yxbo5wqy6BxZv8vAUGQwXBOALyacEbxg=
 google.golang.org/grpc v1.25.1/go.mod h1:c3i+UQWmh7LiEpx4sFZnkU36qjEYZ0imhYfXVyQciAY=
 google.golang.org/grpc v1.27.0/go.mod h1:qbnxyOmOxrQa7FizSgH+ReBfzJrCY1pSN7KXBS8abTk=
-google.golang.org/grpc v1.36.0/go.mod h1:qjiiYl8FncCW8feJPdyg3v6XW24KsRHe+dy9BAGRRjU=
 google.golang.org/grpc v1.36.1 h1:cmUfbeGKnz9+2DD/UYsMQXeqbHZqZDs4eQwW0sFOpBY=
 google.golang.org/grpc v1.36.1/go.mod h1:qjiiYl8FncCW8feJPdyg3v6XW24KsRHe+dy9BAGRRjU=
 google.golang.org/protobuf v0.0.0-20200109180630-ec00e32a8dfd/go.mod h1:DFci5gLYBciE7Vtevhsrf46CRTquxDuWsQurQQe4oz8=
