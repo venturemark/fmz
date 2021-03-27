@@ -246,6 +246,108 @@ func Test_TexUpd_001(t *testing.T) {
 	}
 
 	{
+		i := &texupd.UpdateI{
+			Obj: []*texupd.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": tii,
+						"update.venturemark.co/id":   up1,
+						"venture.venturemark.co/id":  vei,
+					},
+					Jsnpatch: []*texupd.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/text",
+							Val: to.StringP("changed"),
+						},
+					},
+				},
+			},
+		}
+
+		o, err := cli.TexUpd().Update(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["update.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+
+			if s != up1 {
+				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["update.venturemark.co/status"]
+			if !ok {
+				t.Fatal("status must not be empty")
+			}
+
+			if s != "updated" {
+				t.Fatal("status must be updated")
+			}
+		}
+	}
+
+	{
+		i := &update.SearchI{
+			Obj: []*update.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"timeline.venturemark.co/id": tii,
+						"venture.venturemark.co/id":  vei,
+					},
+				},
+			},
+		}
+
+		o, err := cli.Update().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 2 {
+			t.Fatal("there must be two updates")
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["update.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != up2 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[0].Property.Head != "" {
+				t.Fatal("head must be empty")
+			}
+			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
+				t.Fatal("text must be Lorem ipsum 2")
+			}
+		}
+
+		{
+			s, ok := o.Obj[1].Metadata["update.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != up1 {
+				t.Fatal("id must match across actions")
+			}
+			if o.Obj[1].Property.Head != "title" {
+				t.Fatal("head must be title")
+			}
+			if o.Obj[1].Property.Text != "changed" {
+				t.Fatal("text must be changed")
+			}
+		}
+	}
+
+	{
 		i := &texupd.DeleteI{
 			Obj: []*texupd.DeleteI_Obj{
 				{
