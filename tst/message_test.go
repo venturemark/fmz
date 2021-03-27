@@ -14,6 +14,7 @@ import (
 
 	"github.com/venturemark/cfm/pkg/client"
 	"github.com/venturemark/cfm/pkg/oauth"
+	"github.com/venturemark/cfm/pkg/to"
 )
 
 // Test_Message_001 ensures that the lifecycle of messages is covered from
@@ -329,6 +330,55 @@ func Test_Message_001(t *testing.T) {
 	}
 
 	{
+		i := &message.UpdateI{
+			Obj: []*message.UpdateI_Obj{
+				{
+					Metadata: map[string]string{
+						"message.venturemark.co/id":  me1,
+						"timeline.venturemark.co/id": tii,
+						"update.venturemark.co/id":   "1",
+						"venture.venturemark.co/id":  vei,
+					},
+					Jsnpatch: []*message.UpdateI_Obj_Jsnpatch{
+						{
+							Ope: "replace",
+							Pat: "/obj/property/text",
+							Val: to.StringP("changed"),
+						},
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Message().Update(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["message.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+
+			if s != me1 {
+				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["message.venturemark.co/status"]
+			if !ok {
+				t.Fatal("status must not be empty")
+			}
+
+			if s != "updated" {
+				t.Fatal("status must be updated")
+			}
+		}
+	}
+
+	{
 		i := &message.SearchI{
 			Obj: []*message.SearchI_Obj{
 				{
@@ -352,7 +402,7 @@ func Test_Message_001(t *testing.T) {
 
 		{
 			if o.Obj[0].Property.Text != "Lorem ipsum 2" {
-				t.Fatal("text must be Lorem ipsum 1")
+				t.Fatal("text must be Lorem ipsum 2")
 			}
 			s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
 			if !ok {
@@ -364,8 +414,8 @@ func Test_Message_001(t *testing.T) {
 		}
 
 		{
-			if o.Obj[1].Property.Text != "Lorem ipsum 1" {
-				t.Fatal("text must be Lorem ipsum 2")
+			if o.Obj[1].Property.Text != "changed" {
+				t.Fatal("text must be changed")
 			}
 			s, ok := o.Obj[1].Metadata["user.venturemark.co/id"]
 			if !ok {
