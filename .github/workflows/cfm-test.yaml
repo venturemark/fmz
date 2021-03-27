@@ -42,14 +42,12 @@ jobs:
           sudo apt install gcc -y
 
       - name: "Install Test Dependency"
-        env:
-          GO111MODULE: "on"
         run: |
-          go get -u github.com/venturemark/apiserver
+          go get -u github.com/venturemark/apiserver@$(git ls-remote git://github.com/venturemark/apiserver.git HEAD | awk '{print $1;}')
 
       - name: "Install Test Dependency"
         run: |
-          go get -u github.com/venturemark/apiworker
+          go get -u github.com/venturemark/apiworker@$(git ls-remote git://github.com/venturemark/apiworker.git HEAD | awk '{print $1;}')
 
       - name: "Install Test Dependency"
         env:
