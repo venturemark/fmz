@@ -255,6 +255,71 @@ func Test_Venture_001(t *testing.T) {
 	}
 
 	{
+		i := &user.SearchI{
+			Obj: []*user.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "venture",
+						"venture.venturemark.co/id":    ve2,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.User().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one user")
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != us1 {
+				t.Fatal("id must match across actions")
+			}
+		}
+	}
+
+	{
+		i := &user.SearchI{
+			Obj: []*user.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "timeline",
+						"timeline.venturemark.co/id":   tii,
+						"venture.venturemark.co/id":    ve1,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.User().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one user")
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != us1 {
+				t.Fatal("id must match across actions")
+			}
+		}
+	}
+
+	{
 		i := &venture.SearchI{
 			Obj: []*venture.SearchI_Obj{
 				{
@@ -269,7 +334,6 @@ func Test_Venture_001(t *testing.T) {
 		if err == nil {
 			t.Fatal("error must not be empty")
 		}
-
 	}
 
 	{
@@ -328,6 +392,91 @@ func Test_Venture_001(t *testing.T) {
 		_, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
 		if !ok {
 			t.Fatal("id must not be empty")
+		}
+	}
+
+	{
+		i := &user.SearchI{
+			Obj: []*user.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "venture",
+						"venture.venturemark.co/id":    ve2,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.User().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 2 {
+			t.Fatal("there must be two users")
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != us2 {
+				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
+			s, ok := o.Obj[1].Metadata["user.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != us1 {
+				t.Fatal("id must match across actions")
+			}
+		}
+	}
+
+	{
+		i := &user.SearchI{
+			Obj: []*user.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "timeline",
+						"timeline.venturemark.co/id":   tii,
+						"venture.venturemark.co/id":    ve1,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.User().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 2 {
+			t.Fatal("there must be two users")
+		}
+
+		{
+			s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != us2 {
+				t.Fatal("id must match across actions")
+			}
+		}
+
+		{
+			s, ok := o.Obj[1].Metadata["user.venturemark.co/id"]
+			if !ok {
+				t.Fatal("id must not be empty")
+			}
+			if s != us1 {
+				t.Fatal("id must match across actions")
+			}
 		}
 	}
 
