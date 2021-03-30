@@ -41,21 +41,49 @@ func Test_Timeline_001(t *testing.T) {
 		}
 	}
 
-	var cli *client.Client
+	var cr1 *oauth.Insecure
+	var cr2 *oauth.Insecure
 	{
-		c := client.Config{}
+		cr1 = oauth.NewInsecureOne()
+		cr2 = oauth.NewInsecureTwo()
+	}
 
-		cli, err = client.New(c)
+	var cl1 *client.Client
+	{
+		c := client.Config{
+			Credentials: cr1,
+		}
+
+		cl1, err = client.New(c)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		err = cli.Redigo().Purge()
+		err = cl1.Redigo().Purge()
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		defer cli.Grpc().Close()
+		defer cl1.Grpc().Close()
+	}
+
+	var cl2 *client.Client
+	{
+		c := client.Config{
+			Credentials: cr2,
+		}
+
+		cl2, err = client.New(c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = cl2.Redigo().Purge()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		defer cl2.Grpc().Close()
 	}
 
 	{
@@ -69,7 +97,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.User().Create(context.Background(), i)
+		o, err := cl1.User().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -78,6 +106,31 @@ func Test_Timeline_001(t *testing.T) {
 		if !ok {
 			t.Fatal("id must not be empty")
 		}
+	}
+
+	var us2 string
+	{
+		i := &user.CreateI{
+			Obj: []*user.CreateI_Obj{
+				{
+					Property: &user.CreateI_Obj_Property{
+						Name: "disreszi",
+					},
+				},
+			},
+		}
+
+		o, err := cl2.User().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		s, ok := o.Obj[0].Metadata["user.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+
+		us2 = s
 	}
 
 	var vei string
@@ -92,7 +145,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Venture().Create(context.Background(), i)
+		o, err := cl1.Venture().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -120,7 +173,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cl1.Timeline().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -148,7 +201,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Create(context.Background(), i)
+		o, err := cl1.Timeline().Create(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -166,13 +219,106 @@ func Test_Timeline_001(t *testing.T) {
 			Obj: []*timeline.SearchI_Obj{
 				{
 					Metadata: map[string]string{
+						"subject.venturemark.co/id": us2,
+					},
+				},
+			},
+		}
+
+		o, err := cl2.Timeline().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 0 {
+			t.Fatal("there must be zero timelines")
+		}
+	}
+
+	{
+		i := &role.CreateI{
+			Obj: []*role.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "timeline",
+						"role.venturemark.co/kind":     "member",
+						"subject.venturemark.co/id":    us2,
+						"timeline.venturemark.co/id":   ti2,
+						"venture.venturemark.co/id":    vei,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Role().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one role")
+		}
+
+		_, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+	}
+
+	{
+		i := &timeline.SearchI{
+			Obj: []*timeline.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"subject.venturemark.co/id": us2,
+					},
+				},
+			},
+		}
+
+		o, err := cl2.Timeline().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one timeline")
+		}
+	}
+
+	{
+		i := &timeline.SearchI{
+			Obj: []*timeline.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"venture.venturemark.co/id": ti1,
+					},
+				},
+			},
+		}
+
+		o, err := cl2.Timeline().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 0 {
+			t.Fatal("there must be zero timelines")
+		}
+	}
+
+	{
+		i := &timeline.SearchI{
+			Obj: []*timeline.SearchI_Obj{
+				{
+					Metadata: map[string]string{
 						"venture.venturemark.co/id": vei,
 					},
 				},
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cl1.Timeline().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -227,7 +373,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cl1.Timeline().Update(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -267,7 +413,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cl1.Timeline().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -314,7 +460,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Update(context.Background(), i)
+		o, err := cl1.Timeline().Update(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -341,7 +487,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Delete(context.Background(), i)
+		o, err := cl1.Timeline().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -370,7 +516,7 @@ func Test_Timeline_001(t *testing.T) {
 				},
 			}
 
-			o, err := cli.Role().Search(context.Background(), i)
+			o, err := cl1.Role().Search(context.Background(), i)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -399,7 +545,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		o, err := cli.Timeline().Search(context.Background(), i)
+		o, err := cl1.Timeline().Search(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -420,7 +566,7 @@ func Test_Timeline_001(t *testing.T) {
 			},
 		}
 
-		_, err := cli.Venture().Delete(context.Background(), i)
+		_, err := cl1.Venture().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -429,7 +575,16 @@ func Test_Timeline_001(t *testing.T) {
 	{
 		i := &user.DeleteI{}
 
-		_, err := cli.User().Delete(context.Background(), i)
+		_, err := cl1.User().Delete(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	{
+		i := &user.DeleteI{}
+
+		_, err := cl2.User().Delete(context.Background(), i)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -437,7 +592,7 @@ func Test_Timeline_001(t *testing.T) {
 
 	{
 		o := func() error {
-			emp, err := cli.Redigo().Empty()
+			emp, err := cl1.Redigo().Empty()
 			if err != nil {
 				t.Fatal(err)
 			}
