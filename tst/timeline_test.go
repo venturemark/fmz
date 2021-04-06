@@ -286,26 +286,33 @@ func Test_Timeline_001(t *testing.T) {
 		}
 	}
 
-	{
-		i := &timeline.SearchI{
-			Obj: []*timeline.SearchI_Obj{
-				{
-					Metadata: map[string]string{
-						"venture.venturemark.co/id": ti1,
-					},
-				},
-			},
-		}
+	// TODO user2 got only granted access to timeline2 in the venture. Searching
+	// for timelines using the venture ID should only result in this particular
+	// timeline the user got added to. Technically we have to allow this request
+	// in order to check which timelines of the venture the user has access to.
+	// This means we need to implement an egress filter mechanism. Once the
+	// filter is in place we can enable the check below.
+	//
+	// {
+	//  i := &timeline.SearchI{
+	//      Obj: []*timeline.SearchI_Obj{
+	//          {
+	//              Metadata: map[string]string{
+	//                  "venture.venturemark.co/id": vei,
+	//              },
+	//          },
+	//      },
+	//  }
 
-		o, err := cl2.Timeline().Search(context.Background(), i)
-		if err != nil {
-			t.Fatal(err)
-		}
+	// 	o, err := cl2.Timeline().Search(context.Background(), i)
+	// 	if err != nil {
+	// 		t.Fatal(err)
+	// 	}
 
-		if len(o.Obj) != 0 {
-			t.Fatal("there must be zero timelines")
-		}
-	}
+	// 	if len(o.Obj) != 1 {
+	// 		t.Fatal("there must be one timeline")
+	// 	}
+	// }
 
 	{
 		i := &timeline.SearchI{
@@ -351,6 +358,56 @@ func Test_Timeline_001(t *testing.T) {
 			if o.Obj[1].Property.Name != "Marketing Campaign" {
 				t.Fatal("name must be Marketing Campaign")
 			}
+		}
+	}
+
+	{
+		i := &role.CreateI{
+			Obj: []*role.CreateI_Obj{
+				{
+					Metadata: map[string]string{
+						"resource.venturemark.co/kind": "venture",
+						"role.venturemark.co/kind":     "member",
+						"subject.venturemark.co/id":    us2,
+						"venture.venturemark.co/id":    vei,
+					},
+				},
+			},
+		}
+
+		o, err := cl1.Role().Create(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 1 {
+			t.Fatal("there must be one role")
+		}
+
+		_, ok := o.Obj[0].Metadata["role.venturemark.co/id"]
+		if !ok {
+			t.Fatal("id must not be empty")
+		}
+	}
+
+	{
+		i := &timeline.SearchI{
+			Obj: []*timeline.SearchI_Obj{
+				{
+					Metadata: map[string]string{
+						"subject.venturemark.co/id": us2,
+					},
+				},
+			},
+		}
+
+		o, err := cl2.Timeline().Search(context.Background(), i)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(o.Obj) != 2 {
+			t.Fatal("there must be two timelines")
 		}
 	}
 
