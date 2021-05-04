@@ -376,9 +376,11 @@ func Test_Invite_001(t *testing.T) {
 			Obj: []*invite.UpdateI_Obj{
 				{
 					Metadata: map[string]string{
-						"invite.venturemark.co/code": "garbage",
-						"invite.venturemark.co/id":   in2,
-						"venture.venturemark.co/id":  vei,
+						"invite.venturemark.co/code":   "garbage",
+						"invite.venturemark.co/id":     in2,
+						"resource.venturemark.co/kind": "venture",
+						"role.venturemark.co/kind":     "member",
+						"venture.venturemark.co/id":    vei,
 					},
 					Jsnpatch: []*invite.UpdateI_Obj_Jsnpatch{
 						{
@@ -402,9 +404,11 @@ func Test_Invite_001(t *testing.T) {
 			Obj: []*invite.UpdateI_Obj{
 				{
 					Metadata: map[string]string{
-						"invite.venturemark.co/code": co2,
-						"invite.venturemark.co/id":   in2,
-						"venture.venturemark.co/id":  vei,
+						"invite.venturemark.co/code":   co2,
+						"invite.venturemark.co/id":     in2,
+						"resource.venturemark.co/kind": "venture",
+						"role.venturemark.co/kind":     "member",
+						"venture.venturemark.co/id":    vei,
 					},
 					Jsnpatch: []*invite.UpdateI_Obj_Jsnpatch{
 						{
