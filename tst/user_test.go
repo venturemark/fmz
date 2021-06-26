@@ -88,6 +88,7 @@ func Test_User_001(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "marcojelli",
+						Mail: "m@example.com",
 						Prof: []*user.CreateI_Obj_Property_Prof{
 							{
 								Desc: "Founder",
@@ -141,6 +142,7 @@ func Test_User_001(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "disreszi",
+						Mail: "d@example.com",
 					},
 				},
 			},
@@ -206,6 +208,9 @@ func Test_User_001(t *testing.T) {
 		{
 			if o.Obj[0].Property.Name != "marcojelli" {
 				t.Fatal("name must be marcojelli")
+			}
+			if o.Obj[0].Property.Mail != "m@example.com" {
+				t.Fatal("mail must be m@example.com")
 			}
 		}
 
@@ -302,6 +307,9 @@ func Test_User_001(t *testing.T) {
 			if o.Obj[0].Property.Name != "marcojelli" {
 				t.Fatal("name must be marcojelli")
 			}
+			if o.Obj[0].Property.Mail != "m@example.com" {
+				t.Fatal("mail must be m@example.com")
+			}
 		}
 
 		{
@@ -350,6 +358,9 @@ func Test_User_001(t *testing.T) {
 		{
 			if o.Obj[0].Property.Name != "marcojelli" {
 				t.Fatal("name must be marcojelli")
+			}
+			if o.Obj[0].Property.Mail != "m@example.com" {
+				t.Fatal("mail must be m@example.com")
 			}
 		}
 	}
@@ -405,6 +416,9 @@ func Test_User_001(t *testing.T) {
 			if o.Obj[0].Property.Name != "marcojelli" {
 				t.Fatal("name must be marcojelli")
 			}
+			if o.Obj[0].Property.Mail != "m@example.com" {
+				t.Fatal("mail must be m@example.com")
+			}
 		}
 	}
 
@@ -433,6 +447,9 @@ func Test_User_001(t *testing.T) {
 		{
 			if o.Obj[0].Property.Name != "disreszi" {
 				t.Fatal("name must be disreszi")
+			}
+			if o.Obj[0].Property.Mail != "d@example.com" {
+				t.Fatal("mail must be d@example.com")
 			}
 		}
 	}
@@ -471,6 +488,9 @@ func Test_User_001(t *testing.T) {
 			if o.Obj[0].Property.Name != "disreszi" {
 				t.Fatal("name must be disreszi")
 			}
+			if o.Obj[0].Property.Mail != "d@example.com" {
+				t.Fatal("mail must be d@example.com")
+			}
 		}
 	}
 
@@ -507,6 +527,9 @@ func Test_User_001(t *testing.T) {
 		{
 			if o.Obj[0].Property.Name != "disreszi" {
 				t.Fatal("name must be disreszi")
+			}
+			if o.Obj[0].Property.Mail != "d@example.com" {
+				t.Fatal("mail must be d@example.com")
 			}
 		}
 	}
@@ -561,6 +584,9 @@ func Test_User_001(t *testing.T) {
 		{
 			if o.Obj[0].Property.Name != "disreszi" {
 				t.Fatal("name must be disreszi")
+			}
+			if o.Obj[0].Property.Mail != "d@example.com" {
+				t.Fatal("mail must be d@example.com")
 			}
 		}
 	}
@@ -829,6 +855,7 @@ func Test_User_003(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "one",
+						Mail: "o@example.com",
 					},
 				},
 			},
@@ -851,6 +878,7 @@ func Test_User_003(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "two",
+						Mail: "t@example.com",
 					},
 				},
 			},

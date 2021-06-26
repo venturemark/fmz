@@ -92,6 +92,7 @@ func Test_Timeline_001(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "marcojelli",
+						Mail: "m@example.com",
 					},
 				},
 			},
@@ -115,6 +116,7 @@ func Test_Timeline_001(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "disreszi",
+						Mail: "d@example.com",
 					},
 				},
 			},
@@ -695,6 +697,7 @@ func Test_Timeline_002(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "marcojelli",
+						Mail: "m@example.com",
 					},
 				},
 			},
@@ -873,6 +876,7 @@ func Test_Timeline_003(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "marcojelli",
+						Mail: "m@example.com",
 					},
 				},
 			},
@@ -1094,6 +1098,7 @@ func Test_Timeline_004(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "marcojelli",
+						Mail: "m@example.com",
 					},
 				},
 			},
@@ -1299,6 +1304,7 @@ func Test_Timeline_005(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "marcojelli",
+						Mail: "m@example.com",
 					},
 				},
 			},
@@ -1321,6 +1327,7 @@ func Test_Timeline_005(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "disreszi",
+						Mail: "d@example.com",
 					},
 				},
 			},
@@ -1449,6 +1456,7 @@ func Test_Timeline_006(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "marcojelli",
+						Mail: "m@example.com",
 					},
 				},
 			},
