@@ -43,7 +43,7 @@ jobs:
 
       - name: "Install Test Dependency"
         run: |
-          go get -u github.com/venturemark/apiserver@$(git ls-remote git://github.com/venturemark/apiserver.git user-mail | awk '{print $1;}')
+          go get -u github.com/venturemark/apiserver@$(git ls-remote git://github.com/venturemark/apiserver.git HEAD | awk '{print $1;}')
 
       - name: "Install Test Dependency"
         run: |
