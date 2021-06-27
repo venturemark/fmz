@@ -74,6 +74,7 @@ func Test_Message_001(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "marcojelli",
+						Mail: "m@example.com",
 					},
 				},
 			},
@@ -99,6 +100,7 @@ func Test_Message_001(t *testing.T) {
 				{
 					Property: &user.CreateI_Obj_Property{
 						Name: "disreszi",
+						Mail: "d@example.com",
 					},
 				},
 			},
